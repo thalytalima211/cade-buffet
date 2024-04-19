@@ -11,13 +11,20 @@
 
   <body class="py-3 bg-body-secondary">
     <header class="container text-center bg-body">
-      <h1 class="py-3">Cadê Buffet?</h1>
+      <h1 class="py-3"><%= link_to 'Cadê Buffet?', root_path %></h1>
+      <nav>
+        <% if admin_signed_in? %>
+          Admin logado como: <%= current_admin.email %>
+          <%= button_to 'Sair', destroy_admin_session_path, class: "btn btn-danger", method: :delete %>
+        <% end %>
+      </nav>
     </header>
     <main class="container text-center bg-body p-5">
       <div class="alert">
         <% if notice.present? %>
           <span class="alert alert-success"><%= notice %></span>
-        <% elsif alert.present? %>
+        <% end %>
+        <% if alert.present? %>
           <span class="alert alert-danger"><%= alert %></span>
         <% end %>
       </div>

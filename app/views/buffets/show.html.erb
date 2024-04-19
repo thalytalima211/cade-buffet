@@ -1,0 +1,16 @@
+<h2><%= @buffet.brand_name %></h2>
+
+<dl>
+    <dt><%= Buffet.human_attribute_name(:corporate_name) %>: </dt>
+    <dd><%= @buffet.corporate_name  %></dd>
+    <dt><%= Buffet.human_attribute_name(:registration_number) %>: </dt>
+    <dd><%= @buffet.registration_number %></dd>
+    <dt><%= Buffet.human_attribute_name(:location) %>: </dt>
+    <dd><%= @buffet.location %></dd>
+    <dt><%= Buffet.human_attribute_name(:description) %>: </dt>
+    <dd><%= @buffet.description %></dd>
+    <dt><%= Buffet.human_attribute_name(:contact) %>: </dt>
+    <dd><%= @buffet.contact %></dd>
+</dl>
+
+<%= link_to 'Editar', edit_buffet_path(@buffet)%>

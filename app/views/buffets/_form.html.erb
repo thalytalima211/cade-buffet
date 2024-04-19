@@ -1,0 +1,61 @@
+<%= form_with model: @buffet do |f| %>
+    <div>
+        <%= f.label :corporate_name %>
+        <%= f.text_field :corporate_name %>
+    </div>
+    <div>
+        <%= f.label :brand_name %>
+        <%= f.text_field :brand_name %>
+    </div>
+    <div>
+        <%= f.label :registration_number %>
+        <%= f.text_field :registration_number %>
+    </div>
+    <div>
+        <%= f.label :number_phone %>
+        <%= f.text_field :number_phone %>
+    </div>
+    <div>
+        <%= f.label :email %>
+        <%= f.text_field :email %>
+    </div>
+    <div>
+        <%= f.label :full_address %>
+        <%= f.text_field :full_address %>
+    </div>
+    <div>
+        <%= f.label :neighborhood %>
+        <%= f.text_field :neighborhood %>
+    </div>
+    <div>
+        <%= f.label :state %>
+        <%= f.text_field :state %>
+    </div>
+    <div>
+        <%= f.label :city %>
+        <%= f.text_field :city %>
+    </div>
+    <div>
+        <%= f.label :zip_code %>
+        <%= f.text_field :zip_code %>
+    </div>
+    <div>
+        <%= f.label :description %>
+        <%= f.text_area :description %>
+    </div>
+    <div>
+        <%= f.label :accepts_cash %>
+        <%= f.check_box :accepts_cash %>
+    </div>
+    <div>
+        <%= f.label :accepts_pix %>
+        <%= f.check_box :accepts_pix %>
+    </div>
+    <div>
+        <%= f.label :accepts_credit_card %>
+        <%= f.check_box :accepts_credit_card %>
+    </div>
+    <div>
+        <%= f.submit 'Enviar' %>
+    </div>
+<% end %>

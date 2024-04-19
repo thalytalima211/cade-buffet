@@ -1,0 +1,22 @@
+pt-BR:
+  activerecord:
+    models:
+      buffet: Buffet
+    attributes:
+      buffet:
+        corporate_name: Razão Social
+        brand_name: Nome Fantasia
+        registration_number: CNPJ
+        number_phone: Telefone para contato
+        email: Email para contato
+        full_address: Endereço
+        neighborhood: Bairro
+        state: Estado
+        city: Cidade
+        zip_code: CEP
+        description: Descrição
+        accepts_cash: Dinheiro
+        accepts_pix: PIX
+        accepts_credit_card: Cartão de Crédito
+        location: Localização
+        contact: Contato
