@@ -17,13 +17,18 @@ class BuffetsController < ApplicationController
     end
   end
 
-  def show; end
+  def show
+    @event_types = @buffet.event_types
+  end
 
   def edit; end
 
   def update
     if @buffet.update(buffet_params)
       redirect_to buffet_path(@buffet), notice: 'Buffet editado com sucesso'
+    else
+      flash.now[:notice] = 'Não foi possível editar buffet'
+      render :edit
     end
   end
 

@@ -68,4 +68,30 @@ describe 'Administrador edita buffet' do
     expect(current_path).to eq buffet_path(admin2.buffet)
     expect(page).to have_content 'Você não pode editar este buffet'
   end
+
+  it 'com dados incompletos' do
+    # Arrange
+    admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
+    buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
+                            registration_number: '12.345.678/0001-90', number_phone: '(55)5555-5555',
+                            email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
+                            neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
+                            description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
+                            admin: admin)
+
+    # Act
+    login_as(admin)
+    visit root_path
+    click_on 'Editar'
+    fill_in 'Cidade', with: ''
+    fill_in 'Bairro', with: ''
+    fill_in 'CNPJ', with: ''
+    click_on 'Enviar'
+
+    # Assert
+    expect(page).to have_content 'Não foi possível editar buffet'
+    expect(page).to have_content 'Cidade não pode ficar em branco'
+    expect(page).to have_content 'Bairro não pode ficar em branco'
+    expect(page).to have_content 'CNPJ não pode ficar em branco'
+  end
 end

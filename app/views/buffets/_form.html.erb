@@ -1,3 +1,12 @@
+<% if @buffet.errors.any? %>
+    <p>Verifique os erros abaixo: </p>
+    <ul>
+        <% @buffet.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+        <% end %>
+    </ul>
+<% end %>
+
 <%= form_with model: @buffet do |f| %>
     <div>
         <%= f.label :corporate_name %>

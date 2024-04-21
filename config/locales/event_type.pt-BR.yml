@@ -1,0 +1,25 @@
+pt-BR:
+  activerecord:
+    models:
+      event_type: Tipo de evento
+    attributes:
+      event_type:
+        name: Nome
+        description: Descrição
+        min_guests: Quantidade mínima de pessoas
+        max_guests: Quantidade máxima de pessoas
+        default_duration: Duração padrão
+        menu: Cardápio
+        offer_drinks: Bebidas Alcoólicas
+        offer_decoration: Decoração
+        offer_parking_service: Serviço de Estacionamento
+        min_value: Valor mínimo
+        additional_per_guest: Adicional por pessoa
+        extra_hour_value: Valor por hora extra
+        weekend_min_value: Valor mínimo no final de semana
+        weekend_additional_per_guest: Adicional por pessoa no final de semana
+        weekend_extra_hour_value: Valor por hora extra no final de semana
+        buffet_address: Endereço do buffet
+        indicated_address: Endereço indicado pelo contratante
+        default_address: Endereço padrão
+        services: Serviços

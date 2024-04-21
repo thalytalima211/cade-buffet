@@ -4,57 +4,68 @@ RSpec.describe Buffet, type: :model do
   describe '#valid' do
     it 'deve ter Razão Social' do
       buffet = Buffet.new(corporate_name: '')
-      expect(buffet.valid?).to eq false
+      buffet.valid?
+      expect(buffet.errors.include? :corporate_name).to eq true
     end
 
     it 'deve ter Nome Fantasia' do
       buffet = Buffet.new(brand_name: '')
-      expect(buffet.valid?).to eq false
+      buffet.valid?
+      expect(buffet.errors.include? :brand_name).to eq true
     end
 
     it 'deve ter CNPJ' do
       buffet = Buffet.new(registration_number: '')
-      expect(buffet.valid?).to eq false
+      buffet.valid?
+      expect(buffet.errors.include? :registration_number).to eq true
     end
 
     it 'deve ter Telefone para contato' do
       buffet = Buffet.new(number_phone: '')
-      expect(buffet.valid?).to eq false
+      buffet.valid?
+      expect(buffet.errors.include? :number_phone).to eq true
     end
 
     it 'deve ter Email para contato' do
       buffet = Buffet.new(email: '')
-      expect(buffet.valid?).to eq false
+      buffet.valid?
+      expect(buffet.errors.include? :email).to eq true
     end
 
     it 'deve ter Endereço' do
       buffet = Buffet.new(full_address: '')
-      expect(buffet.valid?).to eq false
+      buffet.valid?
+      expect(buffet.errors.include? :full_address).to eq true
     end
 
     it 'deve ter Bairro' do
       buffet = Buffet.new(neighborhood: '')
-      expect(buffet.valid?).to eq false
+      buffet.valid?
+      expect(buffet.errors.include? :neighborhood).to eq true
     end
 
     it 'deve ter Estado' do
       buffet = Buffet.new(state: '')
-      expect(buffet.valid?).to eq false
+      buffet.valid?
+      expect(buffet.errors.include? :state).to eq true
     end
 
     it 'deve ter Cidade' do
       buffet = Buffet.new(city: '')
-      expect(buffet.valid?).to eq false
+      buffet.valid?
+      expect(buffet.errors.include? :city).to eq true
     end
 
     it 'deve ter CEP' do
       buffet = Buffet.new(zip_code: '')
-      expect(buffet.valid?).to eq false
+      buffet.valid?
+      expect(buffet.errors.include? :zip_code).to eq true
     end
 
     it 'deve ter Descrição' do
       buffet = Buffet.new(description: '')
-      expect(buffet.valid?).to eq false
+      buffet.valid?
+      expect(buffet.errors.include? :description).to eq true
     end
   end
 

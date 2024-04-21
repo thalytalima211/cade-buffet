@@ -1,0 +1,82 @@
+<% if @event_type.errors.any? %>
+    <p>Verifique os erros abaixo: </p>
+    <ul>
+        <% @event_type.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+        <% end %>
+    </ul>
+<% end %>
+
+<%= form_with model: @event_type do |f| %>
+    <div>
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+    </div>
+    <div>
+        <%= f.label :description %>
+        <%= f.text_field :description %>
+    </div>
+    <div>
+        <%= f.label :min_guests %>
+        <%= f.number_field :min_guests %>
+    </div>
+    <div>
+        <%= f.label :max_guests %>
+        <%= f.number_field :max_guests %>
+    </div>
+    <div>
+        <%= f.label :default_duration %>
+        <%= f.number_field :default_duration %>
+    </div>
+    <div>
+        <%= f.label :menu %>
+        <%= f.text_field :menu %>
+    </div>
+    <div>
+        <%= f.label :offer_drinks %>
+        <%= f.check_box :offer_drinks %>
+    </div>
+    <div>
+        <%= f.label :offer_decoration %>
+        <%= f.check_box :offer_decoration %>
+    </div>
+    <div>
+        <%= f.label :offer_parking_service %>
+        <%= f.check_box :offer_parking_service %>
+    </div>
+    <div>
+        <input type="radio" id="buffet_address" name="default_address" value='0'>
+        <label for="buffet_address"><%= EventType.human_attribute_name(:buffet_address)%></label>
+    </div>
+    <div>
+        <input type="radio" id="indicated_address" name="default_address" value='1'>
+        <label for="indicated_address"><%= EventType.human_attribute_name(:indicated_address)%></label>
+    </div>
+    <div>
+        <%= f.label :min_value %>
+        <%= f.number_field :min_value %>
+    </div>
+    <div>
+        <%= f.label :additional_per_guest %>
+        <%= f.number_field :additional_per_guest %>
+    </div>
+    <div>
+        <%= f.label :extra_hour_value %>
+        <%= f.number_field :extra_hour_value %>
+    </div>
+    <div>
+        <%= f.label :weekend_min_value %>
+        <%= f.number_field :weekend_min_value %>
+    </div>
+    <div>
+        <%= f.label :weekend_additional_per_guest %>
+        <%= f.number_field :weekend_additional_per_guest %>
+    </div>
+    <div>
+        <%= f.label :weekend_extra_hour_value %>
+        <%= f.number_field :weekend_extra_hour_value %>
+    </div>
+    <div>
+        <%= f.submit 'Enviar' %>
+    </div>
+<% end %>

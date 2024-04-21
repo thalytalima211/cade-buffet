@@ -1,0 +1,39 @@
+<h2><%= @event_type.name %></h2>
+<p><%= @event_type.description %></p>
+
+<dl>
+    <dt><%= EventType.human_attribute_name(:min_guests) %>: </dt>
+    <dd><%= @event_type.min_guests %></dd>
+    <dt><%= EventType.human_attribute_name(:max_guests)%>: </dt>
+    <dd><%= @event_type.max_guests%></dd>
+    <dt><%= EventType.human_attribute_name(:default_duration) %>: </dt>
+    <dd><%= @event_type.default_duration %> minutos</dd>
+    <dt><%= EventType.human_attribute_name(:menu) %>: </dt>
+    <dd><%= @event_type.menu %></dd>
+    <dt><%= EventType.human_attribute_name(:services) %>: </dt>
+    <dd>
+        <% if @event_type.offer_decoration %>
+            <%= EventType.human_attribute_name(:offer_decoration)%> 
+        <% end %>
+        <% if @event_type.offer_drinks %>
+            <%= EventType.human_attribute_name(:offer_drinks)%> 
+        <% end %>
+        <% if @event_type.offer_parking_service %>
+            <%= EventType.human_attribute_name(:offer_parking_service)%> 
+        <% end %>
+    </dd>
+    <dt><%= EventType.human_attribute_name(:default_address) %>: </dt>
+    <dd><%= EventType.human_attribute_name(@event_type.default_address) %></dd>
+    <dt><%= EventType.human_attribute_name(:min_value) %>: </dt>
+    <dd><%= number_to_currency(@event_type.min_value, locale: :'pt-BR')%></dd>
+    <dt><%= EventType.human_attribute_name(:additional_per_guest) %>: </dt>
+    <dd><%= number_to_currency(@event_type.additional_per_guest, locale: :'pt-BR')%></dd>
+    <dt><%= EventType.human_attribute_name(:extra_hour_value) %>: </dt>
+    <dd><%= number_to_currency(@event_type.extra_hour_value, locale: :'pt-BR')%></dd>
+    <dt><%= EventType.human_attribute_name(:weekend_min_value) %>: </dt>
+    <dd><%= number_to_currency(@event_type.weekend_min_value, locale: :'pt-BR')%></dd>
+    <dt><%= EventType.human_attribute_name(:weekend_additional_per_guest) %>: </dt>
+    <dd><%= number_to_currency(@event_type.weekend_additional_per_guest, locale: :'pt-BR')%></dd>
+    <dt><%= EventType.human_attribute_name(:weekend_extra_hour_value) %>: </dt>
+    <dd><%= number_to_currency(@event_type.weekend_extra_hour_value, locale: :'pt-BR')%></dd>
+</dl>

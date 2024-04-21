@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_19_180948) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_21_030255) do
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -46,6 +46,29 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_19_180948) do
     t.index ["admin_id"], name: "index_buffets_on_admin_id"
   end
 
+  create_table "event_types", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.integer "min_guests"
+    t.integer "max_guests"
+    t.integer "default_duration"
+    t.string "menu"
+    t.boolean "offer_drinks"
+    t.boolean "offer_decoration"
+    t.boolean "offer_parking_service"
+    t.integer "default_address"
+    t.decimal "min_value", precision: 10, scale: 2
+    t.decimal "additional_per_guest", precision: 10, scale: 2
+    t.decimal "extra_hour_value", precision: 10, scale: 2
+    t.decimal "weekend_min_value", precision: 10, scale: 2
+    t.decimal "weekend_additional_per_guest", precision: 10, scale: 2
+    t.decimal "weekend_extra_hour_value", precision: 10, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "buffet_id", null: false
+    t.index ["buffet_id"], name: "index_event_types_on_buffet_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -59,4 +82,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_19_180948) do
   end
 
   add_foreign_key "buffets", "admins"
+  add_foreign_key "event_types", "buffets"
 end
