@@ -11,16 +11,23 @@
 
   <body class="py-3 bg-body-secondary">
     <header class="container text-center bg-body">
-      <h1 class="py-3"><%= link_to 'Cadê Buffet?', root_path %></h1>
-      <nav>
+      <h1 class="py-3 m-0"><%= link_to 'Cadê Buffet?', root_path, class: "link-underline link-underline-opacity-0 link-dark"  %></h1>
+      <nav>      
+        <% if !admin_signed_in? && !user_signed_in? %>
+            <%= link_to "Entrar como cliente", new_user_session_path , class: 'b-3 btn btn-primary' %>
+            <%= link_to "Entrar como administrador", new_admin_session_path , class: 'b-3 btn btn-primary' %>
+        <% end %>
         <% if admin_signed_in? %>
           Admin logado como: <%= current_admin.email %>
-          <%= button_to 'Sair', destroy_admin_session_path, class: "btn btn-danger", method: :delete %>
+          <div class="mt-3">
+            <%= button_to 'Meu buffet', buffet_path(current_admin.buffet), class: "btn btn-danger" if current_admin.buffet.present? %>
+            <%= button_to 'Sair', destroy_admin_session_path, class: "btn btn-danger", method: :delete %>
+          </div>
         <% end %>
       </nav>
     </header>
-    <main class="container text-center bg-body p-5">
-      <div class="alert">
+    <main class="container text-center bg-body px-5">
+      <div>
         <% if notice.present? %>
           <span class="alert alert-success"><%= notice %></span>
         <% end %>
