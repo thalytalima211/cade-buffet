@@ -1,7 +1,9 @@
 pt-BR:
   activerecord:
     models:
-      buffet: Buffet
+      buffet:
+        one: Buffet
+        other: Buffets
     attributes:
       buffet:
         corporate_name: Razão Social
@@ -20,3 +22,6 @@ pt-BR:
         accepts_credit_card: Cartão de Crédito
         location: Localização
         contact: Contato
+  found:
+    one: Encontrado
+    other: Encontrados

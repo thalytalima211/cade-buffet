@@ -1,7 +1,3 @@
 <% @buffets.each do |buffet| %>
-    <div>
-        <%= link_to buffet.brand_name, buffet %>
-        <%= buffet.city %>
-        <%= buffet.state %>
-    </div>
+    <%= render buffet %>
 <% end %>

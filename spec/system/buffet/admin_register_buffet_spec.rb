@@ -79,7 +79,7 @@ describe 'Administrador cadastra buffet' do
 
   it 'com dados incompletos' do
     # Arrange
-    admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
+    admin = Admin.create!(email: 'admin@email.com', password: 'senha123', buffet: nil)
 
     # Act
     login_as(admin)

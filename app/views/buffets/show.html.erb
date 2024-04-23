@@ -1,8 +1,10 @@
 <h2><%= @buffet.brand_name %></h2>
 
 <dl>
-    <dt><%= Buffet.human_attribute_name(:corporate_name) %>: </dt>
-    <dd><%= @buffet.corporate_name  %></dd>
+    <% if admin_signed_in? && current_admin.buffet = @buffet %>
+        <dt><%= Buffet.human_attribute_name(:corporate_name) %>: </dt>
+        <dd><%= @buffet.corporate_name  %></dd>
+    <% end %>
     <dt><%= Buffet.human_attribute_name(:registration_number) %>: </dt>
     <dd><%= @buffet.registration_number %></dd>
     <dt><%= Buffet.human_attribute_name(:location) %>: </dt>

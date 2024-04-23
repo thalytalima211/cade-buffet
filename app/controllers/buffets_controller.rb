@@ -1,5 +1,5 @@
 class BuffetsController < ApplicationController
-  before_action :authenticate_admin!
+  before_action :authenticate_admin!, only: [:edit, :update, :new, :create]
   before_action :set_buffet, only: [:show]
   before_action :check_buffet, only: [:edit, :update]
   def new
@@ -12,6 +12,7 @@ class BuffetsController < ApplicationController
     if @buffet.save
       redirect_to buffet_path(@buffet.id), notice: 'Buffet cadastrado com sucesso'
     else
+      @buffet.admin = nil
       flash.now[:notice] = 'Buffet não cadastrado'
       render :new
     end
@@ -30,6 +31,12 @@ class BuffetsController < ApplicationController
       flash.now[:notice] = 'Não foi possível editar buffet'
       render :edit
     end
+  end
+
+  def search
+    @query = params[:query]
+    search_query = 'event_types.name LIKE ? OR buffets.brand_name LIKE ? OR buffets.city LIKE ?'
+    @buffets = Buffet.joins(:event_types).where(search_query, "%#{@query}%", "%#{@query}%", "%#{@query}%").order(:brand_name)
   end
 
   private
