@@ -36,7 +36,7 @@ class BuffetsController < ApplicationController
   def search
     @query = params[:query]
     search_query = 'event_types.name LIKE ? OR buffets.brand_name LIKE ? OR buffets.city LIKE ?'
-    @buffets = Buffet.joins(:event_types).where(search_query, "%#{@query}%", "%#{@query}%", "%#{@query}%").order(:brand_name)
+    @buffets = Buffet.left_outer_joins(:event_types).where(search_query, "%#{@query}%", "%#{@query}%", "%#{@query}%").order(:brand_name)
   end
 
   private
