@@ -17,9 +17,6 @@ class EventTypesController < ApplicationController
 
   def show
     @event_type = EventType.find(params[:id])
-    if @event_type.buffet != current_admin.buffet
-      redirect_to root_path, notice: 'Você não pode ver os detalhes desse tipo de evento pois não pertence ao seu buffet'
-    end
   end
 
   private

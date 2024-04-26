@@ -6,7 +6,7 @@ describe 'Usuário entra na página inicial' do
     expect(page).to have_content 'Cadê Buffet?'
   end
 
-  it 'e vê página de login caso não esteja registrado' do
+  it 'e vê botões de login caso não esteja registrado' do
     # Arrange
 
     # Act
@@ -15,6 +15,19 @@ describe 'Usuário entra na página inicial' do
     # Assert
     expect(page).to have_link 'Entrar como cliente'
     expect(page).to have_link 'Entrar como administrador'
+  end
+
+  it 'e não vê botões de login caso esteja registrado como administrador' do
+    # Arrange
+    admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
+
+    # Act
+    login_as(admin)
+    visit root_path
+
+    # Assert
+    expect(page).not_to have_link 'Entrar como cliente'
+    expect(page).not_to have_link 'Entrar como administrador'
   end
 
   it 'e vê buffets cadastrados' do

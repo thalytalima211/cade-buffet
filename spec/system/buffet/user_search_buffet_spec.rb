@@ -14,6 +14,21 @@ describe 'Usuário pesquisa buffet' do
     end
   end
 
+  it 'e não vê campo de busca se estiver logado com administrador' do
+    # Arrange
+    admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
+
+    # Act
+    login_as(admin)
+    visit root_path
+
+    # Assert
+    within('nav') do
+      expect(page).not_to have_field 'Buscar Buffet'
+      expect(page).not_to have_button 'Buscar'
+    end
+  end
+
   it 'e encontra um buffet pelo nome' do
     # Arrange
     first_admin = Admin.create!(email: 'saboresdivinos@email.com', password: 'senha123')
@@ -58,7 +73,7 @@ describe 'Usuário pesquisa buffet' do
     first_event_type = EventType.create!(name: 'Festa de Casamento', description: 'Celebre seu dia do SIM com o nosso buffet',
                                         min_guests: 20, max_guests: 100, default_duration: 90, menu: 'Bolo e Doces',
                                         offer_decoration: true, offer_drinks: true, offer_parking_service: false,
-                                        default_address: 0, min_value: 10_000.00, additional_per_guest: 250.00,
+                                        default_address: :buffet_address, min_value: 10_000.00, additional_per_guest: 250.00,
                                         extra_hour_value: 1_000.00, weekend_min_value: 14_000.00,
                                         weekend_additional_per_guest: 300.00, weekend_extra_hour_value: 1_500.00,
                                         buffet: first_buffet)
@@ -73,7 +88,7 @@ describe 'Usuário pesquisa buffet' do
     second_event_type = EventType.create!(name: 'Festa de Aniversário', description: 'Assopre as velinhas conosco',
                                         min_guests: 15, max_guests: 90, default_duration: 120, menu: 'Salgadinhos e bolo de aniversário',
                                         offer_decoration: true, offer_drinks: false, offer_parking_service: false,
-                                        default_address: 1, min_value: 8_000.00, additional_per_guest: 100.00,
+                                        default_address: :indicated_address, min_value: 8_000.00, additional_per_guest: 100.00,
                                         extra_hour_value: 900.00, weekend_min_value: 12_000.00,
                                         weekend_additional_per_guest: 200.00, weekend_extra_hour_value: 1_200.00,
                                         buffet: second_buffet)

@@ -23,11 +23,13 @@
             <%= button_to 'Sair', destroy_admin_session_path, class: "btn btn-danger", method: :delete %>
           </div>
         <% end %>
-        <%= form_with(url: search_buffets_path, method: :get) do |f| %>
-            <%= f.label :query, 'Buscar Buffet' %>
-            <%= f.text_field :query %>
-            <%= f.submit 'Buscar' %>
+        <% if !admin_signed_in? %>
+          <%= form_with(url: search_buffets_path, method: :get) do |f| %>
+              <%= f.label :query, 'Buscar Buffet' %>
+              <%= f.text_field :query %>
+              <%= f.submit 'Buscar' %>
           <% end %>
+        <% end %>
       </nav>
     </header>
     <main class="container text-center bg-body px-5">
