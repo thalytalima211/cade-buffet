@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'Cliente faz login' do
   it 'com sucesso' do
     # Arrange
-    Customer.create!(name: 'Maria', cpf: '01234567890', email: 'maria@email.com', password: 'senha123')
+    Customer.create!(name: 'Maria', cpf: CPF.generate, email: 'maria@email.com', password: 'senha123')
 
     # Act
     visit root_path
@@ -19,7 +19,7 @@ describe 'Cliente faz login' do
 
   it 'e faz logout' do
     # Arrange
-    Customer.create!(name: 'Maria', cpf: '01234567890', email: 'maria@email.com', password: 'senha123')
+    Customer.create!(name: 'Maria', cpf: CPF.generate, email: 'maria@email.com', password: 'senha123')
 
     # Act
     visit root_path

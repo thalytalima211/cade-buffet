@@ -5,7 +5,7 @@ describe 'Administrador registra tipo de evento' do
     # Arrange
     admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
     buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
-                            registration_number: '12.345.678/0001-90', number_phone: '(55)5555-5555',
+                            registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
                             email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
                             neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
                             description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
@@ -40,7 +40,7 @@ describe 'Administrador registra tipo de evento' do
     # Arrange
     admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
     buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
-                            registration_number: '12.345.678/0001-90', number_phone: '(55)5555-5555',
+                            registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
                             email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
                             neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
                             description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
@@ -91,7 +91,7 @@ describe 'Administrador registra tipo de evento' do
     # Arrange
     admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
     buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
-                            registration_number: '12.345.678/0001-90', number_phone: '(55)5555-5555',
+                            registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
                             email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
                             neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
                             description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',

@@ -5,7 +5,7 @@ describe 'Usuário vê tipos de eventos' do
     # Arrange
     admin = Admin.create!(email: 'saboresdivinos@email.com', password: 'senha123')
     buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
-                            registration_number: '12.345.678/0001-90', number_phone: '(55)5555-5555',
+                            registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
                             email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
                             neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
                             description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
@@ -30,7 +30,7 @@ describe 'Usuário vê tipos de eventos' do
     # Arrange
     first_admin = Admin.create!(email: 'saboresdivinos@email.com', password: 'senha123')
     first_buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
-                                  registration_number: '12.345.678/0001-90', number_phone: '(55)5555-5555',
+                                  registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
                                   email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
                                   neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
                                   description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
@@ -45,7 +45,7 @@ describe 'Usuário vê tipos de eventos' do
 
     second_admin = Admin.create!(email: 'gourmet@email.com', password: 'senha123')
     second_buffet = Buffet.create!(corporate_name: 'Gourmet & Companhia Ltda.', brand_name: 'Gourmet & Companhia Ltda',
-                                  registration_number: '98.765.432/0001-12', number_phone: '(11)91234-5678',
+                                  registration_number: CNPJ.generate, number_phone: '(11)91234-5678',
                                   email: 'contato@gourmetecia.com',  full_address: 'Avenida Principal, 456',
                                   neighborhood: 'Jardins', city: 'Metropolis', state: 'SP', zip_code: '98765-432',
                                   description: 'Gourmet & Cia Buffet oferece serviços de buffet para eventos de todos os tamanhos.',
@@ -71,7 +71,7 @@ describe 'Usuário vê tipos de eventos' do
     # Arrange
     admin = Admin.create!(email: 'saboresdivinos@email.com', password: 'senha123')
     buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
-                            registration_number: '12.345.678/0001-90', number_phone: '(55)5555-5555',
+                            registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
                             email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
                             neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
                             description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',

@@ -6,13 +6,13 @@ describe 'Administrador edita buffet' do
     admin1 = Admin.create!(email: 'admin1@email.com', password: 'senha123')
     admin2 = Admin.create!(email: 'admin2@email.com', password: 'senha123')
     buffet1 = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
-                            registration_number: '12.345.678/0001-90', number_phone: '(55)5555-5555',
+                            registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
                             email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
                             neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
                             description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
                             admin: admin1)
     buffet2 = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
-                            registration_number: '12.345.678/0001-90', number_phone: '(55)5555-5555',
+                            registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
                             email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
                             neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
                             description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',

@@ -9,7 +9,7 @@ describe 'Cliente se cadastra' do
     click_on 'Entrar como cliente'
     click_on 'Criar uma conta'
     fill_in 'Nome', with: 'Thalyta'
-    fill_in 'CPF', with: '012.345.678-09'
+    fill_in 'CPF', with: CPF.generate
     fill_in 'E-mail', with: 'thalyta@email.com'
     fill_in 'Senha', with: 'senha123'
     fill_in 'Confirme sua senha', with: 'senha123'

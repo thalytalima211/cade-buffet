@@ -57,6 +57,7 @@ describe 'Administrador cadastra buffet' do
 
   it 'com sucesso' do
     # Arrange
+    cnpj = CNPJ.generate
     admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
 
     # Act
@@ -64,7 +65,7 @@ describe 'Administrador cadastra buffet' do
     visit root_path
     fill_in 'Razão Social', with: 'Sabores Divinos Eventos Ltda.'
     fill_in 'Nome Fantasia', with: 'Sabores Divinos Buffet'
-    fill_in 'CNPJ', with: '12.345.678/0001-90'
+    fill_in 'CNPJ', with: cnpj
     fill_in 'Telefone para contato', with: '(55)5555-5555'
     fill_in 'Email para contato', with: 'contato@saboresdivinos.com'
     fill_in 'Endereço', with: 'Av. das Delícias, 1234'
@@ -81,7 +82,7 @@ describe 'Administrador cadastra buffet' do
     expect(page).to have_content 'Buffet cadastrado com sucesso'
     expect(page).to have_content 'Sabores Divinos Buffet'
     expect(page).to have_content 'Razão Social: Sabores Divinos Eventos Ltda.'
-    expect(page).to have_content 'CNPJ: 12.345.678/0001-90'
+    expect(page).to have_content "CNPJ: #{cnpj}"
     expect(page).to have_content 'Av. das Delícias, 1234, Centro, São Paulo-SP, CEP: 01234-567'
     expect(page).to have_content 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis'
     expect(page).to have_content '(55)5555-5555 - contato@saboresdivinos.com'

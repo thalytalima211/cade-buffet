@@ -20,6 +20,40 @@ RSpec.describe Buffet, type: :model do
       expect(buffet.errors.include? :registration_number).to eq true
     end
 
+    it 'CNPJ deve ser único' do
+      # Arrange
+      registration_number = CNPJ.generate
+      admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
+      Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
+                    registration_number: registration_number, number_phone: '(55)5555-5555',
+                    email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
+                    neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
+                    description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
+                    admin: admin)
+
+      buffet = Buffet.new(registration_number: registration_number)
+
+      # Act
+      buffet.valid?
+
+      # Assert
+      expect(buffet.errors.include? :registration_number).to be true
+    end
+
+    it 'CNPJ deve ser válido' do
+      # Arrange
+      first_buffet = Buffet.new(registration_number: CNPJ.generate)
+      second_buffet = Buffet.new(registration_number: '01.234.567/0001-12')
+
+      # Act
+      first_buffet.valid?
+      second_buffet.valid?
+
+      # Assert
+      expect(first_buffet.errors.include? :registration_number).to be false
+      expect(second_buffet.errors.include? :registration_number).to be true
+    end
+
     it 'deve ter Telefone para contato' do
       buffet = Buffet.new(number_phone: '')
       buffet.valid?
