@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :customers, controllers: {registrations: 'customers/registrations'}
   devise_for :admins
-  devise_for :users
   resources :buffets, only: [:new, :create, :show, :edit, :update] do
     get 'search', on: :collection
   end

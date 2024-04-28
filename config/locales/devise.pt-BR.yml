@@ -1,7 +1,7 @@
 pt-BR:
   activerecord:
     attributes:
-      user:
+      customer:
         confirmation_sent_at: Confirmação enviada em
         confirmation_token: Token de confirmação
         confirmed_at: Confirmado em
@@ -25,6 +25,8 @@ pt-BR:
         unconfirmed_email: E-mail não confirmado
         unlock_token: Token de desbloqueio
         updated_at: Atualizado em
+        name: Nome
+        cpf: CPF
       admin:
         confirmation_sent_at: Confirmação enviada em
         confirmation_token: Token de confirmação

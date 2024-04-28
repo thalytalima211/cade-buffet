@@ -19,7 +19,7 @@ describe 'Usuário pesquisa buffet' do
     admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
 
     # Act
-    login_as(admin)
+    login_as(admin, scope: :admin)
     visit root_path
 
     # Assert

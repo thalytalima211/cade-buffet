@@ -19,7 +19,7 @@ describe 'Administrador edita buffet' do
                             admin: admin2)
 
     # Act
-    login_as(admin1)
+    login_as(admin1, scope: :admin)
     patch buffet_path(buffet2), params: {buffet: {admin_id: 3}}
 
     # Assert

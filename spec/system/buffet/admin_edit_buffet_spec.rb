@@ -29,7 +29,7 @@ describe 'Administrador edita buffet' do
                             admin: admin)
 
     # Act
-    login_as(admin)
+    login_as(admin, scope: :admin)
     visit root_path
     click_on 'Editar'
     fill_in 'Cidade', with: 'Sorocaba'
@@ -61,7 +61,7 @@ describe 'Administrador edita buffet' do
                             admin: admin2)
 
     # Act
-    login_as(admin2)
+    login_as(admin2, scope: :admin)
     visit edit_buffet_path(buffet1)
 
     # Assert
@@ -80,7 +80,7 @@ describe 'Administrador edita buffet' do
                             admin: admin)
 
     # Act
-    login_as(admin)
+    login_as(admin, scope: :admin)
     visit root_path
     click_on 'Editar'
     fill_in 'Cidade', with: ''

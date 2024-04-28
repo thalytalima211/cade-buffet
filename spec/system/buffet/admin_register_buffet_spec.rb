@@ -1,6 +1,16 @@
 require 'rails_helper'
 
 describe 'Administrador cadastra buffet' do
+  it 'e deve estar autenticado' do
+    # Arrange
+
+    # Act
+    visit new_buffet_path
+
+    # Assert
+    expect(current_path).to eq new_admin_session_path
+  end
+
   it 'ao criar uma conta' do
     # Arrange
 
@@ -37,7 +47,7 @@ describe 'Administrador cadastra buffet' do
     admin = Admin.create!(email: 'admin@email.com', password: 'senha123', buffet: nil)
 
     # Act
-    login_as(admin)
+    login_as(admin, scope: :admin)
     visit root_path
 
     # Assert
@@ -50,7 +60,7 @@ describe 'Administrador cadastra buffet' do
     admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
 
     # Act
-    login_as(admin)
+    login_as(admin, scope: :admin)
     visit root_path
     fill_in 'Razão Social', with: 'Sabores Divinos Eventos Ltda.'
     fill_in 'Nome Fantasia', with: 'Sabores Divinos Buffet'
@@ -82,7 +92,7 @@ describe 'Administrador cadastra buffet' do
     admin = Admin.create!(email: 'admin@email.com', password: 'senha123', buffet: nil)
 
     # Act
-    login_as(admin)
+    login_as(admin, scope: :admin)
     visit root_path
     fill_in 'Razão Social', with: ''
     fill_in 'Nome Fantasia', with: ''

@@ -1,18 +1,17 @@
 class BuffetsController < ApplicationController
+  before_action :block_customer, only: [:edit, :update, :new, :create]
   before_action :authenticate_admin!, only: [:edit, :update, :new, :create]
   before_action :set_buffet, only: [:show]
   before_action :check_buffet, only: [:edit, :update]
+
   def new
     @buffet = Buffet.new
   end
 
   def create
-    @buffet = Buffet.new(buffet_params)
-    @buffet.admin = current_admin
-    if @buffet.save
-      redirect_to buffet_path(@buffet.id), notice: 'Buffet cadastrado com sucesso'
+    if current_admin.create_buffet!(buffet_params)
+      redirect_to buffet_path(current_admin.buffet), notice: 'Buffet cadastrado com sucesso'
     else
-      @buffet.admin = nil
       flash.now[:notice] = 'Buffet não cadastrado'
       render :new
     end
@@ -55,6 +54,12 @@ class BuffetsController < ApplicationController
     set_buffet
     if @buffet.admin != current_admin
       return redirect_to buffet_path(current_admin.buffet), notice: 'Você não pode editar este buffet'
+    end
+  end
+
+  def block_customer
+    if customer_signed_in?
+      return redirect_to root_path, notice: 'Um cliente não pode administrar dados de buffets!'
     end
   end
 end

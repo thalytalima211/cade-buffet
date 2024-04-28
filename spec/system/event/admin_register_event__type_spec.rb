@@ -12,7 +12,7 @@ describe 'Administrador registra tipo de evento' do
                             admin: admin)
 
     # Act
-    login_as(admin)
+    login_as(admin, scope: :admin)
     visit root_path
     click_on 'Adicionar novo tipo de evento'
 
@@ -47,7 +47,7 @@ describe 'Administrador registra tipo de evento' do
                             admin: admin)
 
     # Act
-    login_as(admin)
+    login_as(admin, scope: :admin)
     visit root_path
     click_on 'Adicionar novo tipo de evento'
     fill_in 'Nome', with: 'Festa de Casamento'
@@ -98,7 +98,7 @@ describe 'Administrador registra tipo de evento' do
                             admin: admin)
 
     # Act
-    login_as(admin)
+    login_as(admin, scope: :admin)
     visit root_path
     click_on 'Adicionar novo tipo de evento'
     fill_in 'Nome', with: ''

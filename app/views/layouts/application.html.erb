@@ -13,16 +13,25 @@
     <header class="container text-center bg-body">
       <h1 class="py-3 m-0"><%= link_to 'Cadê Buffet?', root_path, class: "link-underline link-underline-opacity-0 link-dark"  %></h1>
       <nav>      
-        <% if !admin_signed_in? && !user_signed_in? %>
-            <%= link_to "Entrar como cliente", new_user_session_path , class: 'b-3 btn btn-primary' %>
+        <% if !admin_signed_in? && !customer_signed_in? %>
+            <%= link_to "Entrar como cliente", new_customer_session_path , class: 'b-3 btn btn-primary' %>
             <%= link_to "Entrar como administrador", new_admin_session_path , class: 'b-3 btn btn-primary' %>
         <% end %>
+
         <% if admin_signed_in? %>
           Admin logado como: <%= current_admin.email %>
           <div class="mt-3">
             <%= button_to 'Sair', destroy_admin_session_path, class: "btn btn-danger", method: :delete %>
           </div>
         <% end %>
+
+        <% if customer_signed_in? %>
+          <%= current_customer.name %> | <%= current_customer.email %>
+          <div class="mt-3">
+            <%= button_to 'Sair', destroy_customer_session_path, class: "btn btn-danger", method: :delete %>
+          </div>
+        <% end %>
+
         <% if !admin_signed_in? %>
           <%= form_with(url: search_buffets_path, method: :get) do |f| %>
               <%= f.label :query, 'Buscar Buffet' %>
