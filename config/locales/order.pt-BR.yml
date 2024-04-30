@@ -1,0 +1,18 @@
+pt-BR:
+  activerecord:
+    models:
+      order: Pedido
+    attributes:
+      order:
+        buffet: Buffet
+        buffet_id: Buffet
+        event_type: Tipo de Evento
+        event_type_id: Tipo de Evento
+        estimated_date: Data Estimada
+        number_of_guests: Quantidade de Convidados
+        details: Detalhes
+        address: Endereço
+        status: Status
+        pending: Aguardando avaliação do buffet
+        accepted: Pedido Aceito
+        cancelled: Pedido Cancelado

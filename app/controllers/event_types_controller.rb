@@ -1,4 +1,6 @@
 class EventTypesController < ApplicationController
+  before_action :load_buffet, only: [:new, :create]
+
   def new
     @event_type = EventType.new
   end
@@ -6,9 +8,9 @@ class EventTypesController < ApplicationController
   def create
     @event_type = EventType.new(event_type_params)
     @event_type.default_address = params[:default_address].to_i
-    @event_type.buffet = current_admin.buffet
+    @event_type.buffet = @buffet
     if @event_type.save
-      redirect_to event_type_path(@event_type), notice: 'Tipo de evento cadastrado com sucesso'
+      redirect_to buffet_event_type_path(@buffet, @event_type), notice: 'Tipo de evento cadastrado com sucesso'
     else
       flash.now[:notice] = 'Não foi possível salvar tipo de evento'
       render :new
@@ -20,6 +22,10 @@ class EventTypesController < ApplicationController
   end
 
   private
+
+  def load_buffet
+    @buffet = Buffet.find(params[:buffet_id])
+  end
 
   def event_type_params
     params.require(:event_type).permit(:name, :description, :min_guests, :max_guests, :default_duration, :menu,

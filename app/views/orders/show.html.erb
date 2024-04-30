@@ -1,0 +1,18 @@
+<h2>Pedido <%= @order.code %></h2>
+
+<dl>
+    <dd><%= Order.human_attribute_name(:buffet) %>: </dd>
+    <dt><%= @order.buffet.brand_name %></dt>
+    <dd><%= Order.human_attribute_name(:event_type) %>: </dd>
+    <dt><%= @order.event_type.name %></dt>
+    <dt><%= Order.human_attribute_name(:status) %>: </dt>
+    <dd><%= Order.human_attribute_name(@order.status)%></dd>
+    <dt><%= Order.human_attribute_name(:estimated_date) %>: </dt>
+    <dd><%= I18n.localize(@order.estimated_date) %></dd>
+    <dt><%= Order.human_attribute_name(:number_of_guests) %>: </dt>
+    <dd><%= @order.number_of_guests %></dd>
+    <dt><%= Order.human_attribute_name(:details) %>: </dt>
+    <dd><%= @order.details %></dd>
+    <dt><%= Order.human_attribute_name(:address) %>: </dt>
+    <dd><%= @order.address %></dd>
+</dl>

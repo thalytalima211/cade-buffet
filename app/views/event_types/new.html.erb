@@ -7,7 +7,7 @@
     </ul>
 <% end %>
 
-<%= form_with model: @event_type do |f| %>
+<%= form_with model: [@buffet, @event_type] do |f| %>
     <div>
         <%= f.label :name %>
         <%= f.text_field :name %>

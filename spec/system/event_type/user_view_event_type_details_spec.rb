@@ -25,7 +25,7 @@ describe 'Usuário vê detalhes de um tipo de evento' do
     click_on 'Festa de Casamento'
 
     # Assert
-    expect(current_path).to eq event_type_path(event_type)
+    expect(current_path).to eq buffet_event_type_path(buffet, event_type)
     expect(page).to have_content 'Festa de Casamento'
     expect(page).to have_content 'Celebre seu dia do SIM com o nosso buffet'
     expect(page).to have_content 'Quantidade mínima de pessoas: 20'

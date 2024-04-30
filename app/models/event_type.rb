@@ -1,4 +1,5 @@
 class EventType < ApplicationRecord
+  has_many :orders
   enum default_address: {buffet_address: 0, indicated_address: 1}
   belongs_to :buffet
   validates :name, :description, :min_guests, :max_guests, :default_duration, :menu, :default_address, :min_value,
