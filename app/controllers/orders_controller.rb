@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :authenticate_customer!, only: [:new, :create]
+  before_action :authenticate_customer!, only: [:new, :create, :show]
   before_action :set_buffet_and_event_type, only: [:new, :create]
 
   def new
@@ -24,6 +24,9 @@ class OrdersController < ApplicationController
 
   def show
     @order = Order.find(params[:id])
+    if @order.customer != current_customer
+      redirect_to root_path, notice: 'Você não tem acesso a esse pedido'
+    end
   end
 
   private
