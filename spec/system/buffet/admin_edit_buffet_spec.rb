@@ -67,7 +67,7 @@ describe 'Administrador edita buffet' do
 
     # Assert
     expect(current_path).to eq buffet_path(admin2.buffet)
-    expect(page).to have_content 'Você não pode editar este buffet'
+    expect(page).to have_content 'Você não pode administrar este buffet'
   end
 
   it 'com dados incompletos' do

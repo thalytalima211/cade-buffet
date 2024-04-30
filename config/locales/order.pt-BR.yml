@@ -4,6 +4,8 @@ pt-BR:
       order: Pedido
     attributes:
       order:
+        customer: Cliente
+        customer_id: Cliente
         buffet: Buffet
         buffet_id: Buffet
         event_type: Tipo de Evento

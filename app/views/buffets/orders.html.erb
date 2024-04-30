@@ -1,0 +1,7 @@
+<h2>Pedidos em meu buffet</h2>
+
+<div id="pending-orders">
+    <% @pending_orders.each do |order| %>
+        <%= link_to order.code, buffet_event_type_order_path(order.buffet, order.event_type, order) %>
+    <% end %>
+</div>

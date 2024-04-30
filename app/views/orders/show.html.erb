@@ -1,6 +1,8 @@
 <h2>Pedido <%= @order.code %></h2>
 
 <dl>
+    <dd><%= Order.human_attribute_name(:customer) %>: </dd>
+    <dt><%= @order.customer.name %> | <%= @order.customer.email %></dt>
     <dd><%= Order.human_attribute_name(:buffet) %>: </dd>
     <dt><%= @order.buffet.brand_name %></dt>
     <dd><%= Order.human_attribute_name(:event_type) %>: </dd>
@@ -16,3 +18,9 @@
     <dt><%= Order.human_attribute_name(:address) %>: </dt>
     <dd><%= @order.address %></dd>
 </dl>
+
+<% if admin_signed_in? %>
+    <% if Order.where(estimated_date: @order.estimated_date).many? %>
+        Atenção: Há outro pedido em seu buffet estimado para esta mesma data
+    <% end %>
+<% end %>

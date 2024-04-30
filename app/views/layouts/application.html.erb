@@ -20,14 +20,15 @@
 
         <% if admin_signed_in? %>
           Admin logado como: <%= current_admin.email %>
+          <%= link_to 'Pedidos', orders_buffet_path(current_admin.buffet.id) if current_admin.buffet.present?%>
           <div class="mt-3">
             <%= button_to 'Sair', destroy_admin_session_path, class: "btn btn-danger", method: :delete %>
           </div>
         <% end %>
 
         <% if customer_signed_in? %>
-          <%= link_to 'Meus Pedidos', customer_path(current_customer) %>
           <%= current_customer.name %> | <%= current_customer.email %>
+          <%= link_to 'Meus Pedidos', customer_path(current_customer) %>
           <div class="mt-3">
             <%= button_to 'Sair', destroy_customer_session_path, class: "btn btn-danger", method: :delete %>
           </div>

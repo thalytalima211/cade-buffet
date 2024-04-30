@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       resources :orders, only: [:new, :create, :show]
     end
     get 'search', on: :collection
+    get 'orders', on: :member
   end
   root to: 'home#index'
 end

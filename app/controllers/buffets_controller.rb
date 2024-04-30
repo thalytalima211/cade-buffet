@@ -2,7 +2,7 @@ class BuffetsController < ApplicationController
   before_action :block_customer, only: [:edit, :update, :new, :create]
   before_action :authenticate_admin!, only: [:edit, :update, :new, :create]
   before_action :set_buffet, only: [:show]
-  before_action :check_buffet, only: [:edit, :update]
+  before_action :check_buffet, only: [:edit, :update, :orders]
 
   def new
     @buffet = Buffet.new
@@ -38,6 +38,10 @@ class BuffetsController < ApplicationController
     @buffets = Buffet.left_outer_joins(:event_types).where(search_query, "%#{@query}%", "%#{@query}%", "%#{@query}%").order(:brand_name)
   end
 
+  def orders
+    @pending_orders = Order.where(buffet: @buffet, status: :pending)
+  end
+
   private
 
   def buffet_params
@@ -53,7 +57,7 @@ class BuffetsController < ApplicationController
   def check_buffet
     set_buffet
     if @buffet.admin != current_admin
-      return redirect_to buffet_path(current_admin.buffet), notice: 'Você não pode editar este buffet'
+      return redirect_to buffet_path(current_admin.buffet), notice: 'Você não pode administrar este buffet'
     end
   end
 
