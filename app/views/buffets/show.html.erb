@@ -13,6 +13,12 @@
     <dd><%= @buffet.description %></dd>
     <dt><%= Buffet.human_attribute_name(:contact) %>: </dt>
     <dd><%= @buffet.contact %></dd>
+    <dt><%= Buffet.human_attribute_name(:payment_methods) %>: </dt>
+    <dd>
+        <% @payment_methods.each do |pm| %>
+            <%= pm.name %>
+        <% end %>
+    </dd>
 </dl>
 
 <% if @event_types.any? %>

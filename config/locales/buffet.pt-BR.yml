@@ -6,6 +6,7 @@ pt-BR:
         other: Buffets
     attributes:
       buffet:
+        payment_methods: Métodos de Pagamento
         corporate_name: Razão Social
         brand_name: Nome Fantasia
         registration_number: CNPJ

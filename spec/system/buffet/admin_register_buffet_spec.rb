@@ -13,6 +13,9 @@ describe 'Administrador cadastra buffet' do
 
   it 'ao criar uma conta' do
     # Arrange
+    PaymentMethod.create!(name: 'Dinheiro')
+    PaymentMethod.create!(name: 'PIX')
+    PaymentMethod.create!(name: 'Cartão de Crédito')
 
     # Act
     visit root_path
@@ -59,6 +62,9 @@ describe 'Administrador cadastra buffet' do
     # Arrange
     cnpj = CNPJ.generate
     admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
+    PaymentMethod.create!(name: 'Dinheiro')
+    PaymentMethod.create!(name: 'PIX')
+    PaymentMethod.create!(name: 'Cartão de Crédito')
 
     # Act
     login_as(admin, scope: :admin)
@@ -83,6 +89,8 @@ describe 'Administrador cadastra buffet' do
     expect(page).to have_content 'Sabores Divinos Buffet'
     expect(page).to have_content 'Razão Social: Sabores Divinos Eventos Ltda.'
     expect(page).to have_content "CNPJ: #{cnpj}"
+    expect(page).to have_content "Métodos de Pagamento: Dinheiro PIX"
+    expect(page).not_to have_content "Cartão de Crédito"
     expect(page).to have_content 'Av. das Delícias, 1234, Centro, São Paulo-SP, CEP: 01234-567'
     expect(page).to have_content 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis'
     expect(page).to have_content '(55)5555-5555 - contato@saboresdivinos.com'

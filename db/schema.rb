@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_29_230415) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_01_183509) do
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -25,6 +25,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_29_230415) do
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
+  create_table "buffet_payment_methods", force: :cascade do |t|
+    t.integer "buffet_id", null: false
+    t.integer "payment_method_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["buffet_id"], name: "index_buffet_payment_methods_on_buffet_id"
+    t.index ["payment_method_id"], name: "index_buffet_payment_methods_on_payment_method_id"
+  end
+
   create_table "buffets", force: :cascade do |t|
     t.string "corporate_name"
     t.string "brand_name"
@@ -37,9 +46,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_29_230415) do
     t.string "city"
     t.string "zip_code"
     t.string "description"
-    t.boolean "accepts_cash"
-    t.boolean "accepts_pix"
-    t.boolean "accepts_credit_card"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "admin_id", null: false
@@ -100,6 +106,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_29_230415) do
     t.index ["event_type_id"], name: "index_orders_on_event_type_id"
   end
 
+  create_table "payment_methods", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -112,6 +124,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_29_230415) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "buffet_payment_methods", "buffets"
+  add_foreign_key "buffet_payment_methods", "payment_methods"
   add_foreign_key "buffets", "admins"
   add_foreign_key "event_types", "buffets"
   add_foreign_key "orders", "buffets"
