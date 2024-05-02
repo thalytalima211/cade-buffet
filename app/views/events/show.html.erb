@@ -1,0 +1,22 @@
+<h2>Evento <%= @event_type.name %></h2>
+
+<dl>
+    <dt><%= Event.human_attribute_name(:status) %>: </dt>
+    <dd><%= Event.human_attribute_name(@event.status)%></dd>
+    <dt><%= Event.human_attribute_name(:order) %>: </dt>
+    <dd><%= @order.code %></dd>
+    <dt><%= Event.human_attribute_name(:expiration_date) %>: </dt>
+    <dd><%= I18n.localize(@event.expiration_date) %></dd>
+    <dt><%= Event.human_attribute_name(:default_value) %>: </dt>
+    <dd><%= number_to_currency(@event.default_value, locale: :'pt-BR') %></dd>
+    <dt><%= Event.human_attribute_name(:discount) %>: </dt>
+    <dd><%= number_to_currency(@event.discount, locale: :'pt-BR') %></dd>
+    <dt><%= Event.human_attribute_name(:surcharge) %>: </dt>
+    <dd><%= number_to_currency(@event.surcharge, locale: :'pt-BR') %></dd>
+    <dt><%= Event.human_attribute_name(:final_value) %>: </dt>
+    <dd><%= number_to_currency(@event.final_value, locale: :'pt-BR') %></dd>
+    <dt><%= Event.human_attribute_name(:description) %>: </dt>
+    <dd><%= @event.description %></dd>
+    <dt><%= Event.human_attribute_name(:payment_method) %>: </dt>
+    <dd><%= @event.payment_method.name %></dd>
+</dl>

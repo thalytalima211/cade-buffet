@@ -1,0 +1,18 @@
+pt-BR:
+  activerecord:
+    models:
+      event: Evento
+    attributes:
+      event:
+        payment_method: Método de Pagamento
+        payment_method_id: Método de Pagamento
+        order: Pedido
+        order_id: Pedido
+        expiration_date: Data de Vencimento
+        surcharge: Taxa Extra
+        discount: Desconto
+        description: Descrição do Valor
+        default_value: Preço Padrão
+        final_value: Preço Final
+        pending: Aguardando Confirmação de Cliente
+        confirmed: Confirmado

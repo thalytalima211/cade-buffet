@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
   before_action :authenticate_customer!, only: [:new, :create]
-  before_action :set_buffet_and_event_type, only: [:new, :create, :show]
+  before_action :set_event_type, only: [:new, :create, :show, :cancelled, :accepted]
+  before_action :set_order, only: [:show, :cancelled, :accepted]
 
   def new
     @order = Order.new
@@ -8,14 +9,14 @@ class OrdersController < ApplicationController
 
   def create
     @order = Order.new(order_params)
-    @order.buffet = @buffet
     @order.event_type = @event_type
+    @order.buffet = @event_type.buffet
     @order.customer = current_customer
     if @event_type.buffet_address?
-      @order.address = @buffet.full_address
+      @order.address = @event_type.buffet.full_address
     end
     if @order.save
-      redirect_to buffet_event_type_order_path(@buffet, @event_type, @order), notice: 'Pedido enviado com sucesso'
+      redirect_to event_type_order_path(@event_type, @order), notice: 'Pedido enviado com sucesso'
     else
       flash.now[:notice] = 'Não foi possível efetuar o pedido'
       render :new
@@ -23,16 +24,27 @@ class OrdersController < ApplicationController
   end
 
   def show
-    @order = Order.find(params[:id])
-    if (!admin_signed_in? && !customer_signed_in?) || (customer_signed_in? && @order.customer != current_customer) || (admin_signed_in? && @buffet.admin != current_admin)
+    if (!admin_signed_in? && !customer_signed_in?) || (customer_signed_in? && @order.customer != current_customer) || (admin_signed_in? && @order.buffet.admin != current_admin)
       redirect_to root_path, notice: 'Você não tem acesso a esse pedido'
     end
   end
 
+  def cancelled
+    @order.cancelled!
+    redirect_to event_type_order_path(@event_type, @order)
+  end
+
+  def accepted
+    redirect_to new_event_type_order_event_path(@event_type, @order)
+  end
+
   private
 
-  def set_buffet_and_event_type
-    @buffet = Buffet.find(params[:buffet_id])
+  def set_order
+    @order = Order.find(params[:id])
+  end
+
+  def set_event_type
     @event_type = EventType.find(params[:event_type_id])
   end
 

@@ -38,5 +38,5 @@
     <dd><%= number_to_currency(@event_type.weekend_extra_hour_value, locale: :'pt-BR')%></dd>
 </dl>
 
-<%= link_to 'Fazer pedido',  new_buffet_event_type_order_path(@event_type.buffet ,@event_type) %>
+<%= link_to 'Fazer pedido',  new_event_type_order_path(@event_type) %>
 <%= link_to 'Voltar para buffet', buffet_path(@event_type.buffet)%>

@@ -23,4 +23,6 @@
     <% if Order.where(estimated_date: @order.estimated_date).many? %>
         Atenção: Há outro pedido em seu buffet estimado para esta mesma data
     <% end %>
+    <%= button_to 'Aceitar pedido', accepted_event_type_order_path(@event_type, @order)%>
+    <%= button_to 'Cancelar pedido', cancelled_event_type_order_path(@event_type, @order)%>
 <% end %>

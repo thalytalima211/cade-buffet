@@ -19,7 +19,7 @@ describe 'Usuário cria um novo pedido' do
                                   buffet: buffet)
 
     # Act
-    post buffet_event_type_orders_path(buffet, event_type)
+    post event_type_orders_path(event_type)
 
     # Assert
     expect(response).to redirect_to new_customer_session_path

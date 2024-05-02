@@ -16,5 +16,5 @@ pt-BR:
         address: Endereço
         status: Status
         pending: Aguardando avaliação do buffet
-        accepted: Pedido Aceito
         cancelled: Pedido Cancelado
+        accepted: Pedido Confirmado

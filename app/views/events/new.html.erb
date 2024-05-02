@@ -1,0 +1,31 @@
+<h2>Confirmando Pedido</h2>
+
+<dl>
+    <dt><%= Event.human_attribute_name(:default_value)%>: </dt>
+    <dd><%= number_to_currency(@default_value, locale: :'pt-BR')%></dd>
+</dl>
+
+<%= form_with model: [@event_type, @order, @event] do |f| %>
+    <div>
+        <%= f.label :expiration_date %>
+        <%= f.date_field :expiration_date %>
+    </div>
+    <div>
+        <%= f.label :surcharge %>
+        <%= f.number_field :surcharge %>
+    </div>
+    <div>
+        <%= f.label :discount %>
+        <%= f.number_field :discount %>
+    </div>
+    <div>
+        <%= f.label :description %>
+        <%= f.text_field :description %>
+    </div>
+    <div>
+        <%= f.collection_radio_buttons :payment_method_id, @payment_methods, :id, :name %>
+    </div>
+    <div>
+        <%= f.submit 'Aceitar Pedido' %>
+    </div>
+<% end %>

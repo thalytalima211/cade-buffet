@@ -24,11 +24,11 @@
 <% if @event_types.any? %>
     <h2>Tipos de Eventos oferecidos</h2>
     <% @event_types.each do |et| %>
-        <%= link_to et.name, buffet_event_type_path(@buffet, et) %>
+        <%= link_to et.name, event_type_path(et) %>
     <% end %>
 <% else %>
     <p>Não há nenhum tipo de evento cadastrado</p>
 <% end %>
 
-<%= link_to 'Adicionar novo tipo de evento',  new_buffet_event_type_path(@buffet.id) %>
+<%= link_to 'Adicionar novo tipo de evento',  new_event_type_path %>
 <%= link_to 'Editar', edit_buffet_path(@buffet)%>

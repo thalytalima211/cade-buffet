@@ -119,7 +119,7 @@ describe 'Administrador vê pedidos' do
     click_on order.code
 
     # Assert
-    expect(current_path).to eq  buffet_event_type_order_path(buffet, event_type, order)
+    expect(current_path).to eq event_type_order_path(event_type, order)
     expect(page).to have_content "Pedido #{order.code}"
     expect(page).to have_content "Cliente: Maria | maria@email.com"
     expect(page).to have_content 'Buffet: Sabores Divinos Buffet'
@@ -192,7 +192,7 @@ describe 'Administrador vê pedidos' do
 
     # Act
     login_as(second_admin, scope: :admin)
-    visit buffet_event_type_order_path(first_buffet, event_type, order)
+    visit event_type_order_path(event_type, order)
 
     # Assert
     expect(page).to have_content 'Você não tem acesso a esse pedido'
