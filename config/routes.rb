@@ -10,7 +10,9 @@ Rails.application.routes.draw do
     resources :orders, only: [:new, :create, :show] do
       post 'accepted', on: :member
       post 'cancelled', on: :member
-      resources :events, only: [:new, :create, :show]
+      resources :events, only: [:new, :create, :show] do
+        post 'confirmed', on: :member
+      end
     end
   end
   root to: 'home#index'

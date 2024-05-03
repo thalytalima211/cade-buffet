@@ -6,6 +6,7 @@ class CustomersController < ApplicationController
     if current_customer != customer
       redirect_to customer_path(current_customer), notice: 'Você não tem acesso aos pedidos deste usuário'
     end
-    @orders = Order.where(customer: customer)
+    @pending_orders = Order.where(customer: customer, status: :pending)
+    @pending_confirmation = Event.where(customer: customer, status: :pending)
   end
 end

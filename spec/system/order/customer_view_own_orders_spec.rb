@@ -54,9 +54,12 @@ describe 'Cliente vê seus próprios pedidos' do
     click_on 'Meus Pedidos'
 
     # Assert
-    expect(page).to have_content first_order.code
-    expect(page).to have_content second_order.code
-    expect(page).not_to have_content third_order.code
+    within('#pending-orders') do
+      expect(page).to have_content first_order.code
+      expect(page).to have_content second_order.code
+      expect(page).not_to have_content third_order.code
+    end
+
   end
 
   it 'e não vê listagem de pedidos de outros usuarios' do

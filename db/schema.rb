@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_02_212909) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_03_191811) do
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -101,6 +101,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_02_212909) do
     t.integer "order_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "customer_id", null: false
+    t.integer "buffet_id", null: false
+    t.index ["buffet_id"], name: "index_events_on_buffet_id"
+    t.index ["customer_id"], name: "index_events_on_customer_id"
     t.index ["order_id"], name: "index_events_on_order_id"
     t.index ["payment_method_id"], name: "index_events_on_payment_method_id"
   end
@@ -144,6 +148,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_02_212909) do
   add_foreign_key "buffet_payment_methods", "payment_methods"
   add_foreign_key "buffets", "admins"
   add_foreign_key "event_types", "buffets"
+  add_foreign_key "events", "buffets"
+  add_foreign_key "events", "customers"
   add_foreign_key "events", "orders"
   add_foreign_key "events", "payment_methods"
   add_foreign_key "orders", "buffets"

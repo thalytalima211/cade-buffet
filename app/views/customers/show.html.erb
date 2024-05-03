@@ -1,5 +1,15 @@
 <h2>Meus Pedidos</h2>
 
-<% @orders.each do |order| %>
-    <%= link_to order.code, event_type_order_path(order.event_type, order)%>
-<% end %>
+<div id="pending-confirmation">
+    <% @pending_confirmation.each do |event| %>
+        <%= link_to event.order.code, event_type_order_event_path(event.order.event_type, event.order, event)%>
+        <%= Event.human_attribute_name(:expiration_date) %>: 
+        <%= I18n.localize(event.expiration_date) %>
+    <% end %>
+</div>
+
+<div id="pending-orders">
+    <% @pending_orders.each do |order| %>
+        <%= link_to order.code, event_type_order_path(order.event_type, order)%>
+    <% end %>    
+</div>

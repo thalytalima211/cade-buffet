@@ -20,3 +20,11 @@
     <dt><%= Event.human_attribute_name(:payment_method) %>: </dt>
     <dd><%= @event.payment_method.name %></dd>
 </dl>
+
+<% if customer_signed_in? %>
+    <% if @event.expiration_date >= Date.today && @event.pending? %>
+        <%= button_to 'Confirmar Evento', confirmed_event_type_order_event_path(@event_type, @order, @event)%>
+    <% else %>
+        <p>Data de vencimento expirada!</p>
+    <% end %>
+<% end %>

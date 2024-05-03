@@ -15,4 +15,4 @@ pt-BR:
         default_value: Preço Padrão
         final_value: Preço Final
         pending: Aguardando Confirmação de Cliente
-        confirmed: Confirmado
+        confirmed: Evento Confirmado
