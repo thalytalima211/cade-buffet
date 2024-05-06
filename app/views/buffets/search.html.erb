@@ -2,12 +2,11 @@
 
 <% if @buffets.any? %>
     <p><%= @buffets.count %> <%= Buffet.model_name.human(count: @buffets.count).downcase %> <%= I18n.translate(:found, count: @buffets.count).downcase %> </p>
-    <div class="buffet_search">
+    <div class="buffet_search row row-cols-4">
         <% @buffets.each do |buffet| %>
             <%= render buffet %>
         <% end %>    
-    </div>
-    
+    </div> 
 <% else %>
     <p>Não foi possível encontrar um buffet com o Nome/Cidade/Evento informado</p>
 <% end %>

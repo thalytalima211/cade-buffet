@@ -2,7 +2,7 @@
 
 <dl>
     <dt><%= Event.human_attribute_name(:default_value)%>: </dt>
-    <dd><%= number_to_currency(@default_value, locale: :'pt-BR')%></dd>
+    <dd><%= number_to_currency(@order.default_value, locale: :'pt-BR')%></dd>
 </dl>
 
 <%= form_with model: [@event_type, @order, @event] do |f| %>

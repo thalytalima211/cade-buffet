@@ -8,7 +8,7 @@
     <dt><%= Event.human_attribute_name(:expiration_date) %>: </dt>
     <dd><%= I18n.localize(@event.expiration_date) %></dd>
     <dt><%= Event.human_attribute_name(:default_value) %>: </dt>
-    <dd><%= number_to_currency(@event.default_value, locale: :'pt-BR') %></dd>
+    <dd><%= number_to_currency(@order.default_value, locale: :'pt-BR') %></dd>
     <dt><%= Event.human_attribute_name(:discount) %>: </dt>
     <dd><%= number_to_currency(@event.discount, locale: :'pt-BR') %></dd>
     <dt><%= Event.human_attribute_name(:surcharge) %>: </dt>

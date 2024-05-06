@@ -3,13 +3,14 @@ require 'rails_helper'
 describe 'Cliente faz pedido' do
   it 'a partir da tela de detalhes de um tipo de evento' do
     # Arrange
+    cash = PaymentMethod.create!(name: 'Dinheiro')
     admin = Admin.create!(email: 'saboresdivinos@email.com', password: 'senha123')
     buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
                             registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
                             email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
                             neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
                             description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
-                            admin: admin)
+                            admin: admin, payment_methods: [cash])
     event_type = EventType.create!(name: 'Festa de Casamento', description: 'Celebre seu dia do SIM com o nosso buffet',
                                   min_guests: 20, max_guests: 100, default_duration: 90, menu: 'Bolo e Doces',
                                   offer_decoration: true, offer_drinks: false, offer_parking_service: true,
@@ -29,13 +30,14 @@ describe 'Cliente faz pedido' do
 
   it 'e deve estar autenticado' do
     # Arrange
+    cash = PaymentMethod.create!(name: 'Dinheiro')
     admin = Admin.create!(email: 'saboresdivinos@email.com', password: 'senha123')
     buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
                             registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
                             email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
                             neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
                             description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
-                            admin: admin)
+                            admin: admin, payment_methods: [cash])
     event_type = EventType.create!(name: 'Festa de Casamento', description: 'Celebre seu dia do SIM com o nosso buffet',
                                   min_guests: 20, max_guests: 100, default_duration: 90, menu: 'Bolo e Doces',
                                   offer_decoration: true, offer_drinks: false, offer_parking_service: true,
@@ -56,13 +58,14 @@ describe 'Cliente faz pedido' do
 
   it 'e campo de endereço não aparece se o tipo de evento for realizado no endereço do buffet' do
     # Arrange
+    cash = PaymentMethod.create!(name: 'Dinheiro')
     admin = Admin.create!(email: 'saboresdivinos@email.com', password: 'senha123')
     buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
                             registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
                             email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
                             neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
                             description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
-                            admin: admin)
+                            admin: admin, payment_methods: [cash])
     event_type = EventType.create!(name: 'Festa de Casamento', description: 'Celebre seu dia do SIM com o nosso buffet',
                                   min_guests: 20, max_guests: 100, default_duration: 90, menu: 'Bolo e Doces',
                                   offer_decoration: true, offer_drinks: false, offer_parking_service: true,
@@ -85,13 +88,14 @@ describe 'Cliente faz pedido' do
 
   it 'e campo de endereço aparece se o tipo de evento for realizado no endereço indicado pelo cliente' do
     # Arrange
+    cash = PaymentMethod.create!(name: 'Dinheiro')
     admin = Admin.create!(email: 'saboresdivinos@email.com', password: 'senha123')
     buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
                             registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
                             email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
                             neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
                             description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
-                            admin: admin)
+                            admin: admin, payment_methods: [cash])
     event_type = EventType.create!(name: 'Festa de Casamento', description: 'Celebre seu dia do SIM com o nosso buffet',
                                   min_guests: 20, max_guests: 100, default_duration: 90, menu: 'Bolo e Doces',
                                   offer_decoration: true, offer_drinks: false, offer_parking_service: true,
@@ -114,13 +118,14 @@ describe 'Cliente faz pedido' do
 
   it 'com sucesso' do
     # Arrange
+    cash = PaymentMethod.create!(name: 'Dinheiro')
     admin = Admin.create!(email: 'saboresdivinos@email.com', password: 'senha123')
     buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
                             registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
                             email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
                             neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
                             description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
-                            admin: admin)
+                            admin: admin, payment_methods: [cash])
     event_type = EventType.create!(name: 'Festa de Casamento', description: 'Celebre seu dia do SIM com o nosso buffet',
                                   min_guests: 20, max_guests: 100, default_duration: 90, menu: 'Bolo e Doces',
                                   offer_decoration: true, offer_drinks: false, offer_parking_service: true,
@@ -157,13 +162,14 @@ describe 'Cliente faz pedido' do
 
   it 'com dados incompletos' do
     # Arrange
+    cash = PaymentMethod.create!(name: 'Dinheiro')
     admin = Admin.create!(email: 'saboresdivinos@email.com', password: 'senha123')
     buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
                             registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
                             email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
                             neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
                             description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
-                            admin: admin)
+                            admin: admin, payment_methods: [cash])
     event_type = EventType.create!(name: 'Festa de Casamento', description: 'Celebre seu dia do SIM com o nosso buffet',
                                   min_guests: 20, max_guests: 100, default_duration: 90, menu: 'Bolo e Doces',
                                   offer_decoration: true, offer_drinks: false, offer_parking_service: true,

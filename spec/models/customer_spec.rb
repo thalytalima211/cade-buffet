@@ -37,5 +37,12 @@ RSpec.describe Customer, type: :model do
       expect(first_customer.errors.include? :cpf).to be true
       expect(second_customer.errors.include? :cpf).to be false
     end
+
+    it 'CPF deve ser formatado com traços e pontos' do
+      customer = Customer.new(cpf: '68292799257')
+      customer.valid?
+      expect(customer.errors.include? :cpf).to be false
+      expect(customer.cpf).to eq '682.927.992-57'
+    end
   end
 end

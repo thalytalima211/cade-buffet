@@ -32,13 +32,14 @@ describe 'Usuário entra na página inicial' do
 
   it 'e vê buffets cadastrados' do
     # Arrange
+    cash = PaymentMethod.create!(name: 'Dinheiro')
     admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
     buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
                             registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
                             email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
                             neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
                             description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
-                            admin: admin)
+                            admin: admin, payment_methods: [cash])
     # Act
     visit root_path
 
@@ -50,14 +51,15 @@ describe 'Usuário entra na página inicial' do
 
   it 'e vê detalhes de um buffet' do
     # Arrange
-    cnpj = CNPJ.generate
+    cnpj = CNPJ.new(CNPJ.generate).formatted
+    cash = PaymentMethod.create!(name: 'Dinheiro')
     admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
     buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
                             registration_number: cnpj, number_phone: '(55)5555-5555',
                             email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
                             neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
                             description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
-                            admin: admin)
+                            admin: admin, payment_methods: [cash])
 
     # Act
     visit root_path

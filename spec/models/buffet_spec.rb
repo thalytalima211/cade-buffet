@@ -23,13 +23,14 @@ RSpec.describe Buffet, type: :model do
     it 'CNPJ deve ser único' do
       # Arrange
       registration_number = CNPJ.generate
+      cash = PaymentMethod.create!(name: 'Dinheiro')
       admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
       Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
                     registration_number: registration_number, number_phone: '(55)5555-5555',
                     email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
                     neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
                     description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
-                    admin: admin)
+                    admin: admin, payment_methods: [cash])
 
       buffet = Buffet.new(registration_number: registration_number)
 
@@ -52,6 +53,13 @@ RSpec.describe Buffet, type: :model do
       # Assert
       expect(first_buffet.errors.include? :registration_number).to be false
       expect(second_buffet.errors.include? :registration_number).to be true
+    end
+
+    it 'CNPJ deve ser formatado com traços e pontos' do
+      buffet = Buffet.new(registration_number: '25518757000100')
+      buffet.valid?
+      expect(buffet.errors.include? :registration_number).to be false
+      expect(buffet.registration_number).to eq '25.518.757/0001-00'
     end
 
     it 'deve ter Telefone para contato' do
@@ -100,6 +108,12 @@ RSpec.describe Buffet, type: :model do
       buffet = Buffet.new(description: '')
       buffet.valid?
       expect(buffet.errors.include? :description).to eq true
+    end
+
+    it 'deve ter Métodos de Pagamento' do
+      buffet = Buffet.new(payment_methods: [])
+      buffet.valid?
+      expect(buffet.errors.include? :payment_methods).to eq true
     end
   end
 

@@ -7,20 +7,25 @@ class Order < ApplicationRecord
   enum status: {pending: 0, accepted: 5, cancelled: 10}
 
   validates :estimated_date, :number_of_guests, :address, presence: true
-  validate :estimated_date_is_future, :min_number_of_guests, :max_number_of_guests
+  validates :estimated_date, comparison: {greater_than: Date.today}
+  validate :min_number_of_guests, :max_number_of_guests
 
+  before_save :calculate_default_value
   before_validation :generate_code, on: :create
 
   private
 
-  def generate_code
-    self.code = SecureRandom.alphanumeric(8).upcase
+  def calculate_default_value
+    additional_guests = self.number_of_guests - self.event_type.min_guests
+    if self.estimated_date.sunday? || self.estimated_date.saturday?
+      self.default_value = self.event_type.weekend_min_value + additional_guests * self.event_type.weekend_additional_per_guest
+    else
+      self.default_value = self.event_type.min_value + additional_guests * self.event_type.additional_per_guest
+    end
   end
 
-  def estimated_date_is_future
-    if self.estimated_date.present? && self.estimated_date <= Date.today
-      self.errors.add :estimated_date, 'deve ser futura'
-    end
+  def generate_code
+    self.code = SecureRandom.alphanumeric(8).upcase
   end
 
   def min_number_of_guests

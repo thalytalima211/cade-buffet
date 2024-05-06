@@ -1,5 +1,5 @@
-<div>
-    <%= link_to buffet.brand_name, buffet_path(buffet) %>
+<div class="card m-2 p-2 text-bg-light">
+    <b><%= link_to buffet.brand_name, buffet_path(buffet), class: 'link-underline link-underline-opacity-0' %></b>
     <%= buffet.city %>
     <%= buffet.state %>
 </div>

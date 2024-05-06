@@ -60,7 +60,7 @@ describe 'Administrador cadastra buffet' do
 
   it 'com sucesso' do
     # Arrange
-    cnpj = CNPJ.generate
+    cnpj = CNPJ.new(CNPJ.generate).formatted
     admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
     PaymentMethod.create!(name: 'Dinheiro')
     PaymentMethod.create!(name: 'PIX')

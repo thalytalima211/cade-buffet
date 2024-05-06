@@ -3,13 +3,14 @@ require 'rails_helper'
 describe 'Administrador avalia pedido' do
   it 'a partir da tela de detalhes de um pedido' do
     # Arrange
+    cash = PaymentMethod.create!(name: 'Dinheiro')
     admin = Admin.create!(email: 'saboresdivinos@email.com', password: 'senha123')
     buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
                             registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
                             email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
                             neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
                             description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
-                            admin: admin)
+                            admin: admin, payment_methods: [cash])
     event_type = EventType.create!(name: 'Festa de Casamento', description: 'Celebre seu dia do SIM com o nosso buffet',
                                   min_guests: 20, max_guests: 100, default_duration: 90, menu: 'Bolo e Doces',
                                   offer_decoration: true, offer_drinks: false, offer_parking_service: true,
@@ -34,13 +35,14 @@ describe 'Administrador avalia pedido' do
 
   it 'e cancela pedido' do
     # Arrange
+    cash = PaymentMethod.create!(name: 'Dinheiro')
     admin = Admin.create!(email: 'saboresdivinos@email.com', password: 'senha123')
     buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
                             registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
                             email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
                             neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
                             description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
-                            admin: admin)
+                            admin: admin, payment_methods: [cash])
     event_type = EventType.create!(name: 'Festa de Casamento', description: 'Celebre seu dia do SIM com o nosso buffet',
                                   min_guests: 20, max_guests: 100, default_duration: 90, menu: 'Bolo e Doces',
                                   offer_decoration: true, offer_drinks: false, offer_parking_service: true,

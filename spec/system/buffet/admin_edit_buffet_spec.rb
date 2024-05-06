@@ -3,13 +3,14 @@ require 'rails_helper'
 describe 'Administrador edita buffet' do
   it 'e deve estar autenticado' do
     # Arrange
+    cash = PaymentMethod.create!(name: 'Dinheiro')
     admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
     buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
                             registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
                             email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
                             neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
                             description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
-                            admin: admin)
+                            admin: admin, payment_methods: [cash])
 
     # Act
     visit edit_buffet_path(buffet.id)
@@ -20,14 +21,15 @@ describe 'Administrador edita buffet' do
 
   it 'com sucesso' do
     # Arrange
-    cnpj = CNPJ.generate
+    cnpj = CNPJ.new(CNPJ.generate).formatted
+    cash = PaymentMethod.create!(name: 'Dinheiro')
     admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
     buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
                             registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
                             email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
                             neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
                             description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
-                            admin: admin)
+                            admin: admin, payment_methods: [cash])
 
     # Act
     login_as(admin, scope: :admin)
@@ -36,6 +38,7 @@ describe 'Administrador edita buffet' do
     fill_in 'Cidade', with: 'Sorocaba'
     fill_in 'Bairro', with: 'Campolim'
     fill_in 'CNPJ', with: cnpj
+    check 'Dinheiro'
     click_on 'Enviar'
 
     # Assert
@@ -46,6 +49,7 @@ describe 'Administrador edita buffet' do
 
   it 'caso seja o responsável' do
     # Arrange
+    cash = PaymentMethod.create!(name: 'Dinheiro')
     admin1 = Admin.create!(email: 'admin1@email.com', password: 'senha123')
     admin2 = Admin.create!(email: 'admin2@email.com', password: 'senha123')
     buffet1 = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
@@ -53,13 +57,13 @@ describe 'Administrador edita buffet' do
                             email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
                             neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
                             description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
-                            admin: admin1)
+                            admin: admin1, payment_methods: [cash])
     buffet2 = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
                             registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
                             email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
                             neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
                             description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
-                            admin: admin2)
+                            admin: admin2, payment_methods: [cash])
 
     # Act
     login_as(admin2, scope: :admin)
@@ -72,13 +76,14 @@ describe 'Administrador edita buffet' do
 
   it 'com dados incompletos' do
     # Arrange
+    cash = PaymentMethod.create!(name: 'Dinheiro')
     admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
     buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
                             registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
                             email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
                             neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
                             description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
-                            admin: admin)
+                            admin: admin, payment_methods: [cash])
 
     # Act
     login_as(admin, scope: :admin)

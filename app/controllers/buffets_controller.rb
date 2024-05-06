@@ -10,9 +10,6 @@ class BuffetsController < ApplicationController
 
   def create
     if current_admin.create_buffet!(buffet_params)
-      params[:buffet][:payment_methods].each do |id|
-        current_admin.buffet.payment_methods << PaymentMethod.find(id) if id != ''
-      end
       redirect_to buffet_path(current_admin.buffet), notice: 'Buffet cadastrado com sucesso'
     else
       flash.now[:notice] = 'Buffet não cadastrado'
@@ -49,8 +46,13 @@ class BuffetsController < ApplicationController
   private
 
   def buffet_params
+    payment_methods = []
+    params[:buffet][:payment_methods].each do |id|
+      payment_methods << PaymentMethod.find(id) if id != ''
+    end
     params.require(:buffet).permit(:corporate_name, :brand_name, :registration_number, :number_phone, :email,
-                                  :full_address, :neighborhood, :state, :city, :zip_code, :description)
+                                  :full_address, :neighborhood, :state, :city, :zip_code,
+                                  :description).merge({payment_methods: payment_methods})
   end
 
   def set_buffet

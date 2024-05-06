@@ -51,6 +51,10 @@
     </div>
 
     <div>
+        <%= collection_check_boxes(:buffet, :payment_methods, PaymentMethod.all, :id, :name) %>
+    </div>
+    
+    <div>
         <%= f.submit 'Enviar', class: 'my-4 btn btn-primary' %>
     </div>
 <% end %>

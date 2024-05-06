@@ -16,6 +16,7 @@ describe 'Cliente acessa buffet' do
 
   it 'e tenta editar um buffet' do
     # Arrange
+    cash = PaymentMethod.create!(name: 'Dinheiro')
     customer = Customer.create!(name: 'Maria', cpf: CPF.generate, email: 'maria@email.com', password: 'senha123')
     admin = Admin.create!(email: 'admin1@email.com', password: 'senha123')
     buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
@@ -23,7 +24,7 @@ describe 'Cliente acessa buffet' do
                             email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
                             neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
                             description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
-                            admin: admin)
+                            admin: admin, payment_methods: [cash])
 
     # Act
     login_as(customer, scope: :customer)
