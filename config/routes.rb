@@ -15,5 +15,14 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  namespace :api do
+    namespace :v1 do
+      resources :buffets, only: [:index, :show] do
+        resources :event_types, only: [:index]
+      end
+      resources :orders, only: [:create]
+    end
+  end
   root to: 'home#index'
 end

@@ -20,7 +20,7 @@
 </dl>
 
 <% if admin_signed_in? %>
-    <% if Order.where(estimated_date: @order.estimated_date).many? %>
+    <% if Order.where(estimated_date: @order.estimated_date, event_type: @event_type).many? %>
         Atenção: Há outro pedido em seu buffet estimado para esta mesma data
     <% end %>
     <%= button_to 'Aceitar pedido', accepted_event_type_order_path(@event_type, @order)%>

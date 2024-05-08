@@ -82,7 +82,7 @@ RSpec.describe Event, type: :model do
                                     buffet: buffet)
       customer = Customer.create!(name: 'Maria', cpf: CPF.generate, email: 'maria@email.com', password: 'senha123')
       order = Order.create!(event_type: event_type, buffet: buffet, customer: customer, number_of_guests: 80,
-                        estimated_date: 1.month.from_now, address: 'Avenida Principal, 100', status: :accepted)
+                        estimated_date: 2.weeks.from_now, address: 'Avenida Principal, 100', status: :accepted)
       event = Event.create!(expiration_date: 1.week.from_now, surcharge: 200.00, discount: 0.00, payment_method: cash,
                             description: 'Adicional pelo custo das rosas brancas', order: order, customer: customer,
                             buffet: buffet)
