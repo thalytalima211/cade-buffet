@@ -1,7 +1,7 @@
 class Api::V1::BuffetsController < Api::V1::ApiController
   def index
     if params[:search]
-      buffets = Buffet.where('brand_name LIKE ?', "%#{params[:search]}%").order(:brand_name)
+      buffets = Buffet.searchBuffet(params[:search])
     else
       buffets = Buffet.all.order(:brand_name)
     end

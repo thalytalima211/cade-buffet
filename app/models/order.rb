@@ -25,7 +25,7 @@ class Order < ApplicationRecord
   def calculate_default_value
     if self.event_type.present? && self.number_of_guests.present? && self.estimated_date.present?
       additional_guests = self.number_of_guests - self.event_type.min_guests
-      if self.estimated_date.sunday? || self.estimated_date.saturday?
+      if self.estimated_date.on_weekend?
         self.default_value = self.event_type.weekend_min_value + additional_guests * self.event_type.weekend_additional_per_guest
       else
         self.default_value = self.event_type.min_value + additional_guests * self.event_type.additional_per_guest

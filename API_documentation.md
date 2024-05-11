@@ -25,7 +25,7 @@ O endpoint ```GET /api/v1/buffets``` lista todos os buffets cadastrados por orde
     }
 ]
 ```
-Podemos também realizar a pesquisa de um buffet pelo nome usando o campo ```search```.
+Podemos também realizar a pesquisa de um buffet pelo nome, cidade ou tipo de evento oferecido usando o campo ```search```.
 #### Exemplo de Requisição
 ```url
 http://localhost:3000/api/v1/buffets?search=buffet
@@ -131,12 +131,7 @@ GET http://localhost:3000/api/v1/buffets/7
 Informando o ID do tipo de evento desejado, a data estimada para realização do evento e a quantidade de convidados, recebe o valor prévio para contratação desse evento se a data desejada for futura, se não houver nenhum evento dentro do buffet já confirmado para o data desejada e a quantidade de pessoas estiver dentro dos limites do tipo de evento. Caso contrário, recebe uma mensagem de erro.
 #### Exemplo de Requisição 1
 ```url
-POST http://localhost:3000/api/v1/orders
-{
-    event_type_id: 4
-    estimated_date: '2024-05-09'
-    number_of_guests: 50
-}
+GET http://localhost:3000/api/v1/buffets/4/event_types/4/disponibility?estimated_date=2024-05-10&number_of_guests=50
 ```
 #### Exemplo de Resposta
 ```json
@@ -147,12 +142,7 @@ POST http://localhost:3000/api/v1/orders
 
 #### Exemplo de Requisição 2
 ```url
-POST http://localhost:3000/api/v1/orders
-{
-    event_type_id: 4
-    estimated_date: '2024-05-07'
-    number_of_guests: 120
-}
+GET http://localhost:3000/api/v1/buffets/4/event_types/4/disponibility?estimated_date=2024-05-07&number_of_guests=120
 ```
 #### Exemplo de Resposta
 ```json
@@ -166,12 +156,7 @@ POST http://localhost:3000/api/v1/orders
 
 #### Exemplo de Requisição 3
 ```url
-POST http://localhost:3000/api/v1/orders
-{
-    event_type_id: 4
-    estimated_date: ''
-    number_of_guests: ''
-}
+GET http://localhost:3000/api/v1/buffets/4/event_types/4/disponibility
 ```
 #### Exemplo de Resposta
 ```json

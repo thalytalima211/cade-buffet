@@ -87,7 +87,7 @@ describe 'Administrador avalia pedido' do
                                   buffet: buffet)
     customer =  Customer.create!(name: 'Maria', cpf: CPF.generate, email: 'maria@email.com', password: 'senha123')
     order = Order.create!(event_type: event_type, buffet: buffet, customer: customer, number_of_guests: 80,
-                          estimated_date: 1.week.from_now, address: 'Av. das Delícias, 1234')
+                          estimated_date: 1.week.from_now.next_weekday, address: 'Av. das Delícias, 1234')
 
     # Act
     login_as(admin, scope: :admin)
@@ -127,7 +127,7 @@ describe 'Administrador avalia pedido' do
                                   buffet: buffet)
     customer =  Customer.create!(name: 'Maria', cpf: CPF.generate, email: 'maria@email.com', password: 'senha123')
     order = Order.create!(event_type: event_type, buffet: buffet, customer: customer, number_of_guests: 80,
-                          estimated_date: 3.weeks.from_now, address: 'Av. das Delícias, 1234', details: 'Rosas brancas')
+                          estimated_date: 3.weeks.from_now.next_weekday, address: 'Av. das Delícias, 1234', details: 'Rosas brancas')
 
     # Act
     login_as(admin, scope: :admin)

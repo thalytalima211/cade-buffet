@@ -143,7 +143,7 @@ describe 'API exibe buffets' do
 
     it 'Ocorre um erro interno' do
       # Arrange
-      allow(Buffet).to receive(:where).and_raise(ActiveRecord::QueryCanceled)
+      allow(Buffet).to receive(:searchBuffet).and_raise(ActiveRecord::QueryCanceled)
 
       # Act
       get '/api/v1/buffets?search=buffet'

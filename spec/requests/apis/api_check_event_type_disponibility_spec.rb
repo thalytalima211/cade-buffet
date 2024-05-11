@@ -19,10 +19,9 @@ describe 'API checa disponibilidade de um tipo de evento' do
                                     extra_hour_value: 1_000.00, weekend_min_value: 14_000.00,
                                     weekend_additional_per_guest: 300.00, weekend_extra_hour_value: 1_500.00,
                                     buffet: buffet)
-      order_params = {order: {event_type_id: event_type.id, estimated_date: '2024-05-09', number_of_guests: 40}}
 
       # Act
-      post '/api/v1/orders', params: order_params
+      get "/api/v1/buffets/#{buffet.id}/event_types/#{event_type.id}/disponibility?estimated_date=#{2.weeks.from_now.next_weekday}&number_of_guests=#{40}"
 
       # Assert
       expect(response.status).to eq 200
@@ -52,10 +51,10 @@ describe 'API checa disponibilidade de um tipo de evento' do
       Order.create!(event_type: event_type, buffet: buffet, customer: customer, number_of_guests: 80,
                     estimated_date: 2.weeks.from_now, address: 'Av. das Delícias, 1234', details: 'Rosas brancas',
                     status: :accepted)
-      order_params = {order: {event_type_id: event_type.id, estimated_date: 2.weeks.from_now, number_of_guests: 120}}
 
       # Act
-      post '/api/v1/orders', params: order_params
+      get "/api/v1/buffets/#{buffet.id}/event_types/#{event_type.id}/disponibility?estimated_date=#{2.weeks.from_now}&number_of_guests=#{120}"
+
 
       # Assert
       expect(response.status).to eq 412
@@ -82,10 +81,10 @@ describe 'API checa disponibilidade de um tipo de evento' do
                                     extra_hour_value: 1_000.00, weekend_min_value: 14_000.00,
                                     weekend_additional_per_guest: 300.00, weekend_extra_hour_value: 1_500.00,
                                     buffet: buffet)
-      order_params = {order: {event_type_id: event_type.id , estimated_date: '', number_of_guests: ''}}
 
       # Act
-      post '/api/v1/orders', params: order_params
+      get "/api/v1/buffets/#{buffet.id}/event_types/#{event_type.id}/disponibility"
+
 
       # Assert
       expect(response.status).to eq 412
@@ -112,10 +111,10 @@ describe 'API checa disponibilidade de um tipo de evento' do
                                     weekend_additional_per_guest: 300.00, weekend_extra_hour_value: 1_500.00,
                                     buffet: buffet)
       allow(Order).to receive(:new).and_raise(ActiveRecord::ActiveRecordError)
-      order_params = {order: {event_type_id: event_type.id, estimated_date: 2.weeks.from_now, number_of_guests: 40}}
 
       # Act
-      post '/api/v1/orders', params: order_params
+      get "/api/v1/buffets/#{buffet.id}/event_types/#{event_type.id}/disponibility?estimated_date=#{2.weeks.from_now}&number_of_guests=#{40}"
+
 
       # Assert
       expect(response.status).to eq 500

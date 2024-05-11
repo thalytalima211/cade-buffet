@@ -19,9 +19,10 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :buffets, only: [:index, :show] do
-        resources :event_types, only: [:index]
+        resources :event_types, only: [:index] do
+          get 'disponibility', on: :member
+        end
       end
-      resources :orders, only: [:create]
     end
   end
   root to: 'home#index'

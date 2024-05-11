@@ -20,7 +20,7 @@ describe 'Cliente confirma evento' do
                                   buffet: buffet)
     customer =  Customer.create!(name: 'Maria', cpf: CPF.generate, email: 'maria@email.com', password: 'senha123')
     order = Order.create!(event_type: event_type, buffet: buffet, customer: customer, number_of_guests: 80,
-                          estimated_date: 3.weeks.from_now, address: 'Av. das Delícias, 1234', details: 'Rosas brancas',
+                          estimated_date: 3.weeks.from_now.next_weekday, address: 'Av. das Delícias, 1234', details: 'Rosas brancas',
                           status: :accepted)
     event = Event.create!(expiration_date: 2.weeks.from_now, surcharge: 200.00, discount: 0.00, payment_method: pix,
                           description: 'Adicional pelo custo das rosas brancas', order: order, customer: customer,

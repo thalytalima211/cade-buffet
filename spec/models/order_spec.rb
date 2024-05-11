@@ -242,7 +242,7 @@ RSpec.describe Order, type: :model do
                                     buffet: buffet)
       customer = Customer.create!(name: 'Maria', cpf: CPF.generate, email: 'maria@email.com', password: 'senha123')
       order = Order.create!(event_type: event_type, buffet: buffet, customer: customer, number_of_guests: 80,
-                            estimated_date: 2.weeks.from_now, address: 'Avenida Principal, 100')
+                            estimated_date: 2.weeks.from_now.next_weekday, address: 'Avenida Principal, 100')
 
       # Act
       result = order.default_value
