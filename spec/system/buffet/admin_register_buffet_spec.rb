@@ -89,7 +89,7 @@ describe 'Administrador cadastra buffet' do
     expect(page).to have_content 'Sabores Divinos Buffet'
     expect(page).to have_content 'Razão Social: Sabores Divinos Eventos Ltda.'
     expect(page).to have_content "CNPJ: #{cnpj}"
-    expect(page).to have_content "Métodos de Pagamento: Dinheiro PIX"
+    expect(page).to have_content "Métodos de Pagamento:\nDinheiro PIX"
     expect(page).not_to have_content "Cartão de Crédito"
     expect(page).to have_content 'Av. das Delícias, 1234, Centro, São Paulo-SP, CEP: 01234-567'
     expect(page).to have_content 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis'

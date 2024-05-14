@@ -1,4 +1,4 @@
-<h2>Resultado da Busca por: <%= @query %></h2>
+<h1 class="border-bottom mt-4">Resultado da Busca por: <%= @query %></h1>
 
 <% if @buffets.any? %>
     <p><%= @buffets.count %> <%= Buffet.model_name.human(count: @buffets.count).downcase %> <%= I18n.translate(:found, count: @buffets.count).downcase %> </p>

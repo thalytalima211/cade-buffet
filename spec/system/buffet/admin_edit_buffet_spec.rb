@@ -19,6 +19,50 @@ describe 'Administrador edita buffet' do
     expect(current_path).to eq new_admin_session_path
   end
 
+  it 'e não vê botão para editar buffet se não estiver autenticado' do
+    # Arrange
+    cash = PaymentMethod.create!(name: 'Dinheiro')
+    admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
+    buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
+                            registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
+                            email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
+                            neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
+                            description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
+                            admin: admin, payment_methods: [cash])
+
+    # Act
+    visit root_path
+    click_on 'Sabores Divinos Buffet'
+
+    # Assert
+    expect(page).not_to have_link 'Editar'
+  end
+
+  it 'e não vê botão para editar buffet se não foi o dono do buffet' do
+    # Arrange
+    cash = PaymentMethod.create!(name: 'Dinheiro')
+    first_admin = Admin.create!(email: 'contato@saboresdivinos.com', password: 'senha123')
+    first_buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
+                                  registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
+                                  email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
+                                  neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
+                                  description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
+                                  admin: first_admin, payment_methods: [cash])
+    second_admin = Admin.create!(email: 'contato@gourmetecia.com', password: 'senha123')
+    second_buffet = Buffet.create!(corporate_name: 'Gourmet & Companhia Ltda.', brand_name: 'Gourmet & Companhia Ltda',
+                                  registration_number: CNPJ.generate, number_phone: '(11)91234-5678',
+                                  email: 'contato@gourmetecia.com',  full_address: 'Avenida Principal, 456',
+                                  neighborhood: 'Jardins', city: 'Metropolis', state: 'SP', zip_code: '98765-432',
+                                  description: 'Gourmet & Cia Buffet oferece serviços de buffet para eventos de todos os tamanhos.',
+                                  admin: second_admin, payment_methods: [cash])
+
+    # Act
+    login_as(second_admin, scope: :admin)
+    visit buffet_path(first_buffet)
+
+    # Assert
+    expect(page).not_to have_link 'Editar'
+  end
   it 'com sucesso' do
     # Arrange
     cnpj = CNPJ.new(CNPJ.generate).formatted

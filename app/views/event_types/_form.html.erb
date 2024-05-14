@@ -1,0 +1,89 @@
+<%= form_with model: @event_type, class: 'text-center' do |f| %>
+    <h4 class="text-body-secondary my-3">Detalhes do Evento</h4>
+    <div class="mb-3 row align-items-center">
+        <%= f.label :name, class: 'col-sm-2 col-form-label mb-2' %>
+        <div class="col-sm-10 mb-2"><%= f.text_field :name, class: 'form-control' %></div>  
+        <%= f.label :min_guests, class: 'col-sm-2 col-form-label' %>
+        <div class="col-sm-2 mb-2"><%= f.number_field :min_guests, class: 'form-control' %></div>
+        <%= f.label :max_guests, class: 'col-sm-2 col-form-label mb-2' %>
+        <div class="col-sm-2 mb-2"><%= f.number_field :max_guests, class: 'form-control' %></div>
+        <div class="col-sm-4 d-flex">
+            <%= f.label :default_duration, class: 'col-sm-4 col-form-label' %>
+            <div class="input-group">
+                <%= f.number_field :default_duration, class: 'form-control col-sm-3' %>
+                <span class="input-group-text d-flex justify-content-center col-sm-5">minutos</span>
+            </div>
+        </div>
+        <%= f.label :description, class: 'col-sm-2 col-form-label mb-2' %>
+        <div class="col-sm-10 mb-2"><%= f.text_area :description, class: 'form-control' %></div>
+        <%= f.label :menu, class: 'col-sm-2 col-form-label mb-2' %>
+        <div class="col-sm-10 mb-2"><%= f.text_area :menu, class: 'form-control' %></div>
+    </div>
+
+    <h4 class="text-body-secondary my-3">Serviços Oferecidos</h4>
+    <div class="mb-5">
+        <%= f.check_box :offer_drinks, class: 'form-check-input' %>    
+        <%= f.label :offer_drinks, class: 'form-check-label mx-3' %>
+        <%= f.check_box :offer_decoration, class: 'form-check-input' %>    
+        <%= f.label :offer_decoration, class: 'form-check-label mx-3' %>
+        <%= f.check_box :offer_parking_service, class: 'form-check-input' %>    
+        <%= f.label :offer_parking_service, class: 'form-check-label mx-3' %>
+    </div>
+    
+    <h4 class="text-body-secondary my-3">Endereço do Evento</h4>
+    <div class="mb-5">
+        <%= f.radio_button :default_address, :buffet_address, class: 'form-check-input', id: 'buffet_address' %>
+        <%= f.label :buffet_address, EventType.human_attribute_name(:buffet_address), class: "mx-3 form-check-label", for: 'buffet_address' %>
+        <%= f.radio_button :default_address, :indicated_address, class: 'form-check-input', id: 'indicated_address' %>
+        <%= f.label :indicated_address, EventType.human_attribute_name(:indicated_address), class: "mx-3 form-check-label", for: 'indicated_address' %>
+    </div>
+
+    <h4 class="text-body-secondary my-3">Tabela de Preços</h4>
+    <div class="mb-3 row row-cols-2">
+        <div class="col px-5">
+            <%= f.label :min_value, class: 'col-form-label' %> 
+            <div class="input-group mb-3">
+                <span class="input-group-text">R$</span>
+                <%= f.number_field :min_value, class: 'form-control' %>
+            </div>
+        </div>
+        <div class="col px-5">
+            <%= f.label :weekend_min_value, class: 'col-form-label' %> 
+            <div class="input-group mb-3">
+                <span class="input-group-text">R$</span>
+                <%= f.number_field :weekend_min_value, class: 'form-control' %>
+            </div>
+        </div>
+        <div class="col px-5">
+            <%= f.label :additional_per_guest, class: 'col-form-label' %> 
+            <div class="input-group mb-3">
+                <span class="input-group-text">R$</span>
+                <%= f.number_field :additional_per_guest, class: 'form-control' %>
+            </div>
+        </div>
+        <div class="col px-5">
+            <%= f.label :weekend_additional_per_guest, class: 'col-form-label' %> 
+            <div class="input-group mb-3">
+                <span class="input-group-text">R$</span>
+                <%= f.number_field :weekend_additional_per_guest, class: 'form-control' %>
+            </div>
+        </div>
+        <div class="col px-5">
+            <%= f.label :extra_hour_value, class: 'col-form-label' %> 
+            <div class="input-group mb-3">
+                <span class="input-group-text">R$</span>
+                <%= f.number_field :extra_hour_value, class: 'form-control' %>
+            </div>
+        </div>
+        <div class="col px-5">
+            <%= f.label :weekend_extra_hour_value, class: 'col-form-label' %> 
+            <div class="input-group mb-3">
+                <span class="input-group-text">R$</span>
+                <%= f.number_field :weekend_extra_hour_value, class: 'form-control' %>
+            </div>
+        </div>
+    </div>
+    <div>
+        <%= f.submit 'Enviar', class: 'btn btn-primary mb-5 btn-lg' %>
+    </div>
+<% end %>

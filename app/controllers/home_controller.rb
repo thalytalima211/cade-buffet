@@ -7,7 +7,7 @@ class HomeController < ApplicationController
 
   def redirect_profile
     if admin_signed_in? && current_admin.buffet.present?
-      redirect_to current_admin.buffet
+      redirect_to buffet_path(current_admin.buffet)
     end
   end
 end

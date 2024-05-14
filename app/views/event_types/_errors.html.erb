@@ -1,12 +1,10 @@
-<% if @buffet.errors.any? %>
+<% if @event_type.errors.any? %>
     <div class="border-top border-bottom p-3 my-3">
         <p>Verifique os erros abaixo: </p>
         <ul>
-            <% @buffet.errors.full_messages.each do |msg| %>
+            <% @event_type.errors.full_messages.each do |msg| %>
                 <li><%= msg %></li>
             <% end %>
-        </ul>    
+        </ul>
     </div>
-    
-<% end %>
-
+<% end %>  

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-describe 'Administrador edita buffet' do
-  it 'e não é o dono' do
+describe 'Auteniticação - Buffet' do
+  it 'Admin edita buffet e não é o dono' do
     # Arrange
     cash = PaymentMethod.create!(name: 'Dinheiro')
     admin1 = Admin.create!(email: 'admin1@email.com', password: 'senha123')
@@ -25,5 +25,33 @@ describe 'Administrador edita buffet' do
 
     # Assert
     expect(response).to redirect_to buffet_path(admin1.buffet)
+  end
+
+  it 'Usuário edita buffet e não está autenticado' do
+    # Arrange
+    cash = PaymentMethod.create!(name: 'Dinheiro')
+    admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
+    buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
+                            registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
+                            email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
+                            neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
+                            description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
+                            admin: admin, payment_methods: [cash])
+
+    # Act
+    patch buffet_path(buffet)
+
+    # Assert
+    expect(response).to redirect_to new_admin_session_path
+  end
+
+  it 'Usuário cria buffet e não está autenticado' do
+    # Arrange
+
+    # Act
+    post buffets_path
+
+    # Assert
+    expect(response).to redirect_to new_admin_session_path
   end
 end

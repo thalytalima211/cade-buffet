@@ -8,7 +8,7 @@ describe 'Usuário pesquisa buffet' do
     visit root_path
 
     # Assert
-    within('nav') do
+    within('header') do
       expect(page).to have_field 'Buscar Buffet'
       expect(page).to have_button 'Buscar'
     end
@@ -23,7 +23,7 @@ describe 'Usuário pesquisa buffet' do
     visit root_path
 
     # Assert
-    within('nav') do
+    within('header') do
       expect(page).not_to have_field 'Buscar Buffet'
       expect(page).not_to have_button 'Buscar'
     end

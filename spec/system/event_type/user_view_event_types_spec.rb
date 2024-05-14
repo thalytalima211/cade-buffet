@@ -25,8 +25,20 @@ describe 'Usuário vê tipos de eventos' do
 
     # Assert
     expect(page).to have_content 'Festa de Casamento'
-
+    expect(page).to have_content 'Celebre seu dia do SIM com o nosso buffet'
+    expect(page).to have_content 'Quantidade mínima de pessoas: 20'
+    expect(page).to have_content 'Quantidade máxima de pessoas: 100'
+    expect(page).to have_content 'Duração padrão: 90 minutos'
+    expect(page).to have_content 'Cardápio: Bolo e doces'
+    expect(page).to have_content "Serviços:\nDecoração Bebidas Alcoólicas"
+    expect(page).to have_content 'Endereço padrão: Endereço do buffet'
+    within('table') do
+      expect(page).to have_content 'Valor mínimo R$ 10.000,00 R$ 14.000,00'
+      expect(page).to have_content 'Adicional por pessoa R$ 250,00 R$ 300,00'
+      expect(page).to have_content 'Valor por hora extra R$ 1.000,00 R$ 1.500,00'
+    end
   end
+
   it 'e não vê outros tipos de evento em seu buffet' do
     # Arrange
     cash = PaymentMethod.create!(name: 'Dinheiro')

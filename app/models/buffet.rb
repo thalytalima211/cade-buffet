@@ -21,8 +21,7 @@ class Buffet < ApplicationRecord
 
   def self.searchBuffet(search)
     search_query = 'event_types.name LIKE ? OR buffets.brand_name LIKE ? OR buffets.city LIKE ?'
-    buffets = Buffet.left_outer_joins(:event_types).where(search_query, "%#{search}%", "%#{search}%", "%#{search}%").order(:brand_name)
-    buffets
+    Buffet.left_outer_joins(:event_types).where(search_query, "%#{search}%", "%#{search}%", "%#{search}%").order(:brand_name).distinct
   end
 
   private

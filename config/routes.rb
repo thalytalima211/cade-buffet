@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     get 'search', on: :collection
     get 'orders', on: :member
   end
-  resources :event_types, only: [:new, :create, :show] do
+  resources :event_types, only: [:new, :create, :edit, :update] do
     resources :orders, only: [:new, :create, :show] do
       post 'accepted', on: :member
       post 'cancelled', on: :member
