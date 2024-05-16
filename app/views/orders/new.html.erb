@@ -1,34 +1,38 @@
-<h2>Novo Pedido</h2>
 
 <% if @order.errors.any? %>
+<div class="border-top border-bottom p-3 my-3">
     <p>Verifique os erros abaixo: </p>
     <ul>
         <% @order.errors.full_messages.each do |msg| %>
             <li><%= msg %></li>
         <% end %>
-    </ul>
+    </ul>    
+</div>
+    
 <% end %>
 
-<%= form_with model: [@buffet, @event_type, @order] do |f| %>
-    <div>
-        <%= f.label :estimated_date %>
-        <%= f.date_field :estimated_date %>
+<div class="mb-4 text-center">
+    <h2>Novo Pedido</h2>
+    <p>Evento: <%= @event_type.name %></p>    
+</div>
+
+
+<%= form_with model: [@event_type, @order], class: 'text-center' do |f| %>
+    <div class="row">
+        <%= f.label :estimated_date, class: 'col-sm-2 col-form-label mb-2' %>
+        <div class="col-sm-4 mb-2"><%= f.date_field :estimated_date, class: 'form-control' %></div>
+        <%= f.label :number_of_guests, class: 'col-sm-2 col-form-label mb-2' %>
+        <div class="col-sm-4 mb-2"><%= f.number_field :number_of_guests, class: 'form-control' %></div>
+        <%= f.label :details, class: 'col-sm-2 col-form-label mb-2' %>
+        <div class="col-sm-10 mb-2"><%= f.text_area :details, class: 'form-control' %></div>
+        <%= f.label :address, class: 'col-sm-2 col-form-label mb-2' %>
+        <% if @event_type.indicated_address? %>
+            <div class="col-sm-10 mb-2"><%= f.text_field :address, class: 'form-control' %></div>
+        <% else %>
+            <div class="col-sm-10 mb-2"><input type="text" class="form-control" placeholder="<%= @event_type.buffet.location%>" disabled></div>
+        <% end %>
     </div>
     <div>
-        <%= f.label :number_of_guests %>
-        <%= f.number_field :number_of_guests %>
-    </div>
-    <div>
-        <%= f.label :details %>
-        <%= f.text_area :details %>
-    </div>
-    <% if @event_type.indicated_address? %>
-        <div>
-            <%= f.label :address %>
-            <%= f.date_field :address %>
-        </div>
-    <% end %>
-    <div>
-        <%= f.submit 'Enviar' %>
+        <%= f.submit 'Enviar', class: 'btn btn-primary my-3 btn' %>
     </div>
 <% end %>

@@ -1,28 +1,40 @@
-<h2>Pedido <%= @order.code %></h2>
+<h1 class="my-4 pb-3 text-center border-bottom">Pedido <%= @order.code %></h1>
 
-<dl>
-    <dd><%= Order.human_attribute_name(:customer) %>: </dd>
-    <dt><%= @order.customer.name %> | <%= @order.customer.email %></dt>
-    <dd><%= Order.human_attribute_name(:buffet) %>: </dd>
-    <dt><%= @order.buffet.brand_name %></dt>
-    <dd><%= Order.human_attribute_name(:event_type) %>: </dd>
-    <dt><%= @order.event_type.name %></dt>
-    <dt><%= Order.human_attribute_name(:status) %>: </dt>
-    <dd><%= Order.human_attribute_name(@order.status)%></dd>
-    <dt><%= Order.human_attribute_name(:estimated_date) %>: </dt>
-    <dd><%= I18n.localize(@order.estimated_date) %></dd>
-    <dt><%= Order.human_attribute_name(:number_of_guests) %>: </dt>
-    <dd><%= @order.number_of_guests %></dd>
-    <dt><%= Order.human_attribute_name(:details) %>: </dt>
-    <dd><%= @order.details %></dd>
-    <dt><%= Order.human_attribute_name(:address) %>: </dt>
-    <dd><%= @order.address %></dd>
-</dl>
+<div class="row row-cols-2">
+    <div class="col border-end">
+        <dl>
+            <dt><%= Order.human_attribute_name(:customer) %>: </dt>
+            <dd><%= @order.customer.name %> | <%= @order.customer.email %></dd>
+            <dt><%= Order.human_attribute_name(:buffet) %>: </dt>
+            <dd><%= @order.buffet.brand_name %></dd>
+            <dt><%= Order.human_attribute_name(:event_type) %>: </dt>
+            <dd><%= @order.event_type.name %></dd>
+            <dt><%= Order.human_attribute_name(:status) %>: </dt>
+            <dd><%= Order.human_attribute_name(@order.status)%></dd>
+        </dl>
+    </div>
+    <div class="col">
+        <dl>
+            <dt><%= Order.human_attribute_name(:estimated_date) %>: </dt>
+            <dd><%= I18n.localize(@order.estimated_date) %></dd>
+            <dt><%= Order.human_attribute_name(:number_of_guests) %>: </dt>
+            <dd><%= @order.number_of_guests %></dd>
+            <dt><%= Order.human_attribute_name(:details) %>: </dt>
+            <dd><%= @order.details %></dd>
+            <dt><%= Order.human_attribute_name(:address) %>: </dt>
+            <dd><%= @order.address %></dd>
+        </dl>
+    </div>
+</div>
 
-<% if admin_signed_in? %>
-    <% if Order.where(estimated_date: @order.estimated_date, event_type: @event_type).many? %>
-        Atenção: Há outro pedido em seu buffet estimado para esta mesma data
+<% if admin_signed_in? && @order.pending? %>
+    <% if Order.where(estimated_date: @order.estimated_date, buffet: @event_type.buffet , status: :accepted).any? %>
+        <p class="my-3 alert alert-warning" style="width: fit-content; margin: 0.5rem auto;">Atenção: Há outro pedido em seu buffet estimado para esta mesma data</p>
     <% end %>
-    <%= button_to 'Aceitar pedido', accepted_event_type_order_path(@event_type, @order)%>
-    <%= button_to 'Cancelar pedido', cancelled_event_type_order_path(@event_type, @order)%>
+    <div class="justify-content-center m-3 d-flex">
+        <br>
+        <%= button_to 'Aceitar pedido', accepted_event_type_order_path(@event_type, @order), class: 'btn btn-success m-3' %>
+        <%= button_to 'Cancelar pedido', cancelled_event_type_order_path(@event_type, @order), class: 'btn btn-danger m-3'%>    
+    </div>
+    
 <% end %>

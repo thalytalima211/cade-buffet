@@ -4,7 +4,7 @@ class Order < ApplicationRecord
   belongs_to :customer
   has_one :event
 
-  enum status: {pending: 0, accepted: 5, cancelled: 10}
+  enum status: {pending: 0, cancelled: 5, pending_confirmation: 7, expired: 8, accepted: 10}
 
   validates :estimated_date, :number_of_guests, :address, presence: true
   validates :estimated_date, comparison: {greater_than: Date.today}, unless: -> { estimated_date.blank? }

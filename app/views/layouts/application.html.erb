@@ -43,14 +43,14 @@
       <% end %>
 
       <% if customer_signed_in? %>
-        <%= current_customer.name %> | <%= current_customer.email %>
-        <%= link_to 'Meus Pedidos', customer_path(current_customer) %>
-        <div class="mt-3">
-          <%= button_to 'Sair', destroy_customer_session_path, class: "btn btn-danger", method: :delete %>
+        <span class="h5 text-light mb-0"><%= current_customer.name %> | <%= current_customer.email %></span>
+        <div class="d-flex align-items-center">
+          <%= link_to 'Meus Pedidos', customer_path(current_customer), class: 'm-3 b-3 btn btn-outline-light' %>
+          <%= button_to 'Sair', destroy_customer_session_path, class: "m-3 b-3 btn btn-outline-light", method: :delete %>
         </div>
       <% end %>
     </header>
-    <main class="container">
+    <main class="container mb-4">
       <% if notice.present? %>
         <div class="alert alert-success" style="width: fit-content; margin:0 auto"><%= notice %></div>
       <% end %>

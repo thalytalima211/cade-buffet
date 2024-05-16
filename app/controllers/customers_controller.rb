@@ -7,6 +7,9 @@ class CustomersController < ApplicationController
       redirect_to customer_path(current_customer), notice: 'Você não tem acesso aos pedidos deste usuário'
     end
     @pending_orders = Order.where(customer: customer, status: :pending)
-    @pending_confirmation = Event.where(customer: customer, status: :pending)
+    @canceled_orders = Order.where(customer: customer, status: :cancelled)
+    @pending_confirmation_orders = Order.where(customer: customer, status: :pending_confirmation)
+    @expired_orders = Order.where(customer: customer, status: :expired)
+    @accepted_orders = Order.where(customer: customer, status: :accepted)
   end
 end

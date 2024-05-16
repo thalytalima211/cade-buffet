@@ -31,7 +31,7 @@ class OrdersController < ApplicationController
 
   def cancelled
     @order.cancelled!
-    redirect_to event_type_order_path(@event_type, @order)
+    redirect_to orders_buffet_path(@event_type.buffet)
   end
 
   def accepted

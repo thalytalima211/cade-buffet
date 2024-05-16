@@ -1,31 +1,60 @@
-<h2>Confirmando Pedido</h2>
+<% if @event.errors.any? %>
+    <div class="border-top border-bottom p-3 my-3">
+        <p>Verifique os erros abaixo: </p>
+        <ul>
+            <% @event.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+        </ul>    
+    </div>
+<% end %>
 
-<dl>
-    <dt><%= Event.human_attribute_name(:default_value)%>: </dt>
-    <dd><%= number_to_currency(@order.default_value, locale: :'pt-BR')%></dd>
-</dl>
+<div class="mb-4 text-center">
+    <h2>Confirmando Pedido</h2>
+    <dl>
+        <dt><%= Order.human_attribute_name(:event_type)%>: </dt>
+        <dd><%= @order.event_type.name %></dd>
+        <dt><%= Event.human_attribute_name(:default_value)%>: </dt>
+        <dd><%= number_to_currency(@order.default_value, locale: :'pt-BR')%></dd>
+        <dt><%= Order.human_attribute_name(:details) %>: </dt>
+        <dd><%= @order.details %></dd>
+        <dt><%= Order.human_attribute_name(:estimated_date) %>: </dt>
+        <dd><%= I18n.localize @order.estimated_date %></dd>
+    </dl>    
+</div>
 
-<%= form_with model: [@event_type, @order, @event] do |f| %>
-    <div>
-        <%= f.label :expiration_date %>
-        <%= f.date_field :expiration_date %>
+<%= form_with model: [@event_type, @order, @event], class: 'text-center' do |f| %>
+    <div class="row row-cols-3 mb-3">
+        <div class="col">
+            <%= f.label :expiration_date, class: 'col-form-label' %>
+            <%= f.date_field :expiration_date, class: 'form-control' %>
+        </div>
+        <div class="col">
+            <%= f.label :surcharge, class: 'col-form-label' %>
+            <div class="input-group">
+                <span class="input-group-text">R$</span>
+                <%= f.number_field :surcharge, class: 'form-control' %>   
+            </div> 
+        </div>
+        <div class="col">
+            <%= f.label :discount, class: 'col-form-label' %>
+            <div class="input-group">
+                <span class="input-group-text">R$</span>
+                <%= f.number_field :discount, class: 'form-control' %>   
+            </div> 
+        </div>
     </div>
-    <div>
-        <%= f.label :surcharge %>
-        <%= f.number_field :surcharge %>
+    <div class="row">
+        <%= f.label :description, class: 'col-sm-2 col-form-label mb-2' %>
+        <div class="col-sm-10 mb-2"><%= f.text_area :description, class: 'form-control' %></div>
     </div>
-    <div>
-        <%= f.label :discount %>
-        <%= f.number_field :discount %>
+
+    <h4 class="text-body-secondary my-3">Método de Pagamento</h4>
+    <div class="d-flex justify-content-evenly mx-5 px-5">
+        <%= f.collection_radio_buttons :payment_method_id, @payment_methods, :id, :name %>    
     </div>
+        
     <div>
-        <%= f.label :description %>
-        <%= f.text_field :description %>
-    </div>
-    <div>
-        <%= f.collection_radio_buttons :payment_method_id, @payment_methods, :id, :name %>
-    </div>
-    <div>
-        <%= f.submit 'Aceitar Pedido' %>
+        <%= f.submit 'Aceitar Pedido', class: 'my-4 btn btn-primary' %>
     </div>
 <% end %>

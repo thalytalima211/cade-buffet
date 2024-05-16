@@ -21,7 +21,7 @@ describe 'Cliente confirma evento' do
     customer =  Customer.create!(name: 'Maria', cpf: CPF.generate, email: 'maria@email.com', password: 'senha123')
     order = Order.create!(event_type: event_type, buffet: buffet, customer: customer, number_of_guests: 80,
                           estimated_date: 3.weeks.from_now.next_weekday, address: 'Av. das Delícias, 1234', details: 'Rosas brancas',
-                          status: :accepted)
+                          status: :pending_confirmation)
     event = Event.create!(expiration_date: 2.weeks.from_now, surcharge: 200.00, discount: 0.00, payment_method: pix,
                           description: 'Adicional pelo custo das rosas brancas', order: order, customer: customer,
                           buffet: buffet)
@@ -30,14 +30,14 @@ describe 'Cliente confirma evento' do
     login_as(customer, scope: :customer)
     visit root_path
     click_on 'Meus Pedidos'
-    within('#pending-confirmation') do
+    within('#pending-confirmation-orders') do
       click_on order.code
     end
 
     # Assert
-    expect(page).to have_content 'Evento Festa de Casamento'
-    expect(page).to have_content 'Status: Aguardando Confirmação de Cliente'
-    expect(page).to have_content "Pedido: #{order.code}"
+    expect(page).to have_content "Pedido #{order.code}"
+    expect(page).to have_content 'Tipo de Evento: Festa de Casamento'
+    expect(page).to have_content 'Status: Aguardando confirmação de cliente'
     expect(page).to have_content "Data de Vencimento: #{I18n.localize(2.weeks.from_now.to_date)}"
     expect(page).to have_content 'Preço Padrão: R$ 25.000,00'
     expect(page).to have_content 'Desconto: R$ 0,00'
@@ -68,7 +68,7 @@ describe 'Cliente confirma evento' do
     customer =  Customer.create!(name: 'Maria', cpf: CPF.generate, email: 'maria@email.com', password: 'senha123')
     order = Order.create!(event_type: event_type, buffet: buffet, customer: customer, number_of_guests: 80,
                           estimated_date: 3.weeks.from_now, address: 'Av. das Delícias, 1234', details: 'Rosas brancas',
-                          status: :accepted)
+                          status: :pending_confirmation)
     event = Event.create!(expiration_date: 2.weeks.from_now, surcharge: 200.00, discount: 0.00, payment_method: pix,
                           description: 'Adicional pelo custo das rosas brancas', order: order, customer: customer,
                           buffet: buffet)
@@ -82,8 +82,9 @@ describe 'Cliente confirma evento' do
 
     # Assert
     expect(page).to have_content 'Evento confirmado com sucesso'
-    expect(page).to have_content 'Status: Evento Confirmado'
-    expect(page).not_to have_button 'Confirmar Evento'
+    within('#accepted-orders') do
+      expect(page).to have_content order.code
+    end
   end
 
   it 'e vê caso data-limite tenha expirado' do
@@ -106,20 +107,23 @@ describe 'Cliente confirma evento' do
     customer =  Customer.create!(name: 'Maria', cpf: CPF.generate, email: 'maria@email.com', password: 'senha123')
     order = Order.create!(event_type: event_type, buffet: buffet, customer: customer, number_of_guests: 80,
                           estimated_date: 2.weeks.from_now, address: 'Av. das Delícias, 1234', details: 'Rosas brancas',
-                          status: :accepted)
-    event = Event.new(expiration_date: 1.day.ago, surcharge: 200.00, discount: 0.00, payment_method: pix,
-                      description: 'Adicional pelo custo das rosas brancas', order: order, customer: customer,
-                      buffet: buffet)
-    event.save(validate: false)
+                          status: :pending_confirmation)
+    travel_to 2.days.ago do
+      event = Event.create!(expiration_date: 1.day.from_now, surcharge: 200.00, discount: 0.00, payment_method: pix,
+                            description: 'Adicional pelo custo das rosas brancas', order: order, customer: customer,
+                            buffet: buffet)
+    end
 
     # Act
     login_as(customer, scope: :customer)
     visit root_path
     click_on 'Meus Pedidos'
-    click_on order.code
+    within('#expired-orders') do
+      click_on order.code
+    end
 
     # Assert
-    expect(page).to have_content 'Data de vencimento expirada!'
+    expect(page).to have_content 'Status: Pedido Expirado'
     expect(page).not_to have_button 'Confirmar Evento'
   end
 end

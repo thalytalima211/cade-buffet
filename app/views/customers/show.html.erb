@@ -1,15 +1,157 @@
-<h2>Meus Pedidos</h2>
+<h1 class="text-center">Meus Pedidos</h1>
 
-<div id="pending-confirmation">
-    <% @pending_confirmation.each do |event| %>
-        <%= link_to event.order.code, event_type_order_event_path(event.order.event_type, event.order, event)%>
-        <%= Event.human_attribute_name(:expiration_date) %>: 
-        <%= I18n.localize(event.expiration_date) %>
+<a data-bs-toggle="collapse" href="#pending-confirmation-orders" role="button" style="text-decoration: none;">
+<div class="d-flex align-items-center mb-3 pe-3 justify-content-between text-warning border-bottom border-warning">
+<h3>Pedidos aguardando confirmação do cliente</h3>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill='currentColor' class="bi bi-chevron-down text-warning" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
+    </svg>
+</div>
+</a>
+<div id="pending-confirmation-orders" class="collapse row row-cols-3 justify-content-center">
+<% if @pending_confirmation_orders.any? %>
+    <% @pending_confirmation_orders.each do |order| %>
+        <a href="<%= event_type_order_event_path(order.event_type, order, order.event)%>" class="card col-sm-3 me-3 mt-3 p-0 text-center" style="text-decoration: none;">
+            <div class="card-header bg-warning"><b class="text-light"><%= order.code %></b></div>
+            <div class="card-body">
+                <dl>
+                    <dt><%= Order.human_attribute_name(:customer) %>: </dt>
+                    <dd><%= order.customer.name %></dd>
+                    <dt><%= Order.human_attribute_name(:event_type) %>: </dt>
+                    <dd><%= order.event_type.name %></dd>
+                    <dt><%= Event.human_attribute_name(:final_value) %>: </dt>
+                    <dd><%= number_to_currency(order.event.final_value, locale: :'pt-BR') %></dd>
+                    <dt><%= Event.human_attribute_name(:expiration_date) %>: </dt>
+                    <dd><%= I18n.localize(order.event.expiration_date) %></dd>
+                </dl>
+            </div>
+        </a>
     <% end %>
-</div>
+<% else %>
+    <p class="my-3 alert alert-warning text-center">Não há pedidos</p>
+<% end %> 
+</div> 
 
-<div id="pending-orders">
-    <% @pending_orders.each do |order| %>
-        <%= link_to order.code, event_type_order_path(order.event_type, order)%>
-    <% end %>    
+<a data-bs-toggle="collapse" href="#accepted-orders" role="button" style="text-decoration: none;">
+<div class="d-flex mb-3 pe-3 align-items-center justify-content-between text-success border-bottom border-success">
+<h3>Eventos confirmados</h3>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill='currentColor' class="bi bi-chevron-down text-success" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
+    </svg>
 </div>
+</a>
+<div id="accepted-orders" class="collapse row row-cols-3 justify-content-center">
+<% if @accepted_orders.any? %>
+    <% @accepted_orders.each do |order| %>
+        <a href="<%= event_type_order_event_path(order.event_type, order, order.event)%>" class="card col-sm-3 me-3 mt-3 p-0 text-center" style="text-decoration: none;">
+            <div class="card-header bg-success"><b class="text-light"><%= order.code %></b></div>
+            <div class="card-body">
+                <dl>
+                    <dt><%= Order.human_attribute_name(:customer) %>: </dt>
+                    <dd><%= order.customer.name %></dd>
+                    <dt><%= Order.human_attribute_name(:event_type) %>: </dt>
+                    <dd><%= order.event_type.name %></dd>
+                    <dt><%= Order.human_attribute_name(:estimated_date) %>: </dt>
+                    <dd><%= I18n.localize(order.estimated_date) %></dd>
+                    <dt><%= Event.human_attribute_name(:final_value) %>: </dt>
+                    <dd><%= number_to_currency(order.event.final_value, locale: :'pt-BR') %></dd>
+                </dl>
+            </div>
+        </a>
+    <% end %>
+<% else %>
+    <p class="my-3 alert alert-success text-center">Não há eventos</p>
+<% end %> 
+</div> 
+
+<a data-bs-toggle="collapse" href="#pending-orders" role="button" style="text-decoration: none;">
+<div class="d-flex mb-3 pe-3 align-items-center justify-content-between text-info border-bottom border-info">
+<h3>Pedidos aguardando avaliação do buffet</h3>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill='currentColor' class=" bi bi-chevron-down text-info" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
+    </svg>
+</div>
+</a>
+<div id="pending-orders" class="collapse row row-cols-3 justify-content-center">
+<% if @pending_orders.any? %>
+    <% @pending_orders.each do |order| %>
+        <a href="<%= event_type_order_path(order.event_type, order)%>" class="card col-sm-3 me-3 mt-3 p-0 text-center" style="text-decoration: none;">
+            <div class="card-header bg-info"><b class="text-light"><%= order.code %></b></div>
+            <div class="card-body">
+                <dl>
+                    <dt><%= Order.human_attribute_name(:customer) %>: </dt>
+                    <dd><%= order.customer.name %></dd>
+                    <dt><%= Order.human_attribute_name(:event_type) %>: </dt>
+                    <dd><%= order.event_type.name %></dd>
+                    <dt><%= Order.human_attribute_name(:estimated_date) %>: </dt>
+                    <dd><%= I18n.localize(order.estimated_date) %></dd>
+                </dl>
+            </div>
+        </a>
+    <% end %>
+<% else %>
+    <p class="my-3 alert alert-info text-center">Não há pedidos</p>
+<% end %> 
+</div> 
+
+<a data-bs-toggle="collapse" href="#canceled-orders" role="button" style="text-decoration: none;">
+<div class="d-flex mb-3 pe-3 align-items-center justify-content-between text-danger border-bottom border-danger">
+<h3>Pedidos cancelados</h3>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill='currentColor' class="bi bi-chevron-down text-danger" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
+    </svg>
+</div>
+</a>
+<div id="canceled-orders" class="collapse row row-cols-3 justify-content-center">
+<% if @canceled_orders.any? %>
+    <% @canceled_orders.each do |order| %>
+        <a href="<%= event_type_order_path(order.event_type, order)%>" class="card col-sm-3 me-3 mt-3 p-0 text-center" style="text-decoration: none;">
+            <div class="card-header bg-danger"><b class="text-light"><%= order.code %></b></div>
+            <div class="card-body">
+                <dl>
+                    <dt><%= Order.human_attribute_name(:customer) %>: </dt>
+                    <dd><%= order.customer.name %></dd>
+                    <dt><%= Order.human_attribute_name(:buffet) %>: </dt>
+                    <dd><%= order.buffet.brand_name %></dd>
+                    <dt><%= Order.human_attribute_name(:event_type) %>: </dt>
+                    <dd><%= order.event_type.name %></dd>
+                    <dt><%= Order.human_attribute_name(:estimated_date) %>: </dt>
+                    <dd><%= I18n.localize(order.estimated_date) %></dd>
+                </dl>
+            </div>
+        </a>
+    <% end %>
+<% else %>
+    <p class="my-3 alert alert-danger text-center">Não há pedidos</p>
+<% end %> 
+</div> 
+
+<a data-bs-toggle="collapse" href="#expired-orders" role="button" style="text-decoration: none;">
+<div class="d-flex mb-3 pe-3 align-items-center justify-content-between border-bottom border-secondary text-secondary">
+<h3>Pedidos expirados</h3>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill='currentColor' class="bi bi-chevron-down text-secondary" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
+    </svg>
+</div>  
+</a>
+<div class="collapse row row-cols-3 justify-content-center" id="expired-orders">
+<% if @expired_orders.any? %>
+    <% @expired_orders.each do |order| %>
+        <a href="<%= event_type_order_event_path(order.event_type, order, order.event)%>" class="card col-sm-3 me-3 mt-3 p-0 text-center" style="text-decoration: none;">
+            <div class="card-header bg-secondary"><b class="text-light"><%= order.code %></b></div>
+            <div class="card-body">
+                <dl>
+                    <dt><%= Order.human_attribute_name(:customer) %>: </dt>
+                    <dd><%= order.customer.name %></dd>
+                    <dt><%= Order.human_attribute_name(:event_type) %>: </dt>
+                    <dd><%= order.event_type.name %></dd>
+                    <dt><%= Event.human_attribute_name(:expiration_date) %>: </dt>
+                    <dd><%= I18n.localize(order.event.expiration_date) %></dd>
+                </dl>
+            </div>
+        </a>
+    <% end %>
+    <% else %>
+        <p class="my-3 alert alert-secondary text-center">Não há pedidos</p>
+    <% end %>
+</div> 

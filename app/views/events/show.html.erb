@@ -1,30 +1,49 @@
-<h2>Evento <%= @event_type.name %></h2>
+<h1 class="my-4 pb-3 text-center border-bottom">Pedido <%= @order.code %></h1>
 
-<dl>
-    <dt><%= Event.human_attribute_name(:status) %>: </dt>
-    <dd><%= Event.human_attribute_name(@event.status)%></dd>
-    <dt><%= Event.human_attribute_name(:order) %>: </dt>
-    <dd><%= @order.code %></dd>
-    <dt><%= Event.human_attribute_name(:expiration_date) %>: </dt>
-    <dd><%= I18n.localize(@event.expiration_date) %></dd>
-    <dt><%= Event.human_attribute_name(:default_value) %>: </dt>
-    <dd><%= number_to_currency(@order.default_value, locale: :'pt-BR') %></dd>
-    <dt><%= Event.human_attribute_name(:discount) %>: </dt>
-    <dd><%= number_to_currency(@event.discount, locale: :'pt-BR') %></dd>
-    <dt><%= Event.human_attribute_name(:surcharge) %>: </dt>
-    <dd><%= number_to_currency(@event.surcharge, locale: :'pt-BR') %></dd>
-    <dt><%= Event.human_attribute_name(:final_value) %>: </dt>
-    <dd><%= number_to_currency(@event.final_value, locale: :'pt-BR') %></dd>
-    <dt><%= Event.human_attribute_name(:description) %>: </dt>
-    <dd><%= @event.description %></dd>
-    <dt><%= Event.human_attribute_name(:payment_method) %>: </dt>
-    <dd><%= @event.payment_method.name %></dd>
-</dl>
+<div class="row row-cols-2">
+    <div class="col border-end">
+        <dl>
+            <dt><%= Order.human_attribute_name(:customer) %>: </dt>
+            <dd><%= @order.customer.name %> | <%= @order.customer.email %></dd>
+            <dt><%= Order.human_attribute_name(:buffet) %>: </dt>
+            <dd><%= @order.buffet.brand_name %></dd>
+            <dt><%= Order.human_attribute_name(:event_type) %>: </dt>
+            <dd><%= @order.event_type.name %></dd>
+            <dt><%= Order.human_attribute_name(:estimated_date) %>: </dt>
+            <dd><%= I18n.localize(@order.estimated_date) %></dd>
+            <dt><%= Order.human_attribute_name(:number_of_guests) %>: </dt>
+            <dd><%= @order.number_of_guests %></dd>
+            <dt><%= Order.human_attribute_name(:details) %>: </dt>
+            <dd><%= @order.details %></dd>
+            <dt><%= Order.human_attribute_name(:address) %>: </dt>
+            <dd><%= @order.address %></dd>
+            <dt><%= Order.human_attribute_name(:status) %>: </dt>
+            <dd><%= Order.human_attribute_name(@order.status)%></dd>
+        </dl>
+    </div>
+    <div class="col">
+        <dl>
+            <dt><%= Event.human_attribute_name(:expiration_date) %>: </dt>
+            <dd><%= I18n.localize(@event.expiration_date) %></dd>
+            <dt><%= Event.human_attribute_name(:default_value) %>: </dt>
+            <dd><%= number_to_currency(@order.default_value, locale: :'pt-BR') %></dd>
+            <dt><%= Event.human_attribute_name(:discount) %>: </dt>
+            <dd><%= number_to_currency(@event.discount, locale: :'pt-BR') %></dd>
+            <dt><%= Event.human_attribute_name(:surcharge) %>: </dt>
+            <dd><%= number_to_currency(@event.surcharge, locale: :'pt-BR') %></dd>
+            <dt><%= Event.human_attribute_name(:final_value) %>: </dt>
+            <dd><%= number_to_currency(@event.final_value, locale: :'pt-BR') %></dd>
+            <dt><%= Event.human_attribute_name(:description) %>: </dt>
+            <dd><%= @event.description %></dd>
+            <dt><%= Event.human_attribute_name(:payment_method) %>: </dt>
+            <dd><%= @event.payment_method.name %></dd>
+        </dl>
+    </div>
+</div>
 
-<% if customer_signed_in? %>
-    <% if @event.expiration_date >= Date.today && @event.pending? %>
-        <%= button_to 'Confirmar Evento', confirmed_event_type_order_event_path(@event_type, @order, @event)%>
-    <% else %>
-        <p>Data de vencimento expirada!</p>
-    <% end %>
+
+<% if customer_signed_in? && @order.pending_confirmation?  %>
+    <div class="text-center">
+        <%= button_to 'Confirmar Evento', confirmed_event_type_order_event_path(@event_type, @order, @event), class: 'btn btn-success'%>
+    </div>
 <% end %>

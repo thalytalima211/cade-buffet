@@ -40,6 +40,10 @@ class BuffetsController < ApplicationController
 
   def orders
     @pending_orders = Order.where(buffet: @buffet, status: :pending)
+    @accepted_orders = Order.where(buffet: @buffet, status: :accepted)
+    @pending_confirmation_orders = Order.where(buffet: @buffet, status: :pending_confirmation)
+    @canceled_orders = Order.where(buffet: @buffet, status: :cancelled)
+    @expired_orders = Order.where(buffet: @buffet, status: :expired)
   end
 
   private

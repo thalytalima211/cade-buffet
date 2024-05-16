@@ -153,7 +153,9 @@ describe 'Administrador vê pedidos' do
                                   buffet: buffet)
     customer =  Customer.create!(name: 'Maria', cpf: CPF.generate, email: 'maria@email.com', password: 'senha123')
     first_order = Order.create!(event_type: event_type, buffet: buffet, customer: customer, number_of_guests: 80,
-                                estimated_date: 1.month.from_now, address: 'Av. das Delícias, 1234')
+                                estimated_date: 1.month.from_now, address: 'Av. das Delícias, 1234', status: :accepted)
+    event = Event.create!(payment_method: cash, order: first_order, customer: customer, buffet: buffet,
+                          expiration_date: 2.weeks.from_now, surcharge: 0.00, discount: 0.00, description: 'Evento Padrão')
     second_order = Order.create!(event_type: event_type, buffet: buffet, customer: customer, number_of_guests: 45,
                                 estimated_date: 1.month.from_now, address: 'Av. dos Noivos, 14')
 
@@ -161,7 +163,7 @@ describe 'Administrador vê pedidos' do
     login_as(admin, scope: :admin)
     visit root_path
     click_on 'Pedidos'
-    click_on first_order.code
+    click_on second_order.code
 
     # Assert
     expect(page).to have_content 'Atenção: Há outro pedido em seu buffet estimado para esta mesma data'

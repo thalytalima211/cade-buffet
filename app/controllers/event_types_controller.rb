@@ -9,7 +9,6 @@ class EventTypesController < ApplicationController
 
   def create
     @event_type = EventType.new(event_type_params)
-    @event_type.default_address = params[:default_address].to_i if params[:default_address]
     @event_type.buffet = current_admin.buffet
     if @event_type.save
       redirect_to buffet_path(current_admin.buffet), notice: 'Tipo de evento cadastrado com sucesso'

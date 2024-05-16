@@ -1,51 +1,53 @@
-<h2 class="mb-4">Crie sua conta</h2>
+<div class="my-5 w-75 text-center bg-primary-subtle p-5 rounded-5" style="margin: 0 auto;">
+  <h2 class="mb-4">Crie sua conta</h2>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%= render "customers/shared/error_messages", resource: resource %>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "customers/shared/error_messages", resource: resource %>
-
-  <div class="field mb-3 row">
-    <%= f.label :name, class: 'col-sm-2 col-form-label' %>
-    <div class="col-sm-10">
-      <%= f.text_field :name, class: "form-control", autofocus: true, autocomplete: "Nome"  %>
+    <div class="field mb-3 row">
+      <%= f.label :name, class: 'col-sm-2 col-form-label' %>
+      <div class="col-sm-10">
+        <%= f.text_field :name, class: "form-control", autofocus: true, autocomplete: "Nome"  %>
+      </div>
     </div>
-  </div>
 
-  <div class="field mb-3 row">
-    <%= f.label :cpf, class: 'col-sm-2 col-form-label' %>
-    <div class="col-sm-10">
-      <%= f.text_field :cpf, class: "form-control", autofocus: true, autocomplete: "CPF"  %>
+    <div class="field mb-3 row">
+      <%= f.label :cpf, class: 'col-sm-2 col-form-label' %>
+      <div class="col-sm-10">
+        <%= f.text_field :cpf, class: "form-control", autofocus: true, autocomplete: "CPF"  %>
+      </div>
     </div>
-  </div>
 
-  <div class="field mb-3 row">
-    <%= f.label :email, class: 'col-sm-2 col-form-label' %>
-    <div class="col-sm-10">
-      <%= f.email_field :email, class: "form-control", autofocus: true, autocomplete: "Email" %>
+    <div class="field mb-3 row">
+      <%= f.label :email, class: 'col-sm-2 col-form-label' %>
+      <div class="col-sm-10">
+        <%= f.email_field :email, class: "form-control", autofocus: true, autocomplete: "Email" %>
+      </div>
     </div>
-  </div>
 
-  <div class="field mb-3 row align-items-center">
-    <div class='col-sm-2 col-form-label'>
-      <%= f.label :password %>
-      <% if @minimum_password_length %>
-      <br>(<%= @minimum_password_length %> caracteres mínimos)
-      <% end %>
+    <div class="field mb-3 row align-items-center">
+      <div class='col-sm-2 col-form-label'>
+        <%= f.label :password %>
+        <% if @minimum_password_length %>
+        <br>(<%= @minimum_password_length %> caracteres mínimos)
+        <% end %>
+      </div>
+      <div class="col-sm-10">
+        <%= f.password_field :password, class: "form-control", autocomplete: "Nova Senha" %>
+      </div>
     </div>
-    <div class="col-sm-10">
-      <%= f.password_field :password, class: "form-control", autocomplete: "Nova Senha" %>
+
+    <div class="field mb-3 row">
+      <%= f.label :password_confirmation, class: 'col-sm-2 col-form-label' %>
+      <div class="col-sm-10">
+        <%= f.password_field :password_confirmation, class: "form-control", autocomplete: "new-password" %>
+      </div>
     </div>
-  </div>
 
-  <div class="field mb-3 row">
-    <%= f.label :password_confirmation, class: 'col-sm-2 col-form-label' %>
-    <div class="col-sm-10">
-      <%= f.password_field :password_confirmation, class: "form-control", autocomplete: "new-password" %>
+    <div class="actions row justify-content-center m-3">
+      <%= f.submit "Cadastre-se", class: 'col-3 m-2 btn btn-dark '%>
     </div>
-  </div>
+  <% end %>
 
-  <div class="actions row justify-content-center m-3">
-    <%= f.submit "Cadastre-se", class: 'col-3 m-2 btn btn-dark '%>
-  </div>
-<% end %>
+  <%= render "customers/shared/links" %>
+</div>
 
-<%= render "customers/shared/links" %>
