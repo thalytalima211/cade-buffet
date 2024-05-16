@@ -6,7 +6,7 @@ class Event < ApplicationRecord
 
   validates :expiration_date, :surcharge, :discount, :description, :payment_method,  presence: true
   validates :surcharge, :discount, numericality: {greater_than_or_equal_to: 0}
-  validates :expiration_date, comparison: {greater_than: Date.today}
+  validates :expiration_date, comparison: {greater_than: Date.today}, on: :create
 
   before_save :calculate_final_value
 

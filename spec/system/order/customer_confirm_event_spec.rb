@@ -108,22 +108,22 @@ describe 'Cliente confirma evento' do
     order = Order.create!(event_type: event_type, buffet: buffet, customer: customer, number_of_guests: 80,
                           estimated_date: 2.weeks.from_now, address: 'Av. das Delícias, 1234', details: 'Rosas brancas',
                           status: :pending_confirmation)
-    travel_to 2.days.ago do
-      event = Event.create!(expiration_date: 1.day.from_now, surcharge: 200.00, discount: 0.00, payment_method: pix,
-                            description: 'Adicional pelo custo das rosas brancas', order: order, customer: customer,
-                            buffet: buffet)
-    end
+    event = Event.create!(expiration_date: 1.day.from_now, surcharge: 200.00, discount: 0.00, payment_method: pix,
+                          description: 'Adicional pelo custo das rosas brancas', order: order, customer: customer,
+                          buffet: buffet)
 
-    # Act
-    login_as(customer, scope: :customer)
-    visit root_path
-    click_on 'Meus Pedidos'
-    within('#expired-orders') do
-      click_on order.code
-    end
+    travel_to 2.days.from_now do
+      # Act
+      login_as(customer, scope: :customer)
+      visit root_path
+      click_on 'Meus Pedidos'
+      within('#expired-orders') do
+        click_on order.code
+      end
 
-    # Assert
-    expect(page).to have_content 'Status: Pedido Expirado'
-    expect(page).not_to have_button 'Confirmar Evento'
+      # Assert
+      expect(page).to have_content 'Status: Pedido Expirado'
+      expect(page).not_to have_button 'Confirmar Evento'
+    end
   end
 end
