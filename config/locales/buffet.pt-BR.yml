@@ -18,9 +18,6 @@ pt-BR:
         city: Cidade
         zip_code: CEP
         description: Descrição
-        accepts_cash: Dinheiro
-        accepts_pix: PIX
-        accepts_credit_card: Cartão de Crédito
         location: Localização
         contact: Contato
   found:

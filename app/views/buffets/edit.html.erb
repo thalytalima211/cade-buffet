@@ -52,7 +52,7 @@
 
     <div class="m-3">
         <h4 class="text-body-secondary my-3">Métodos de Pagamento</h4>
-        <div class="d-flex justify-content-around mx-5">
+        <div class="d-flex justify-content-around align-items-center mx-5">
             <%= collection_check_boxes(:buffet, :payment_methods, PaymentMethod.all, :id, :name, { checked: @buffet.payment_method_ids }, class: 'm-3') %>
         </div>
     </div>

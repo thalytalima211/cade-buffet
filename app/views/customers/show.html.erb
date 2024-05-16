@@ -8,15 +8,15 @@
     </svg>
 </div>
 </a>
-<div id="pending-confirmation-orders" class="collapse row row-cols-3 justify-content-center">
+<div id="pending-confirmation-orders" class="collapse row row-cols-3 justify-content-center mb-4">
 <% if @pending_confirmation_orders.any? %>
     <% @pending_confirmation_orders.each do |order| %>
         <a href="<%= event_type_order_event_path(order.event_type, order, order.event)%>" class="card col-sm-3 me-3 mt-3 p-0 text-center" style="text-decoration: none;">
             <div class="card-header bg-warning"><b class="text-light"><%= order.code %></b></div>
             <div class="card-body">
                 <dl>
-                    <dt><%= Order.human_attribute_name(:customer) %>: </dt>
-                    <dd><%= order.customer.name %></dd>
+                    <dt><%= Order.human_attribute_name(:buffet) %>: </dt>
+                    <dd><%= order.buffet.brand_name %></dd>
                     <dt><%= Order.human_attribute_name(:event_type) %>: </dt>
                     <dd><%= order.event_type.name %></dd>
                     <dt><%= Event.human_attribute_name(:final_value) %>: </dt>
@@ -40,21 +40,23 @@
     </svg>
 </div>
 </a>
-<div id="accepted-orders" class="collapse row row-cols-3 justify-content-center">
+<div id="accepted-orders" class="collapse row row-cols-3 justify-content-center mb-4">
 <% if @accepted_orders.any? %>
     <% @accepted_orders.each do |order| %>
         <a href="<%= event_type_order_event_path(order.event_type, order, order.event)%>" class="card col-sm-3 me-3 mt-3 p-0 text-center" style="text-decoration: none;">
             <div class="card-header bg-success"><b class="text-light"><%= order.code %></b></div>
             <div class="card-body">
                 <dl>
-                    <dt><%= Order.human_attribute_name(:customer) %>: </dt>
-                    <dd><%= order.customer.name %></dd>
+                    <dt><%= Order.human_attribute_name(:buffet) %>: </dt>
+                    <dd><%= order.buffet.brand_name %></dd>
                     <dt><%= Order.human_attribute_name(:event_type) %>: </dt>
                     <dd><%= order.event_type.name %></dd>
                     <dt><%= Order.human_attribute_name(:estimated_date) %>: </dt>
                     <dd><%= I18n.localize(order.estimated_date) %></dd>
                     <dt><%= Event.human_attribute_name(:final_value) %>: </dt>
                     <dd><%= number_to_currency(order.event.final_value, locale: :'pt-BR') %></dd>
+                    <dt><%= Order.human_attribute_name(:address) %>: </dt>
+                    <dd><%= order.address %></dd>
                 </dl>
             </div>
         </a>
@@ -72,15 +74,15 @@
     </svg>
 </div>
 </a>
-<div id="pending-orders" class="collapse row row-cols-3 justify-content-center">
+<div id="pending-orders" class="collapse row row-cols-3 justify-content-center mb-4">
 <% if @pending_orders.any? %>
     <% @pending_orders.each do |order| %>
         <a href="<%= event_type_order_path(order.event_type, order)%>" class="card col-sm-3 me-3 mt-3 p-0 text-center" style="text-decoration: none;">
             <div class="card-header bg-info"><b class="text-light"><%= order.code %></b></div>
             <div class="card-body">
                 <dl>
-                    <dt><%= Order.human_attribute_name(:customer) %>: </dt>
-                    <dd><%= order.customer.name %></dd>
+                    <dt><%= Order.human_attribute_name(:buffet) %>: </dt>
+                    <dd><%= order.buffet.brand_name %></dd>
                     <dt><%= Order.human_attribute_name(:event_type) %>: </dt>
                     <dd><%= order.event_type.name %></dd>
                     <dt><%= Order.human_attribute_name(:estimated_date) %>: </dt>
@@ -102,21 +104,19 @@
     </svg>
 </div>
 </a>
-<div id="canceled-orders" class="collapse row row-cols-3 justify-content-center">
+<div id="canceled-orders" class="collapse row row-cols-3 justify-content-center mb-4">
 <% if @canceled_orders.any? %>
     <% @canceled_orders.each do |order| %>
         <a href="<%= event_type_order_path(order.event_type, order)%>" class="card col-sm-3 me-3 mt-3 p-0 text-center" style="text-decoration: none;">
             <div class="card-header bg-danger"><b class="text-light"><%= order.code %></b></div>
             <div class="card-body">
                 <dl>
-                    <dt><%= Order.human_attribute_name(:customer) %>: </dt>
-                    <dd><%= order.customer.name %></dd>
+                    <dt><%= Order.human_attribute_name(:buffet) %>: </dt>
+                    <dd><%= order.buffet.brand_name %></dd>
                     <dt><%= Order.human_attribute_name(:buffet) %>: </dt>
                     <dd><%= order.buffet.brand_name %></dd>
                     <dt><%= Order.human_attribute_name(:event_type) %>: </dt>
                     <dd><%= order.event_type.name %></dd>
-                    <dt><%= Order.human_attribute_name(:estimated_date) %>: </dt>
-                    <dd><%= I18n.localize(order.estimated_date) %></dd>
                 </dl>
             </div>
         </a>
@@ -134,15 +134,15 @@
     </svg>
 </div>  
 </a>
-<div class="collapse row row-cols-3 justify-content-center" id="expired-orders">
+<div class="collapse row row-cols-3 justify-content-center mb-4" id="expired-orders">
 <% if @expired_orders.any? %>
     <% @expired_orders.each do |order| %>
         <a href="<%= event_type_order_event_path(order.event_type, order, order.event)%>" class="card col-sm-3 me-3 mt-3 p-0 text-center" style="text-decoration: none;">
             <div class="card-header bg-secondary"><b class="text-light"><%= order.code %></b></div>
             <div class="card-body">
                 <dl>
-                    <dt><%= Order.human_attribute_name(:customer) %>: </dt>
-                    <dd><%= order.customer.name %></dd>
+                    <dt><%= Order.human_attribute_name(:buffet) %>: </dt>
+                    <dd><%= order.buffet.brand_name %></dd>
                     <dt><%= Order.human_attribute_name(:event_type) %>: </dt>
                     <dd><%= order.event_type.name %></dd>
                     <dt><%= Event.human_attribute_name(:expiration_date) %>: </dt>
