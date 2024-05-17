@@ -63,8 +63,11 @@ rspec
 
 ![](https://lh3.googleusercontent.com/drive-viewer/AKGpihb0i3xJO2AG-LE__Cte3mERm78XAiNrqRxJhNSnSaHWsDtC7IXMeOeoP9OBCxuT9C44es1prw2MACdoqc_5RsMQt0zGbKgFyw=w1920-h912)
 
-Exibição da página inicial da aplicação, com buffets cadastrados e acesso aos tipos de eventos oferecidos
+Exibição da página inicial da aplicação, com buffets cadastrados e acesso aos tipos de eventos oferecidos.
 
 ![](https://lh3.googleusercontent.com/drive-viewer/AKGpihYgIQ9YxBbXbWSPwgCcAV9GCDzr-oz6MkQEZY9Hh5T6cRponpRVCnw7pjoXj1kmX_xmsjGVcMimeuYiWu8WCqKJGLFL_gk3sbw=w1920-h912)
 
-Tela de pedidos de um cliente específico, com abas classificando cada pedido de acordo com seu status
+Tela de pedidos de um cliente específico, com abas classificando cada pedido de acordo com seu status.
+
+Ao rodar o comando ```rails db:seed``` é carregado no banco de dados informações iniciais de pedidos de uma cliente pré-cadastrada.
+Dados de login - Email: flavia_soares@gmail.com  Senha: senha123
