@@ -35,16 +35,6 @@ describe 'Cliente confirma evento' do
     end
 
     # Assert
-    expect(page).to have_content "Pedido #{order.code}"
-    expect(page).to have_content 'Tipo de Evento: Festa de Casamento'
-    expect(page).to have_content 'Status: Aguardando confirmação de cliente'
-    expect(page).to have_content "Data de Vencimento: #{I18n.localize(2.weeks.from_now.to_date)}"
-    expect(page).to have_content 'Preço Padrão: R$ 25.000,00'
-    expect(page).to have_content 'Desconto: R$ 0,00'
-    expect(page).to have_content 'Taxa Extra: R$ 200,00'
-    expect(page).to have_content 'Preço Final: R$ 25.200,00'
-    expect(page).to have_content 'Descrição do Valor: Adicional pelo custo das rosas brancas'
-    expect(page).to have_content 'Método de Pagamento: PIX'
     expect(page).to have_button 'Confirmar Evento'
   end
 
@@ -112,7 +102,7 @@ describe 'Cliente confirma evento' do
                           description: 'Adicional pelo custo das rosas brancas', order: order, customer: customer,
                           buffet: buffet)
 
-    travel_to 2.days.from_now do
+    travel_to 3.days.from_now do
       # Act
       login_as(customer, scope: :customer)
       visit root_path

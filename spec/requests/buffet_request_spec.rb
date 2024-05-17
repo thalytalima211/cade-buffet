@@ -54,4 +54,23 @@ describe 'Auteniticação - Buffet' do
     # Assert
     expect(response).to redirect_to new_admin_session_path
   end
+
+  it 'Administrador com buffet cadastrado cria novo buffet' do
+    # Arrange
+    cash = PaymentMethod.create!(name: 'Dinheiro')
+    admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
+    buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
+                            registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
+                            email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
+                            neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
+                            description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
+                            admin: admin, payment_methods: [cash])
+
+    # Act
+    login_as(admin, scope: :admin)
+    post buffets_path
+
+    # Assert
+    expect(response).to redirect_to root_path
+  end
 end

@@ -1,7 +1,7 @@
 class EventTypesController < ApplicationController
-  before_action :authenticate_admin!, only: [:new, :create, :edit]
+  before_action :authenticate_admin!, only: [:new, :create, :edit, :update]
   before_action :find_event_type, only: [:edit, :update]
-  before_action :check_admin, only: [:edit]
+  before_action :check_admin, only: [:edit, :update]
 
   def new
     @event_type = EventType.new

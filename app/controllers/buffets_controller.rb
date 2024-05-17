@@ -1,8 +1,9 @@
 class BuffetsController < ApplicationController
   before_action :block_customer, only: [:edit, :update, :new, :create]
   before_action :authenticate_admin!, only: [:edit, :update, :new, :create]
-  before_action :set_buffet, only: [:show]
-  before_action :check_buffet, only: [:edit, :update, :orders]
+  before_action :unique_buffet, only: [:new, :create]
+  before_action :set_buffet, only: [:show, :orders]
+  before_action :check_buffet, only: [:edit, :update]
 
   def new
     @buffet = Buffet.new
@@ -39,14 +40,24 @@ class BuffetsController < ApplicationController
   end
 
   def orders
-    @pending_orders = Order.where(buffet: @buffet, status: :pending)
-    @accepted_orders = Order.where(buffet: @buffet, status: :accepted)
-    @pending_confirmation_orders = Order.where(buffet: @buffet, status: :pending_confirmation)
-    @canceled_orders = Order.where(buffet: @buffet, status: :cancelled)
-    @expired_orders = Order.where(buffet: @buffet, status: :expired)
+    if !admin_signed_in? || current_admin != @buffet.admin
+      redirect_to root_path, notice: 'Você não tem acesso aos pedidos desse buffet'
+    else
+      @pending_orders = Order.where(buffet: @buffet, status: :pending)
+      @accepted_orders = Order.where(buffet: @buffet, status: :accepted)
+      @pending_confirmation_orders = Order.where(buffet: @buffet, status: :pending_confirmation)
+      @canceled_orders = Order.where(buffet: @buffet, status: :cancelled)
+      @expired_orders = Order.where(buffet: @buffet, status: :expired)
+    end
   end
 
   private
+
+  def unique_buffet
+    if current_admin.buffet.present?
+      redirect_to root_path, notice: 'Você não pode cadastrar um novo buffet a conta atual'
+    end
+  end
 
   def buffet_params
     payment_methods = []

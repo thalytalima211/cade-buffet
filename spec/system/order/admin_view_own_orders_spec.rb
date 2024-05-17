@@ -20,7 +20,7 @@ describe 'Administrador vê pedidos' do
     expect(page).to have_link 'Pedidos'
   end
 
-  it 'e deve estar autenticado' do
+  it 'e não vê botão para pedidos se não estiver autenticado' do
     # Arrange
 
     # Act
@@ -28,6 +28,25 @@ describe 'Administrador vê pedidos' do
 
     # Assert
     expect(page).not_to have_link 'Pedidos'
+  end
+
+  it 'e deve estar autenticado' do
+    # Arrange
+    cash = PaymentMethod.create!(name: 'Dinheiro')
+    admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
+    buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
+                            registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
+                            email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
+                            neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
+                            description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
+                            admin: admin, payment_methods: [cash])
+
+    # Act
+    visit orders_buffet_path(buffet)
+
+    # Assert
+    expect(current_path).to eq root_path
+    expect(page).to have_content 'Você não tem acesso aos pedidos desse buffet'
   end
 
   it 'e deve ter um buffet cadastrado' do
@@ -42,7 +61,7 @@ describe 'Administrador vê pedidos' do
     expect(page).not_to have_link 'Pedidos'
   end
 
-  it 'e não vê outros pedidos' do
+  it 'e vê seus próprios pedidos' do
     # Arrange
     cash = PaymentMethod.create!(name: 'Dinheiro')
     first_admin = Admin.create!(email: 'admin1@email.com', password: 'senha123')
@@ -169,7 +188,34 @@ describe 'Administrador vê pedidos' do
     expect(page).to have_content 'Atenção: Há outro pedido em seu buffet estimado para esta mesma data'
   end
 
-  it 'e não visita pedidos de outros buffets' do
+  it 'e não vê listagem de pedidos de outro buffet' do
+    # Arrange
+    cash = PaymentMethod.create!(name: 'Dinheiro')
+    first_admin = Admin.create!(email: 'admin1@email.com', password: 'senha123')
+    second_admin = Admin.create!(email: 'admin2@email.com', password: 'senha123')
+    first_buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
+                                  registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
+                                  email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
+                                  neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
+                                  description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
+                                  admin: first_admin, payment_methods: [cash])
+    second_buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
+                                  registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
+                                  email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
+                                  neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
+                                  description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
+                                  admin: second_admin, payment_methods: [cash])
+
+    # Act
+    login_as(first_admin, scope: :admin)
+    visit orders_buffet_path(second_buffet)
+
+    # Assert
+    expect(current_path).to eq buffet_path(first_buffet)
+    expect(page).to have_content 'Você não tem acesso aos pedidos desse buffet'
+  end
+
+  it 'e não visita detalhes de pedidos de outros buffets' do
     # Arrange
     cash = PaymentMethod.create!(name: 'Dinheiro')
     first_admin = Admin.create!(email: 'admin1@email.com', password: 'senha123')

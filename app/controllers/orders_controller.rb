@@ -30,12 +30,20 @@ class OrdersController < ApplicationController
   end
 
   def cancelled
-    @order.cancelled!
-    redirect_to orders_buffet_path(@event_type.buffet)
+    if !admin_signed_in? || current_admin.buffet != @event_type.buffet
+      redirect_to root_path
+    else
+      @order.cancelled!
+      redirect_to orders_buffet_path(@event_type.buffet)
+    end
   end
 
   def accepted
-    redirect_to new_event_type_order_event_path(@event_type, @order)
+    if !admin_signed_in? || current_admin.buffet != @event_type.buffet
+      redirect_to root_path
+    else
+      redirect_to new_event_type_order_event_path(@event_type, @order)
+    end
   end
 
   private

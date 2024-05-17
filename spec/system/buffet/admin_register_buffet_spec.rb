@@ -114,4 +114,24 @@ describe 'Administrador cadastra buffet' do
     expect(page).to have_content 'Nome Fantasia não pode ficar em branco'
     expect(page).to have_content 'CNPJ não pode ficar em branco'
   end
+
+  it 'e não pode cadastrar novo buffet se já houver um cadastrado em sua conta' do
+    # Arrange
+    cash = PaymentMethod.create!(name: 'Dinheiro')
+    admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
+    buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
+                            registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
+                            email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
+                            neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
+                            description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
+                            admin: admin, payment_methods: [cash])
+
+    # Act
+    login_as(admin, scope: :admin)
+    visit new_buffet_path
+
+    # Assert
+    expect(current_path).to eq buffet_path(buffet)
+    expect(page).to have_content 'Você não pode cadastrar um novo buffet a conta atual'
+  end
 end

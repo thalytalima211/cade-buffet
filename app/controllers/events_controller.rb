@@ -2,8 +2,12 @@ class EventsController < ApplicationController
   before_action :set_event_type_and_order, only: [:new, :create, :show, :confirmed]
 
   def new
-    @payment_methods = @event_type.buffet.payment_methods
-    @event = Event.new
+    if !admin_signed_in? || current_admin.buffet != @order.buffet
+      redirect_to root_path
+    else
+      @payment_methods = @event_type.buffet.payment_methods
+      @event = Event.new
+    end
   end
 
   def create
