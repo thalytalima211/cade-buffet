@@ -7,6 +7,7 @@ class BuffetsController < ApplicationController
 
   def new
     @buffet = Buffet.new
+    @buffet.build_photo
   end
 
   def create
@@ -60,13 +61,9 @@ class BuffetsController < ApplicationController
   end
 
   def buffet_params
-    payment_methods = []
-    params[:buffet][:payment_methods].each do |id|
-      payment_methods << PaymentMethod.find(id) if id != ''
-    end
     params.require(:buffet).permit(:corporate_name, :brand_name, :registration_number, :number_phone, :email,
-                                  :full_address, :neighborhood, :state, :city, :zip_code,
-                                  :description).merge({payment_methods: payment_methods})
+                                  :full_address, :neighborhood, :state, :city, :zip_code, :description,
+                                  payment_method_ids: [], photo_attributes: [:id, :image])
   end
 
   def set_buffet

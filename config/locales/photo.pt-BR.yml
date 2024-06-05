@@ -1,0 +1,22 @@
+pt-BR:
+  activerecord:
+    models:
+      Photo: Foto
+    attributes:
+      order:
+        customer: Cliente
+        customer_id: Cliente
+        buffet: Buffet
+        buffet_id: Buffet
+        event_type: Tipo de Evento
+        event_type_id: Tipo de Evento
+        estimated_date: Data Estimada
+        number_of_guests: Quantidade de Convidados
+        details: Detalhes
+        address: Endereço
+        status: Status
+        pending: Aguardando avaliação do buffet
+        pending_confirmation: Aguardando confirmação de cliente
+        expired: Pedido Expirado
+        cancelled: Pedido Cancelado
+        accepted: Pedido Confirmado

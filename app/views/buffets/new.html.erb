@@ -53,9 +53,16 @@
     <div class="m-3">
         <h4 class="text-body-secondary my-3">Métodos de Pagamento</h4>
         <div class="d-flex justify-content-around align-items-center mx-5">
-            <%= collection_check_boxes(:buffet, :payment_methods, PaymentMethod.all, :id, :name) %>
+            <%= collection_check_boxes(:buffet, :payment_method_ids , PaymentMethod.all, :id, :name) %>
         </div>
     </div>
+
+    <%= f.fields_for :photo, @buffet.photo do |photo_form| %>
+        <div>
+            <%= photo_form.label :image, 'Imagem do Buffet' %>
+            <%= photo_form.file_field :image %>
+        </div>
+    <% end %>
 
     <div>
         <%= f.submit 'Enviar', class: 'my-4 btn btn-primary' %>

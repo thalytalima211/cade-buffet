@@ -57,6 +57,13 @@
         </div>
     </div>
     
+    <%= f.fields_for :photo, @buffet.photo do |photo_form| %>
+        <div>
+            <%= photo_form.label :image, 'Imagem do Buffet' %>
+            <%= photo_form.file_field :image %>
+        </div>
+    <% end %>
+    
     <div>
         <%= f.submit 'Enviar', class: 'my-4 btn btn-primary' %>
     </div>

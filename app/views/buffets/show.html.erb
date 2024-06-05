@@ -26,6 +26,8 @@
                 
             </dd>
         </dl>
+        <%= image_tag(@buffet.photo.image, class: 'mw-100 figure') %>
+        <p class="figure-caption text-center">Imagem do buffet <%= @buffet.brand_name%></p>
         <% if admin_signed_in? && current_admin == @buffet.admin %>
             <div class="text-center">
                 <a href="<%= edit_buffet_path(@buffet) %>" class="btn btn-primary">

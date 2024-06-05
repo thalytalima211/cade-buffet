@@ -42,6 +42,7 @@ describe 'Administrador cadastra buffet' do
     expect(page).to have_field 'Dinheiro'
     expect(page).to have_field 'PIX'
     expect(page).to have_field 'Cartão de Crédito'
+    expect(page).to have_field 'Imagem do Buffet'
     expect(page).to have_button 'Enviar'
   end
 
@@ -82,11 +83,14 @@ describe 'Administrador cadastra buffet' do
     fill_in 'Descrição', with: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis'
     check 'Dinheiro'
     check 'PIX'
+    attach_file 'Imagem do Buffet', Rails.root.join('spec', 'support', 'images', 'buffet_image.jpg')
+    save_page
     click_on 'Enviar'
 
     # Assert
     expect(page).to have_content 'Buffet cadastrado com sucesso'
     expect(page).to have_content 'Sabores Divinos Buffet'
+    expect(page).to have_css 'img[src*="buffet_image.jpg"]'
     expect(page).to have_content 'Razão Social: Sabores Divinos Eventos Ltda.'
     expect(page).to have_content "CNPJ: #{cnpj}"
     expect(page).to have_content "Métodos de Pagamento:\nDinheiro PIX"
@@ -119,12 +123,15 @@ describe 'Administrador cadastra buffet' do
     # Arrange
     cash = PaymentMethod.create!(name: 'Dinheiro')
     admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
+    buffet_photo = Photo.create!()
+    buffet_photo.image.attach(io: File.open(Rails.root.join('spec', 'support', 'images', 'buffet_image.jpg')),
+                              filename: 'buffet_image.jpg')
     buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
                             registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
                             email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
                             neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
                             description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
-                            admin: admin, payment_methods: [cash])
+                            admin: admin, payment_methods: [cash], photo: buffet_photo)
 
     # Act
     login_as(admin, scope: :admin)

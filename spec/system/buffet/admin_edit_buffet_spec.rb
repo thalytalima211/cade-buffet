@@ -5,12 +5,15 @@ describe 'Administrador edita buffet' do
     # Arrange
     cash = PaymentMethod.create!(name: 'Dinheiro')
     admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
+    buffet_photo = Photo.create!()
+    buffet_photo.image.attach(io: File.open(Rails.root.join('spec', 'support', 'images', 'buffet_image.jpg')),
+                              filename: 'buffet_image.jpg')
     buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
                             registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
                             email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
                             neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
                             description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
-                            admin: admin, payment_methods: [cash])
+                            admin: admin, payment_methods: [cash], photo: buffet_photo)
 
     # Act
     visit edit_buffet_path(buffet.id)
@@ -23,12 +26,15 @@ describe 'Administrador edita buffet' do
     # Arrange
     cash = PaymentMethod.create!(name: 'Dinheiro')
     admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
+    buffet_photo = Photo.create!()
+    buffet_photo.image.attach(io: File.open(Rails.root.join('spec', 'support', 'images', 'buffet_image.jpg')),
+                              filename: 'buffet_image.jpg')
     buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
                             registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
                             email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
                             neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
                             description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
-                            admin: admin, payment_methods: [cash])
+                            admin: admin, payment_methods: [cash], photo: buffet_photo)
 
     # Act
     visit root_path
@@ -42,19 +48,22 @@ describe 'Administrador edita buffet' do
     # Arrange
     cash = PaymentMethod.create!(name: 'Dinheiro')
     first_admin = Admin.create!(email: 'contato@saboresdivinos.com', password: 'senha123')
+    buffet_photo = Photo.create!()
+    buffet_photo.image.attach(io: File.open(Rails.root.join('spec', 'support', 'images', 'buffet_image.jpg')),
+                              filename: 'buffet_image.jpg')
     first_buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
                                   registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
                                   email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
                                   neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
                                   description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
-                                  admin: first_admin, payment_methods: [cash])
+                                  admin: first_admin, payment_methods: [cash], photo: buffet_photo)
     second_admin = Admin.create!(email: 'contato@gourmetecia.com', password: 'senha123')
     second_buffet = Buffet.create!(corporate_name: 'Gourmet & Companhia Ltda.', brand_name: 'Gourmet & Companhia Ltda',
                                   registration_number: CNPJ.generate, number_phone: '(11)91234-5678',
                                   email: 'contato@gourmetecia.com',  full_address: 'Avenida Principal, 456',
                                   neighborhood: 'Jardins', city: 'Metropolis', state: 'SP', zip_code: '98765-432',
                                   description: 'Gourmet & Cia Buffet oferece serviços de buffet para eventos de todos os tamanhos.',
-                                  admin: second_admin, payment_methods: [cash])
+                                  admin: second_admin, payment_methods: [cash], photo: buffet_photo)
 
     # Act
     login_as(second_admin, scope: :admin)
@@ -68,12 +77,15 @@ describe 'Administrador edita buffet' do
     cnpj = CNPJ.new(CNPJ.generate).formatted
     cash = PaymentMethod.create!(name: 'Dinheiro')
     admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
+    buffet_photo = Photo.create!()
+    buffet_photo.image.attach(io: File.open(Rails.root.join('spec', 'support', 'images', 'buffet_image.jpg')),
+                              filename: 'buffet_image.jpg')
     buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
                             registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
                             email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
                             neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
                             description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
-                            admin: admin, payment_methods: [cash])
+                            admin: admin, payment_methods: [cash], photo: buffet_photo)
 
     # Act
     login_as(admin, scope: :admin)
@@ -96,18 +108,21 @@ describe 'Administrador edita buffet' do
     cash = PaymentMethod.create!(name: 'Dinheiro')
     admin1 = Admin.create!(email: 'admin1@email.com', password: 'senha123')
     admin2 = Admin.create!(email: 'admin2@email.com', password: 'senha123')
+    buffet_photo = Photo.create!()
+    buffet_photo.image.attach(io: File.open(Rails.root.join('spec', 'support', 'images', 'buffet_image.jpg')),
+                              filename: 'buffet_image.jpg')
     buffet1 = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
                             registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
                             email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
                             neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
                             description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
-                            admin: admin1, payment_methods: [cash])
+                            admin: admin1, payment_methods: [cash], photo: buffet_photo)
     buffet2 = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
                             registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
                             email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
                             neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
                             description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
-                            admin: admin2, payment_methods: [cash])
+                            admin: admin2, payment_methods: [cash], photo: buffet_photo)
 
     # Act
     login_as(admin2, scope: :admin)
@@ -122,12 +137,15 @@ describe 'Administrador edita buffet' do
     # Arrange
     cash = PaymentMethod.create!(name: 'Dinheiro')
     admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
+    buffet_photo = Photo.create!()
+    buffet_photo.image.attach(io: File.open(Rails.root.join('spec', 'support', 'images', 'buffet_image.jpg')),
+                              filename: 'buffet_image.jpg')
     buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
                             registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
                             email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
                             neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
                             description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
-                            admin: admin, payment_methods: [cash])
+                            admin: admin, payment_methods: [cash], photo: buffet_photo)
 
     # Act
     login_as(admin, scope: :admin)

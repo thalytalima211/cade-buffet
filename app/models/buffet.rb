@@ -5,10 +5,13 @@ class Buffet < ApplicationRecord
   has_many :events
   has_many :buffet_payment_methods
   has_many :payment_methods, through: :buffet_payment_methods
+  has_one :buffet_photo
+  has_one :photo, through: :buffet_photo
+  accepts_nested_attributes_for :photo
 
   validate :valid_registration_number
   validates :corporate_name, :brand_name, :registration_number, :number_phone, :email, :full_address,
-            :neighborhood, :state, :city, :zip_code, :description, :payment_methods, presence: true
+            :neighborhood, :state, :city, :zip_code, :description, :payment_methods, :photo, presence: true
   validates :registration_number, uniqueness: true
 
   def location
