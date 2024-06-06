@@ -3,63 +3,17 @@ require 'rails_helper'
 RSpec.describe Event, type: :model do
   describe '#valid' do
     context 'Data de Vencimento' do
-      it 'deve ter Data de Vencimento' do
-        event = Event.new(expiration_date: '')
-        event.valid?
-        expect(event.errors.include? :expiration_date).to be true
-      end
-
-      it 'Data de Vencimento não deve ser passada' do
-        event = Event.new(expiration_date: 1.day.ago)
-        event.valid?
-        expect(event.errors.include? :expiration_date).to be true
-        expect(event.errors[:expiration_date]).to include("deve ser maior que #{Date.today}")
-      end
-
-      it 'Data de Vencimento não deve ser igual a hoje' do
-        event = Event.new(expiration_date: Date.today)
-        event.valid?
-        expect(event.errors.include? :expiration_date).to be true
-        expect(event.errors[:expiration_date]).to include("deve ser maior que #{Date.today}")
-      end
-
-      it 'Data de Vencimento deve ser igual ou maior do que amanhã' do
-        event = Event.new(expiration_date: 1.day.from_now)
-        event.valid?
-        expect(event.errors.include? :expiration_date).to be false
-        expect(event.errors[:expiration_date]).not_to include("deve ser maior que #{Date.today}")
-      end
+      it {should validate_presence_of :expiration_date}
+      it {should validate_comparison_of(:expiration_date).is_greater_than(Date.today)}
     end
 
-    it 'deve ter Taxa Extra' do
-      event = Event.new(surcharge: '')
-      event.valid?
-      expect(event.errors.include? :surcharge).to eq true
-    end
+    it {should validate_presence_of :surcharge}
+    it {should validate_numericality_of(:surcharge).is_greater_than_or_equal_to(0)}
 
-    it 'Taxa Extra deve ser maior ou igual a 0' do
-      event = Event.new(surcharge: -1)
-      event.valid?
-      expect(event.errors.include? :surcharge).to eq true
-    end
+    it {should validate_presence_of :discount}
+    it {should validate_numericality_of(:discount).is_greater_than_or_equal_to(0)}
 
-    it 'deve ter Desconto' do
-      event = Event.new(discount: '')
-      event.valid?
-      expect(event.errors.include? :discount).to eq true
-    end
-
-    it 'Desconto deve ser maior ou igual a 0' do
-      event = Event.new(discount: -1)
-      event.valid?
-      expect(event.errors.include? :discount).to eq true
-    end
-
-    it 'deve ter Descrição' do
-      event = Event.new(description: '')
-      event.valid?
-      expect(event.errors.include? :description).to eq true
-    end
+    it {should validate_presence_of :description}
   end
 
   describe 'Calcula valor final' do
@@ -96,5 +50,12 @@ RSpec.describe Event, type: :model do
       # Assert
       expect(result).to eq 25_200.00
     end
+  end
+
+  describe 'Associações' do
+    it {should belong_to :payment_method}
+    it {should belong_to :order}
+    it {should belong_to :customer}
+    it {should belong_to :buffet}
   end
 end

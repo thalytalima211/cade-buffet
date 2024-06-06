@@ -2,17 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Customer, type: :model do
   describe '#valid?' do
-    it 'deve ter nome' do
-      customer = Customer.new(name: '')
-      customer.valid?
-      expect(customer.errors.include? :name).to be true
-    end
-
-    it 'deve ter CPF' do
-      customer = Customer.new(cpf: '')
-      customer.valid?
-      expect(customer.errors.include? :cpf).to be true
-    end
+    it {should validate_presence_of :name}
+    it {should validate_presence_of :cpf}
 
     it 'CPF deve ser único' do
       # Arrange
@@ -44,5 +35,10 @@ RSpec.describe Customer, type: :model do
       expect(customer.errors.include? :cpf).to be false
       expect(customer.cpf).to eq '682.927.992-57'
     end
+  end
+
+  context 'Associações' do
+    it {should have_many :orders}
+    it {should have_many :events}
   end
 end

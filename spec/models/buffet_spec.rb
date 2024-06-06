@@ -84,4 +84,16 @@ RSpec.describe Buffet, type: :model do
       expect(result).to eq '(55)5555-5555 - contato@saboresdivinos.com'
     end
   end
+
+  context 'Associações' do
+    it {should belong_to :admin}
+    it {should have_many :event_types}
+    it {should have_many :orders}
+    it {should have_many :events}
+    it {should have_many :buffet_payment_methods}
+    it {should have_many(:payment_methods).through(:buffet_payment_methods)}
+    it {should have_one :buffet_photo}
+    it {should have_one(:photo).through(:buffet_photo)}
+    it {should accept_nested_attributes_for :photo}
+  end
 end

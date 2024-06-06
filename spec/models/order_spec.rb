@@ -3,19 +3,11 @@ require 'rails_helper'
 RSpec.describe Order, type: :model do
   describe '#valid' do
     context 'Endereço' do
-      it 'deve ter Endereço' do
-        order = Order.new(address: '')
-        order.valid?
-        expect(order.errors.include? :address).to be true
-      end
+      it {should validate_presence_of :address}
     end
 
     context 'Quantidade de Convidados' do
-      it 'deve ter Quanitdade de Convidados' do
-        order = Order.new(number_of_guests: '')
-        order.valid?
-        expect(order.errors.include? :number_of_guests).to be true
-      end
+      it {should validate_presence_of :number_of_guests}
 
       it 'Quantidade de Convidados não pode ser menor do que o mínimo para o evento' do
         # Arrange
@@ -110,33 +102,13 @@ RSpec.describe Order, type: :model do
     end
 
     context 'Data Estimada' do
-      it 'deve ter Data Estimada' do
-        order = Order.new(estimated_date: '')
-        order.valid?
-        expect(order.errors.include? :estimated_date).to be true
-      end
-
-      it 'data estimada não deve ser passada' do
-        order = Order.new(estimated_date: 1.day.ago)
-        order.valid?
-        expect(order.errors.include? :estimated_date).to be true
-        expect(order.errors[:estimated_date]).to include("deve ser maior que #{Date.today}")
-      end
-
-      it 'data estimada não deve ser igual a hoje' do
-        order = Order.new(estimated_date: Date.today)
-        order.valid?
-        expect(order.errors.include? :estimated_date).to be true
-        expect(order.errors[:estimated_date]).to include("deve ser maior que #{Date.today}")
-      end
-
-      it 'data estimada deve ser igual ou maior do que amanhã' do
-        order = Order.new(estimated_date: 1.day.from_now)
-        order.valid?
-        expect(order.errors.include? :estimated_date).to be false
-        expect(order.errors[:estimated_date]).not_to include("deve ser maior que #{Date.today}")
-      end
+      it {should validate_presence_of :estimated_date}
+      it {should validate_comparison_of(:estimated_date).is_greater_than(Date.today)}
     end
+
+    it {should validate_presence_of :status}
+    it {should define_enum_for(:status).with_values(pending: 0, cancelled: 5, pending_confirmation: 7,
+                                                    expired: 8, accepted: 10)}
 
   end
 
@@ -251,5 +223,12 @@ RSpec.describe Order, type: :model do
       # Assert
       expect(result).to eq 25_000
     end
+  end
+
+  describe 'Associações' do
+    it {should belong_to :buffet}
+    it {should belong_to :event_type}
+    it {should belong_to :customer}
+    it {should have_one :event}
   end
 end
