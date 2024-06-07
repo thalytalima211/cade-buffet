@@ -1,5 +1,12 @@
-<div class="card col m-2 p-2 text-bg-light text-center">
-    <b><%= link_to buffet.brand_name, buffet_path(buffet), class: 'link-underline link-underline-opacity-0' %></b>
-    <%= buffet.city %>
-    <%= buffet.state %>
+<div class="col p-2" id="buffet-<%= buffet.id %>">
+    <%= link_to buffet_path(buffet), class: 'card my-2 text-bg-light text-center link-underline link-underline-opacity-0' do %>
+        <%= image_tag buffet.photo.image, class: 'card-img-top', size: '200' %>
+        <div class="card-body">
+            <h5 class="card-title text-primary fw-bold"><%= buffet.brand_name %></h5>
+            <p class="card-text">
+                <%= buffet.city %>
+                <%= buffet.state %>
+            </p>
+        </div>
+    <% end %>
 </div>

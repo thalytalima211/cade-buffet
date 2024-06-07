@@ -18,52 +18,67 @@ first_buffet_description = <<~DESCRIPTION.strip.gsub("\n", " ")
 O Buffet Estrela Dourada oferece uma experiência gastronômica única para eventos especiais. Com um cardápio
 diversificado e serviço de alta qualidade, tornamos seu evento inesquecível.
 DESCRIPTION
+first_buffet_photo = Photo.create!()
+first_buffet_photo.image.attach(io: File.open(Rails.root.join('app', 'assets', 'images', 'first_buffet.jpeg')),
+                              filename: 'first_buffet.jpeg')
 first_buffet = Buffet.create!(corporate_name: 'Estrela Dourada Buffet Ltda.', brand_name: 'Estrela Dourada',
                               registration_number: '48.723.329/0001-07', number_phone: '(11) 1234-5678',
                               email: 'contato@estreladourada.com.br', full_address: 'Rua das Flores, 100',
                               neighborhood: 'Jardim das Estrelas', city: 'Sâo Paulo', state: 'SP', zip_code: '01234-567',
                               description: first_buffet_description, admin: first_admin, payment_methods: [credit_card,
-                              cash])
+                              cash], photo: first_buffet_photo)
 second_buffet_description = <<~DESCRIPTION.strip.gsub("\n", " ")
 O Buffet Lua Cheia oferece uma atmosfera mágica para seus eventos. Com um ambiente sofisticado e culinária excepcional,
 transformamos suas celebrações em momentos inesquecíveis.
 DESCRIPTION
+second_buffet_photo = Photo.create!()
+second_buffet_photo.image.attach(io: File.open(Rails.root.join('app', 'assets', 'images', 'second_buffet.jpeg')),
+                              filename: 'second_buffet.jpeg')
 second_buffet = Buffet.create!(corporate_name: 'Lua Cheia Eventos Ltda.', brand_name: 'Lua Cheia',
                               registration_number: '44.524.856/0001-31', number_phone: '(21) 98765-4321',
                               email: 'contato@luacheiaeventos.com', full_address: 'Av. dos Anjos, 500',
                               neighborhood: 'Praia da Lua', city: 'Rio de Janeiro', state: 'RJ', zip_code: '21000-123',
                               description: second_buffet_description, admin: second_admin, payment_methods: [credit_card,
-                              debit_card])
+                              debit_card], photo: second_buffet_photo)
 third_buffet_description = <<~DESCRIPTION.strip.gsub("\n", " ")
 O Buffet Sol Nascente oferece uma experiência gastronômica refinada, com pratos exclusivos e serviço impecável.
 Transformamos seu evento em uma verdadeira celebração.
 DESCRIPTION
+third_buffet_photo = Photo.create!()
+third_buffet_photo.image.attach(io: File.open(Rails.root.join('app', 'assets', 'images', 'third_buffet.jpeg')),
+                              filename: 'third_buffet.jpeg')
 third_buffet = Buffet.create!(corporate_name: 'Sol Nascente Gastronomia Ltda.', brand_name: 'Sol Nascente',
                               registration_number: '97.840.378/0001-35', number_phone: '(31) 5432-1098',
                               email: 'contato@solnascentegastronomia.com', full_address: 'Rua das Palmeiras, 200',
                               neighborhood: 'Centro Solar', city: 'Belo Horizonte', state: 'MG', zip_code: '30123-456',
                               description: third_buffet_description, admin: third_admin, payment_methods: [credit_card,
-                              cash, pix])
+                              cash, pix], photo: third_buffet_photo)
 fourth_buffet_description = <<~DESCRIPTION.strip.gsub("\n", " ")
 O Buffet Gastronômico Encantos oferece uma variedade de pratos deliciosos, preparados com ingredientes frescos e
 selecionados. Garantimos uma experiência gastronômica única para seus eventos.
 DESCRIPTION
+fourth_buffet_photo = Photo.create!()
+fourth_buffet_photo.image.attach(io: File.open(Rails.root.join('app', 'assets', 'images', 'fourth_buffet.jpeg')),
+                              filename: 'fourth_buffet.jpeg')
 fourth_buffet = Buffet.create!(corporate_name: 'Encantos Gastronômicos Ltda.', brand_name: 'Encantos Gastronômico',
                               registration_number: '29.225.393/0001-13', number_phone: '(51) 2345-6789',
                               email: 'contato@encantosgastronomicos.com', full_address: 'Rua das Estrelas, 300',
                               neighborhood: 'Centro Encantado', city: 'Porto Alegre', state: 'RS', zip_code: '90000-321',
                               description: fourth_buffet_description, admin: fourth_admin, payment_methods: [credit_card,
-                              debit_card])
+                              debit_card], photo: fourth_buffet_photo)
 fifth_buffet_description = <<~DESCRIPTION.strip.gsub("\n", " ")
 O Buffet Delícias do Vale oferece uma fusão de sabores regionais e internacionais, proporcionando uma experiência
 culinária única para seus convidados. Surpreenda-se com nossas iguarias.
 DESCRIPTION
+fifth_buffet_photo = Photo.create!()
+fifth_buffet_photo.image.attach(io: File.open(Rails.root.join('app', 'assets', 'images', 'fifth_buffet.jpeg')),
+                              filename: 'fifth_buffet.jpeg')
 fifth_buffet = Buffet.create!(corporate_name: 'Delícias do Vale Eventos Ltda.', brand_name: 'Delícias do Vale',
                               registration_number: '55.857.806/0001-92', number_phone: '(85) 8765-4321',
                               email: 'contato@deliciasdovale.com', full_address: 'Av. das Águas, 400',
                               neighborhood: 'Vale Encantado', city: 'Fortaleza', state: 'CE', zip_code: '60000-987',
                               description: fifth_buffet_description, admin: fifth_admin, payment_methods: [credit_card,
-                              cash])
+                              cash], photo: fifth_buffet_photo)
 
 first_event_type = EventType.create!(name: 'Casamento Clássico', min_guests: 50, max_guests: 200,
                                     description: ' Um casamento tradicional e elegante, com decoração refinada',
@@ -150,61 +165,61 @@ customer = Customer.create!(name: 'Flávia Soares', cpf: '874.047.760-66', email
                             password: 'senha123')
 
 first_order = Order.create!(buffet: first_buffet, event_type: first_event_type, customer: customer,
-                            estimated_date: '2024-06-12', number_of_guests: 50,
+                            estimated_date: 1.week.from_now, number_of_guests: 50,
                             details: 'Jantar romântico à luz de velas, com música ao vivo de um quarteto de cordas',
                             address: 'Rua das Flores, 100')
 second_order = Order.create!(buffet: first_buffet, event_type: second_event_type, customer: customer,
-                            estimated_date: '2024-08-25', number_of_guests: 100,
+                            estimated_date: 2.weeks.from_now, number_of_guests: 100,
                             details: 'A festa será inspirada em um conto de fadas, com decoração que remete a um castelo encantado',
                             address: 'Rua das Flores, 100')
 third_order = Order.create!(buffet: first_buffet, event_type: third_event_type, customer: customer,
-                            estimated_date: '2024-07-15', number_of_guests: 50, status: :cancelled,
+                            estimated_date: 3.weeks.from_now, number_of_guests: 50, status: :cancelled,
                             details: 'O coquetel será realizado em um ambiente elegante, com decoração minimalista',
                             address: 'Rua das Palmeiras, 200')
 fourth_order = Order.create!(buffet: second_buffet, event_type: fourth_event_type, customer: customer,
-                            estimated_date: '2024-07-10', number_of_guests: 30, status: :cancelled,
+                            estimated_date: 4.weeks.from_now, number_of_guests: 30, status: :cancelled,
                             details: 'A festa terá como tema "Mundo dos Dinossauros", com decoração colorida e divertida',
                             address: 'Av. dos Anjos, 500')
 fifth_order = Order.create!(buffet: second_buffet, event_type: fifth_event_type, customer: customer,
-                            estimated_date: '2024-12-20', number_of_guests: 150, status: :pending_confirmation,
+                            estimated_date: 5.weeks.from_now, number_of_guests: 150, status: :pending_confirmation,
                             details: 'A festa deve ser decorada com elementos sofisticados e glamourosos',
                             address: 'Av. dos Anjos, 500')
 sixth_order = Order.create!(buffet: third_buffet, event_type: sixth_event_type, customer: customer,
-                            estimated_date: '2024-11-05', number_of_guests: 60, status: :pending_confirmation,
+                            estimated_date: 6.weeks.from_now, number_of_guests: 60, status: :pending_confirmation,
                             details: 'O brunch deverá ter mesas dispostas de forma a promover a interação entre os participantes',
                             address: 'Av. das Águas, 400')
 seventh_order = Order.create!(buffet: third_buffet, event_type: seventh_event_type, customer: customer,
-                            estimated_date: '2024-05-17', number_of_guests: 200, status: :expired,
+                            estimated_date: 7.weeks.from_now, number_of_guests: 200, status: :expired,
                             details: 'O jantar será realizado em um salão de eventos luxuoso, decorado com elegância e sofisticação',
                             address: 'Rua das Palmeiras, 200')
 eighth_order = Order.create!(buffet: third_buffet, event_type: eighth_event_type, customer: customer,
-                            estimated_date: '2024-09-20', number_of_guests: 40, status: :accepted,
+                            estimated_date: 8.weeks.from_now, number_of_guests: 40, status: :accepted,
                             details: 'O almoço será realizado em um ambiente corporativo',
                             address: 'Rua do Comércio, 500')
 nineth_order = Order.create!(buffet: fifth_buffet, event_type: nineth_event_type, customer: customer,
-                            estimated_date: '2024-10-31', number_of_guests: 80, status: :accepted,
+                            estimated_date: 9.weeks.from_now, number_of_guests: 80, status: :accepted,
                             details: 'A festa será realizada em um espaço decorado com abóboras, teias de aranha, e decorações assustadoras.',
                             address: 'Rua dos Sustos, 967')
 tenth_order = Order.create!(buffet: fifth_buffet, event_type: tenth_event_type, customer: customer,
-                            estimated_date: '2024-11-15', number_of_guests: 25, status: :accepted,
+                            estimated_date: 10.weeks.from_now, number_of_guests: 25, status: :accepted,
                             details: 'Decoração em tons suaves e elementos fofos, como ursinhos de pelúcia e nuvens',
                             address: 'Rua das Nuvens, 123')
 
 first_event = Event.create!(buffet: second_buffet, order: fifth_order, customer: customer, payment_method: debit_card,
-                            expiration_date: '2024-10-01', surcharge: 300.00, discount: 0.00,
+                            expiration_date: 7.weeks.from_now, surcharge: 300.00, discount: 0.00,
                             description: 'Custo adicional pela decoração especial')
 second_event = Event.create!(buffet: third_buffet, order: sixth_order, customer: customer, payment_method: credit_card,
-                            expiration_date: '2024-08-15', surcharge: 0.00, discount: 150.00,
+                            expiration_date: 8.weeks.from_now, surcharge: 0.00, discount: 150.00,
                             description: 'Custo promocional')
 third_event = Event.create!(buffet: third_buffet, order: seventh_order, customer: customer, payment_method: cash,
-                            expiration_date: '2024-05-17', surcharge: 0.00, discount: 0.00,
+                            expiration_date: 9.weeks.from_now, surcharge: 0.00, discount: 0.00,
                             description: 'Valor padrão')
 fourth_event = Event.create!(buffet: third_buffet, order: eighth_order, customer: customer, payment_method: pix,
-                            expiration_date: '2024-07-30', surcharge: 0.00, discount: 0.00,
+                            expiration_date: 10.weeks.from_now, surcharge: 0.00, discount: 0.00,
                             description: 'Valor padrão')
 fifth_event = Event.create!(buffet: fifth_buffet, order: nineth_order, customer: customer, payment_method: credit_card,
-                            expiration_date: '2024-08-24', surcharge: 0.00, discount: 200.00,
+                            expiration_date: 11.weeks.from_now, surcharge: 0.00, discount: 200.00,
                             description: 'Promoção especial do dia das bruxas')
 sixth_event = Event.create!(buffet: fifth_buffet, order: tenth_order, customer: customer, payment_method: cash,
-                            expiration_date: '2024-09-07', surcharge: 150.00, discount: 0.00,
+                            expiration_date: 12.weeks.from_now, surcharge: 150.00, discount: 0.00,
                             description: 'Adicional por decoração temática')
