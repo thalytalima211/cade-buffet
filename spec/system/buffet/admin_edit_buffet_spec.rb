@@ -72,6 +72,31 @@ describe 'Administrador edita buffet' do
     # Assert
     expect(page).not_to have_link 'Editar'
   end
+
+  it 'e vê pré-visualização da imagem anexada', js: true do
+    cnpj = CNPJ.new(CNPJ.generate).formatted
+    cash = PaymentMethod.create!(name: 'Dinheiro')
+    admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
+    buffet_photo = Photo.create!()
+    buffet_photo.image.attach(io: File.open(Rails.root.join('spec', 'support', 'images', 'buffet_image.jpg')),
+                              filename: 'buffet_image.jpg')
+    buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
+                            registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
+                            email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
+                            neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
+                            description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
+                            admin: admin, payment_methods: [cash], photo: buffet_photo)
+
+    login_as(admin, scope: :admin)
+    visit root_path
+    click_on 'Editar'
+    attach_file 'Imagem do Buffet', Rails.root.join('spec', 'support', 'images', 'buffet_image.jpg')
+
+    within('#imagePreview') do
+      expect(page).to have_css 'img'
+    end
+  end
+
   it 'com sucesso' do
     # Arrange
     cnpj = CNPJ.new(CNPJ.generate).formatted
@@ -94,6 +119,7 @@ describe 'Administrador edita buffet' do
     fill_in 'Cidade', with: 'Sorocaba'
     fill_in 'Bairro', with: 'Campolim'
     fill_in 'CNPJ', with: cnpj
+    attach_file 'Imagem do Buffet', Rails.root.join('spec', 'support', 'images', 'buffet_image.jpg')
     check 'Dinheiro'
     click_on 'Enviar'
 
@@ -101,6 +127,7 @@ describe 'Administrador edita buffet' do
     expect(page).to have_content 'Buffet editado com sucesso'
     expect(page).to have_content 'Av. das Delícias, 1234, Campolim, Sorocaba-SP, CEP: 01234-567'
     expect(page).to have_content "CNPJ: #{cnpj}"
+    expect(page).to have_css 'img[src*="buffet_image.jpg"]'
   end
 
   it 'caso seja o responsável' do

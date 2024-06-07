@@ -84,7 +84,6 @@ describe 'Administrador cadastra buffet' do
     check 'Dinheiro'
     check 'PIX'
     attach_file 'Imagem do Buffet', Rails.root.join('spec', 'support', 'images', 'buffet_image.jpg')
-    save_page
     click_on 'Enviar'
 
     # Assert
@@ -98,6 +97,18 @@ describe 'Administrador cadastra buffet' do
     expect(page).to have_content 'Av. das Delícias, 1234, Centro, São Paulo-SP, CEP: 01234-567'
     expect(page).to have_content 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis'
     expect(page).to have_content '(55)5555-5555 - contato@saboresdivinos.com'
+  end
+
+  it 'e vê pré-visualização da imagem anexada', js: true do
+    admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
+
+    login_as(admin, scope: :admin)
+    visit root_path
+    attach_file 'Imagem do Buffet', Rails.root.join('spec', 'support', 'images', 'buffet_image.jpg')
+
+    within('#imagePreview') do
+      expect(page).to have_css 'img'
+    end
   end
 
   it 'com dados incompletos' do

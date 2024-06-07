@@ -56,15 +56,41 @@
             <%= collection_check_boxes(:buffet, :payment_methods, PaymentMethod.all, :id, :name, { checked: @buffet.payment_method_ids }, class: 'm-3') %>
         </div>
     </div>
-    
+
     <%= f.fields_for :photo, @buffet.photo do |photo_form| %>
-        <div>
-            <%= photo_form.label :image, 'Imagem do Buffet' %>
-            <%= photo_form.file_field :image %>
+        <div class="mb-2 row align-items-center">
+            <h4 class="text-body-secondary my-3">Imagem do Buffet</h4>
+            <%= photo_form.label :image, 'Imagem do Buffet', class: 'col-sm-2 col-form-label'%>
+            <div class="col-sm-10" id="imageForm"><%= photo_form.file_field :image, class: 'form-control' %></div>   
+            <div id="imagePreview" class="col-sm-4 text-center"></div>
         </div>
     <% end %>
-    
+
     <div>
         <%= f.submit 'Enviar', class: 'my-4 btn btn-primary' %>
     </div>
 <% end %>
+
+<script>
+document.getElementById('buffet_photo_attributes_image').addEventListener('change', function(event) {
+    const [file] = event.target.files
+    const imagePreview = document.getElementById('imagePreview')
+    if(imagePreview.firstElementChild){
+        imagePreview.removeChild(imagePreview.firstElementChild)
+        document.getElementById('imageForm').className = 'col-sm-10'
+
+    }
+    if (file) {
+        const reader = new FileReader()
+        reader.onload = function(e) {
+            const img = document.createElement('img')
+            img.src = e.target.result
+            img.style.height = '200px'
+            img.className = 'img-thumbnail'
+            document.getElementById('imageForm').className = 'col-sm-6'
+            imagePreview.appendChild(img)
+        }
+        reader.readAsDataURL(file);
+    }
+});
+</script>
