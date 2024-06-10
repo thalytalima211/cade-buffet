@@ -1,0 +1,107 @@
+<%= form_with model: @buffet, class: 'text-center' do |f| %>
+    <div>
+        <h4 class="text-body-secondary my-3">Informações Corporativas</h4>
+        <div class="mb-2 row">
+            <%= f.label :corporate_name, class: 'col-sm-2 col-form-label' %>
+            <div class="col-sm-10"><%= f.text_field :corporate_name, class: 'form-control' %></div>
+        </div>
+        <div class="mb-2 row">
+            <%= f.label :brand_name, class: 'col-sm-2 col-form-label' %>
+            <div class="col-sm-10"><%= f.text_field :brand_name, class: 'form-control' %></div>
+        </div>
+        <div class="mb-2 row">
+            <%= f.label :registration_number, class: 'col-sm-2 col-form-label' %>
+            <div class="col-sm-10"><%= f.text_field :registration_number, class: 'form-control' %></div>
+        </div>
+    </div>
+    <div class="mb-2 row">
+        <h4 class="text-body-secondary my-3">Contato</h4>
+        <%= f.label :number_phone, class: 'col-sm-2 col-form-label' %>
+        <div class="col-sm-4"><%= f.text_field :number_phone, class: 'form-control' %></div>
+        <%= f.label :email, class: 'col-sm-2 col-form-label' %>
+        <div class="col-sm-4"><%= f.text_field :email, class: 'form-control'%></div>
+    </div>
+    
+    <div>
+        <h4 class="text-body-secondary my-3">Endereço</h4>
+        <div class="mb-2 row">
+            <%= f.label :full_address, class: 'col-sm-2 col-form-label' %>
+            <div class="col-sm-5"><%= f.text_field :full_address, class: 'form-control' %></div>
+            <%= f.label :neighborhood, class: 'col-sm-1 col-form-label' %>
+            <div class="col-sm-4"><%= f.text_field :neighborhood, class: 'form-control' %></div>
+        </div>
+        <div class="mb-2 row">
+            <%= f.label :city, class: 'col-sm-2 col-form-label' %>
+            <div class="col-sm-3"><%= f.text_field :city, class: 'form-control' %></div>
+            <%= f.label :state, class: 'col-sm-1 col-form-label' %>
+            <div class="col-sm-1"><%= f.text_field :state, class: 'form-control' %></div>
+            <%= f.label :zip_code, class: 'col-sm-1 col-form-label' %>
+            <div class="col-sm-4"><%= f.text_field :zip_code, class: 'form-control' %></div>
+        </div>'    
+    </div>
+    
+    <div class="mb-2 row align-items-center">
+        <h4 class="text-body-secondary my-3">Descrição</h4>
+        <%= f.label :description, class: 'col-sm-2 col-form-label' %>
+        <div class="col-sm-10"><%= f.text_area :description, class: 'form-control' %></div>
+    </div>
+
+    <div class="m-3">
+        <h4 class="text-body-secondary my-3">Métodos de Pagamento</h4>
+        <div class="d-flex justify-content-around align-items-center mx-5">
+            <%= collection_check_boxes(:buffet, :payment_method_ids, PaymentMethod.all, :id, :name, { checked: @buffet.payment_method_ids }, class: 'm-3') %>
+        </div>
+    </div>
+
+    <%= f.fields_for :photo, @buffet.photo do |photo_form| %>
+        <div class="mb-2 row align-items-center">
+            <h4 class="text-body-secondary my-3">Imagem do Buffet</h4>
+            <%= photo_form.label :image, 'Imagem do Buffet', class: 'col-sm-2 col-form-label'%>
+            <div class="col-sm-10" id="imageForm"><%= photo_form.file_field :image, class: 'form-control' %></div>   
+            <div id="imagePreview" class="col-sm-4 text-center"></div>
+        </div>
+    <% end %>
+
+    <div>
+        <%= f.submit 'Enviar', class: 'my-4 btn btn-primary' %>
+    </div>
+<% end %>
+
+<script>
+const imagePreview = document.getElementById('imagePreview')
+
+function removeImagePreview(){
+    imagePreview.innerHTML = ''
+    document.getElementById('imageForm').className = 'col-sm-10'
+}
+
+document.getElementById('buffet_photo_attributes_image').addEventListener('change', function(event) {
+    const [file] = event.target.files
+    if(imagePreview.firstElementChild) removeImagePreview()
+    if (file) {
+        const reader = new FileReader()
+        reader.onload = function(e) {
+            const img = document.createElement('img')
+            img.src = e.target.result
+            img.style.height = '200px'
+            img.className = 'img-thumbnail'
+            document.getElementById('imageForm').className = 'col-sm-6'
+            imagePreview.appendChild(img)
+            const remove_button = document.createElement('button')
+            remove_button.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+            </svg>`
+            remove_button.className = 'mx-2 btn btn-danger'
+            remove_button.id = 'remove-image'
+            remove_button.addEventListener('click', function(event){
+                event.preventDefault()
+                removeImagePreview()
+                document.getElementById('buffet_photo_attributes_image').value = ''
+            })
+            imagePreview.appendChild(remove_button)
+        }
+        reader.readAsDataURL(file);
+    }
+});
+</script>

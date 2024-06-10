@@ -111,6 +111,19 @@ describe 'Administrador cadastra buffet' do
     end
   end
 
+  it 'e remove imagem anexada', js: true do
+    admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
+
+    login_as(admin, scope: :admin)
+    visit root_path
+    attach_file 'Imagem do Buffet', Rails.root.join('spec', 'support', 'images', 'buffet_image.jpg')
+    find('button#remove-image').click
+
+    within('#imageForm') do
+      expect(page).not_to have_css 'img'
+    end
+  end
+
   it 'com dados incompletos' do
     # Arrange
     admin = Admin.create!(email: 'admin@email.com', password: 'senha123', buffet: nil)

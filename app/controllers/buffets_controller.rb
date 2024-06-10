@@ -11,9 +11,12 @@ class BuffetsController < ApplicationController
   end
 
   def create
-    if current_admin.create_buffet!(buffet_params)
+    @buffet = Buffet.new(buffet_params)
+    if @buffet.save
       redirect_to buffet_path(current_admin.buffet), notice: 'Buffet cadastrado com sucesso'
     else
+      current_admin.buffet = nil
+      @buffet.build_photo
       flash.now[:notice] = 'Buffet não cadastrado'
       render :new
     end
@@ -63,7 +66,7 @@ class BuffetsController < ApplicationController
   def buffet_params
     params.require(:buffet).permit(:corporate_name, :brand_name, :registration_number, :number_phone, :email,
                                   :full_address, :neighborhood, :state, :city, :zip_code, :description,
-                                  payment_method_ids: [], photo_attributes: [:id, :image])
+                                  payment_method_ids: [], photo_attributes: [:id, :image]).merge({admin: current_admin})
   end
 
   def set_buffet
