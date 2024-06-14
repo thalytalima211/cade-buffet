@@ -53,12 +53,17 @@
         </div>
     </div>
 
-    <%= f.fields_for :photo, @buffet.photo do |photo_form| %>
+    <%= f.fields_for :photo, @photo do |photo_form| %>
         <div class="mb-2 row align-items-center">
             <h4 class="text-body-secondary my-3">Imagem do Buffet</h4>
             <%= photo_form.label :image, 'Imagem do Buffet', class: 'col-sm-2 col-form-label'%>
-            <div class="col-sm-10" id="imageForm"><%= photo_form.file_field :image, class: 'form-control' %></div>   
-            <div id="imagePreview" class="col-sm-4 text-center"></div>
+            <% if @photo.image.attached? %>
+                <div class="col-sm-6" id="imageForm"><%= photo_form.file_field :image, class: 'form-control' %></div>   
+                <div id="imagePreview" class="col-sm-4 text-center"><%= image_tag @photo.image, size: '200', class: 'img-thumbnail' %></div>  
+            <% else %>
+                <div class="col-sm-10" id="imageForm"><%= photo_form.file_field :image, class: 'form-control' %></div>   
+                <div id="imagePreview" class="col-sm-4 text-center"></div>
+            <% end %>
         </div>
     <% end %>
 

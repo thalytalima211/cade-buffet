@@ -3,17 +3,8 @@ require 'rails_helper'
 describe 'Administrador edita buffet' do
   it 'e deve estar autenticado' do
     # Arrange
-    cash = PaymentMethod.create!(name: 'Dinheiro')
-    admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
-    buffet_photo = Photo.create!()
-    buffet_photo.image.attach(io: File.open(Rails.root.join('spec', 'support', 'images', 'buffet_image.jpg')),
-                              filename: 'buffet_image.jpg')
-    buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
-                            registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
-                            email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
-                            neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
-                            description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
-                            admin: admin, payment_methods: [cash], photo: buffet_photo)
+    loadBuffet
+    buffet = Buffet.first
 
     # Act
     visit edit_buffet_path(buffet.id)
@@ -24,21 +15,12 @@ describe 'Administrador edita buffet' do
 
   it 'e não vê botão para editar buffet se não estiver autenticado' do
     # Arrange
-    cash = PaymentMethod.create!(name: 'Dinheiro')
-    admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
-    buffet_photo = Photo.create!()
-    buffet_photo.image.attach(io: File.open(Rails.root.join('spec', 'support', 'images', 'buffet_image.jpg')),
-                              filename: 'buffet_image.jpg')
-    buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
-                            registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
-                            email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
-                            neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
-                            description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
-                            admin: admin, payment_methods: [cash], photo: buffet_photo)
+    loadBuffet
+    buffet = Buffet.first
 
     # Act
     visit root_path
-    click_on 'Sabores Divinos Buffet'
+    click_on buffet.brand_name
 
     # Assert
     expect(page).not_to have_link 'Editar'
@@ -74,18 +56,8 @@ describe 'Administrador edita buffet' do
   end
 
   it 'e vê pré-visualização da imagem anexada', js: true do
-    cnpj = CNPJ.new(CNPJ.generate).formatted
-    cash = PaymentMethod.create!(name: 'Dinheiro')
-    admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
-    buffet_photo = Photo.create!()
-    buffet_photo.image.attach(io: File.open(Rails.root.join('spec', 'support', 'images', 'buffet_image.jpg')),
-                              filename: 'buffet_image.jpg')
-    buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
-                            registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
-                            email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
-                            neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
-                            description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
-                            admin: admin, payment_methods: [cash], photo: buffet_photo)
+    loadBuffet
+    admin = Admin.first
 
     login_as(admin, scope: :admin)
     visit root_path
@@ -98,18 +70,8 @@ describe 'Administrador edita buffet' do
   end
 
   it 'e remove imagem anexada', js: true do
-    cnpj = CNPJ.new(CNPJ.generate).formatted
-    cash = PaymentMethod.create!(name: 'Dinheiro')
-    admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
-    buffet_photo = Photo.create!()
-    buffet_photo.image.attach(io: File.open(Rails.root.join('spec', 'support', 'images', 'buffet_image.jpg')),
-                              filename: 'buffet_image.jpg')
-    buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
-                            registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
-                            email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
-                            neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
-                            description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
-                            admin: admin, payment_methods: [cash], photo: buffet_photo)
+    loadBuffet
+    admin = Admin.first
 
     login_as(admin, scope: :admin)
     visit root_path
@@ -124,18 +86,9 @@ describe 'Administrador edita buffet' do
 
   it 'com sucesso' do
     # Arrange
+    loadBuffet
     cnpj = CNPJ.new(CNPJ.generate).formatted
-    cash = PaymentMethod.create!(name: 'Dinheiro')
-    admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
-    buffet_photo = Photo.create!()
-    buffet_photo.image.attach(io: File.open(Rails.root.join('spec', 'support', 'images', 'buffet_image.jpg')),
-                              filename: 'buffet_image.jpg')
-    buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
-                            registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
-                            email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
-                            neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
-                            description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
-                            admin: admin, payment_methods: [cash], photo: buffet_photo)
+    admin = Admin.first
 
     # Act
     login_as(admin, scope: :admin)
@@ -187,17 +140,8 @@ describe 'Administrador edita buffet' do
 
   it 'com dados incompletos' do
     # Arrange
-    cash = PaymentMethod.create!(name: 'Dinheiro')
-    admin = Admin.create!(email: 'admin@email.com', password: 'senha123')
-    buffet_photo = Photo.create!()
-    buffet_photo.image.attach(io: File.open(Rails.root.join('spec', 'support', 'images', 'buffet_image.jpg')),
-                              filename: 'buffet_image.jpg')
-    buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
-                            registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
-                            email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
-                            neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
-                            description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
-                            admin: admin, payment_methods: [cash], photo: buffet_photo)
+    loadBuffet
+    admin = Admin.first
 
     # Act
     login_as(admin, scope: :admin)

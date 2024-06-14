@@ -54,17 +54,8 @@ describe 'API exibe tipos de eventos' do
 
     it 'Retorna vazio caso não haja nenhum tipo de evento cadastrado no buffet' do
       # Arrange
-      cash = PaymentMethod.create!(name: 'Dinheiro')
-      admin = Admin.create!(email: 'saboresdivinos@email.com', password: 'senha123')
-      buffet_photo = Photo.create!()
-      buffet_photo.image.attach(io: File.open(Rails.root.join('spec', 'support', 'images', 'buffet_image.jpg')),
-                                filename: 'buffet_image.jpg')
-      buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
-                              registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
-                              email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
-                              neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
-                              description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
-                              admin: admin, payment_methods: [cash], photo: buffet_photo)
+      loadBuffet
+      buffet = Buffet.first
 
       # Act
       get "/api/v1/buffets/#{buffet.id}/event_types"
@@ -88,17 +79,8 @@ describe 'API exibe tipos de eventos' do
 
     it 'Ocorre um erro interno' do
       # Arrange
-      cash = PaymentMethod.create!(name: 'Dinheiro')
-      admin = Admin.create!(email: 'saboresdivinos@email.com', password: 'senha123')
-      buffet_photo = Photo.create!()
-      buffet_photo.image.attach(io: File.open(Rails.root.join('spec', 'support', 'images', 'buffet_image.jpg')),
-                                filename: 'buffet_image.jpg')
-      buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
-                              registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
-                              email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
-                              neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
-                              description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
-                              admin: admin, payment_methods: [cash], photo: buffet_photo)
+      loadBuffet
+      buffet = Buffet.first
       allow(Buffet).to receive(:find).and_raise(ActiveRecord::QueryCanceled)
 
       # Act

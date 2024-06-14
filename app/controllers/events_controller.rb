@@ -1,9 +1,11 @@
 class EventsController < ApplicationController
   before_action :set_event_type_and_order, only: [:new, :create, :show, :confirmed]
+  before_action :authenticate_customer!, only: [:confirmed]
+  before_action :authenticate_admin!, only: [:new, :create]
 
   def new
-    if !admin_signed_in? || current_admin.buffet != @order.buffet
-      redirect_to root_path
+    if current_admin.buffet != @order.buffet
+      redirect_to root_path, notice: 'Você não pode criar um evento para este buffet'
     else
       @payment_methods = @event_type.buffet.payment_methods
       @event = Event.new
@@ -11,14 +13,18 @@ class EventsController < ApplicationController
   end
 
   def create
-    @event = Event.new(event_params)
-    if @event.save
-      @order.pending_confirmation!
-      redirect_to event_type_order_event_path(@event_type, @order, @event), notice: 'Pedido aceito!'
+    if @order.buffet == current_admin.buffet
+      @event = Event.new(event_params)
+      if @event.save
+        @order.pending_confirmation!
+        redirect_to event_type_order_event_path(@event_type, @order, @event), notice: 'Pedido aceito!'
+      else
+        @payment_methods = @event_type.buffet.payment_methods
+        flash.now[:notice] = 'Não foi possível aceitar pedido'
+        render :new
+      end
     else
-      @payment_methods = @event_type.buffet.payment_methods
-      flash.now[:notice] = 'Não foi possível aceitar pedido'
-      render :new
+      redirect_to buffet_path(current_admin.buffet), notice: 'Você não pode criar um evento para este buffet'
     end
   end
 
@@ -27,8 +33,12 @@ class EventsController < ApplicationController
   end
 
   def confirmed
-    @order.accepted!
-    redirect_to customer_path(current_customer), notice: 'Evento confirmado com sucesso'
+    if current_customer == @order.customer
+      @order.accepted!
+      redirect_to customer_path(current_customer), notice: 'Evento confirmado com sucesso'
+    else
+      redirect_to root_path, notice: 'Você não pode confirmar um pedido no qual não é o dono'
+    end
   end
 
   private

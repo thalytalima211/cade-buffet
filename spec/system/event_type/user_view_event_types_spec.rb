@@ -3,17 +3,8 @@ require 'rails_helper'
 describe 'Usuário vê tipos de eventos' do
   it 'a partir da tela inicial' do
     # Arrange
-    cash = PaymentMethod.create!(name: 'Dinheiro')
-    admin = Admin.create!(email: 'saboresdivinos@email.com', password: 'senha123')
-    buffet_photo = Photo.create!()
-    buffet_photo.image.attach(io: File.open(Rails.root.join('spec', 'support', 'images', 'buffet_image.jpg')),
-                              filename: 'buffet_image.jpg')
-    buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
-                            registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
-                            email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
-                            neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
-                            description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
-                            admin: admin, payment_methods: [cash], photo: buffet_photo)
+    loadBuffet
+    buffet = Buffet.first
     event_type = EventType.create!(name: 'Festa de Casamento', description: 'Celebre seu dia do SIM com o nosso buffet',
                                   min_guests: 20, max_guests: 100, default_duration: 90, menu: 'Bolo e Doces',
                                   offer_decoration: true, offer_drinks: true, offer_parking_service: false,
@@ -24,7 +15,7 @@ describe 'Usuário vê tipos de eventos' do
 
     # Act
     visit root_path
-    click_on 'Sabores Divinos Buffet'
+    click_on buffet.brand_name
 
     # Assert
     expect(page).to have_content 'Festa de Casamento'
@@ -89,21 +80,12 @@ describe 'Usuário vê tipos de eventos' do
 
   it 'e não existem tipos de eventos cadastrados' do
     # Arrange
-    cash = PaymentMethod.create!(name: 'Dinheiro')
-    admin = Admin.create!(email: 'saboresdivinos@email.com', password: 'senha123')
-    buffet_photo = Photo.create!()
-    buffet_photo.image.attach(io: File.open(Rails.root.join('spec', 'support', 'images', 'buffet_image.jpg')),
-                              filename: 'buffet_image.jpg')
-    buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
-                            registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
-                            email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
-                            neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
-                            description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
-                            admin: admin, payment_methods: [cash], photo: buffet_photo)
+    loadBuffet
+    buffet = Buffet.first
 
     # Act
     visit root_path
-    click_on 'Sabores Divinos Buffet'
+    click_on buffet.brand_name
 
     # Assert
     expect(page).to have_content 'Não há nenhum tipo de evento cadastrado'

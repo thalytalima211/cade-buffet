@@ -7,7 +7,7 @@ class BuffetsController < ApplicationController
 
   def new
     @buffet = Buffet.new
-    @buffet.build_photo
+    @photo = @buffet.build_photo
   end
 
   def create
@@ -27,7 +27,9 @@ class BuffetsController < ApplicationController
     @payment_methods = @buffet.payment_methods
   end
 
-  def edit; end
+  def edit
+    @photo = @buffet.photo
+  end
 
   def update
     if @buffet.update(buffet_params)
