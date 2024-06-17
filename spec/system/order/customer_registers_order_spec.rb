@@ -136,10 +136,26 @@ describe 'Cliente faz pedido' do
     expect(page).to have_field 'Endereço'
   end
 
-  it 'com sucesso' do
+  it 'em tipo de evento realizado no endereço indicado pelo cliente' do
     # Arrange
-    loadBuffetAndEventType
-    buffet = Buffet.first
+    cash = PaymentMethod.create!(name: 'Dinheiro')
+    admin = Admin.create!(email: 'saboresdivinos@email.com', password: 'senha123')
+    buffet_photo = Photo.create!()
+    buffet_photo.image.attach(io: File.open(Rails.root.join('spec', 'support', 'images', 'buffet_image.jpg')),
+                              filename: 'buffet_image.jpg')
+    buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
+                            registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
+                            email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
+                            neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
+                            description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
+                            admin: admin, payment_methods: [cash], photo: buffet_photo)
+    event_type = EventType.create!(name: 'Festa de Casamento', description: 'Celebre seu dia do SIM com o nosso buffet',
+                                  min_guests: 20, max_guests: 100, default_duration: 90, menu: 'Bolo e Doces',
+                                  offer_decoration: true, offer_drinks: false, offer_parking_service: true,
+                                  default_address: :indicated_address, min_value: 10_000.00, additional_per_guest: 250.00,
+                                  extra_hour_value: 1_000.00, weekend_min_value: 14_000.00,
+                                  weekend_additional_per_guest: 300.00, weekend_extra_hour_value: 1_500.00,
+                                  buffet: buffet)
     customer =  Customer.create!(name: 'Maria', cpf: CPF.generate, email: 'maria@email.com', password: 'senha123')
     allow(SecureRandom).to receive(:alphanumeric).with(8).and_return('ABC12345')
 
@@ -168,6 +184,52 @@ describe 'Cliente faz pedido' do
     expect(page).to have_content 'Endereço: Rua dos Noivos, 700'
   end
 
+  it 'em tipo de evento realizado no endereço do buffet' do
+    # Arrange
+    cash = PaymentMethod.create!(name: 'Dinheiro')
+    admin = Admin.create!(email: 'saboresdivinos@email.com', password: 'senha123')
+    buffet_photo = Photo.create!()
+    buffet_photo.image.attach(io: File.open(Rails.root.join('spec', 'support', 'images', 'buffet_image.jpg')),
+                              filename: 'buffet_image.jpg')
+    buffet = Buffet.create!(corporate_name: 'Sabores Divinos Eventos Ltda.', brand_name: 'Sabores Divinos Buffet',
+                            registration_number: CNPJ.generate, number_phone: '(55)5555-5555',
+                            email: 'contato@saboresdivinos.com',  full_address: 'Av. das Delícias, 1234',
+                            neighborhood: 'Centro', city: 'São Paulo', state: 'SP', zip_code: '01234-567',
+                            description: 'Sabores Divinos Buffet é especializado em transformar eventos em experiências inesquecíveis',
+                            admin: admin, payment_methods: [cash], photo: buffet_photo)
+    event_type = EventType.create!(name: 'Festa de Casamento', description: 'Celebre seu dia do SIM com o nosso buffet',
+                                  min_guests: 20, max_guests: 100, default_duration: 90, menu: 'Bolo e Doces',
+                                  offer_decoration: true, offer_drinks: false, offer_parking_service: true,
+                                  default_address: :buffet_address, min_value: 10_000.00, additional_per_guest: 250.00,
+                                  extra_hour_value: 1_000.00, weekend_min_value: 14_000.00,
+                                  weekend_additional_per_guest: 300.00, weekend_extra_hour_value: 1_500.00,
+                                  buffet: buffet)
+    customer =  Customer.create!(name: 'Maria', cpf: CPF.generate, email: 'maria@email.com', password: 'senha123')
+    allow(SecureRandom).to receive(:alphanumeric).with(8).and_return('ABC12345')
+
+    # Act
+    login_as(customer, scope: :customer)
+    visit root_path
+    click_on 'Sabores Divinos Buffet'
+    within('#event-type-1') do
+      click_on 'Fazer pedido'
+    end
+    fill_in 'Data Estimada', with: 1.month.from_now
+    fill_in 'Quantidade de Convidados', with: 70
+    fill_in 'Detalhes', with: 'Providenciar rosas brancas'
+    click_on 'Enviar'
+
+    # Assert
+    expect(page).to have_content 'Pedido enviado com sucesso'
+    expect(page).to have_content 'Pedido ABC12345'
+    expect(page).to have_content 'Buffet: Sabores Divinos Buffet'
+    expect(page).to have_content 'Tipo de Evento: Festa de Casamento'
+    expect(page).to have_content 'Status: Aguardando avaliação do buffet'
+    expect(page).to have_content "Data Estimada: #{I18n.localize(1.month.from_now.to_date)}"
+    expect(page).to have_content 'Quantidade de Convidados: 70'
+    expect(page).to have_content 'Detalhes: Providenciar rosas brancas'
+    expect(page).to have_content "Endereço: #{buffet.full_address}"
+  end
   it 'com dados incompletos' do
     # Arrange
     loadBuffetAndEventType

@@ -16,7 +16,7 @@ class BuffetsController < ApplicationController
       redirect_to buffet_path(current_admin.buffet), notice: 'Buffet cadastrado com sucesso'
     else
       current_admin.buffet = nil
-      @buffet.build_photo
+      @photo = @buffet.photo || @buffet.build_photo
       flash.now[:notice] = 'Buffet não cadastrado'
       render :new
     end
@@ -35,6 +35,7 @@ class BuffetsController < ApplicationController
     if @buffet.update(buffet_params)
       redirect_to buffet_path(@buffet), notice: 'Buffet editado com sucesso'
     else
+      @photo = @buffet.photo
       flash.now[:notice] = 'Não foi possível editar buffet'
       render :edit
     end

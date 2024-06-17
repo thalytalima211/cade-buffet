@@ -30,6 +30,7 @@ group :development, :test do
   gem "rspec-rails"
   gem "capybara"
   gem 'selenium-webdriver'
+  gem 'simplecov', require: true
 end
 
 group :development do
