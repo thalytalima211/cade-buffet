@@ -60,12 +60,15 @@ rspec
 ```
 
 ## Casos de teste
+![Página inicial](https://github.com/user-attachments/assets/026b77db-20de-4c5a-a43c-2a23690faba9)
 
-![](https://lh3.googleusercontent.com/drive-viewer/AKGpihb0i3xJO2AG-LE__Cte3mERm78XAiNrqRxJhNSnSaHWsDtC7IXMeOeoP9OBCxuT9C44es1prw2MACdoqc_5RsMQt0zGbKgFyw=w1920-h912)
+Página inicial da aplicação, com listagem de todos os buffets cadastrados na plataforma.
 
-Exibição da página inicial da aplicação, com buffets cadastrados e acesso aos tipos de eventos oferecidos.
+![Detalhamento de buffet](https://github.com/user-attachments/assets/9381f816-c831-43fb-9f30-a18fdaebe6a5)
 
-![](https://lh3.googleusercontent.com/drive-viewer/AKGpihYgIQ9YxBbXbWSPwgCcAV9GCDzr-oz6MkQEZY9Hh5T6cRponpRVCnw7pjoXj1kmX_xmsjGVcMimeuYiWu8WCqKJGLFL_gk3sbw=w1920-h912)
+Tela de detalhes de um buffet, com listagem dos tipos de eventos oferecidos.
+
+![Tela de pedidos](https://github.com/user-attachments/assets/d3bb3ccd-600d-42e8-a20b-f7bf4c065865)
 
 Tela de pedidos de um cliente específico, com abas classificando cada pedido de acordo com seu status.
 
