@@ -206,20 +206,20 @@ tenth_order = Order.create!(buffet: fifth_buffet, event_type: tenth_event_type, 
                             address: 'Rua das Nuvens, 123')
 
 first_event = Event.create!(buffet: second_buffet, order: fifth_order, customer: customer, payment_method: debit_card,
-                            expiration_date: 7.weeks.from_now, surcharge: 300.00, discount: 0.00,
+                            expiration_date: 4.weeks.from_now, surcharge: 300.00, discount: 0.00,
                             description: 'Custo adicional pela decoração especial')
 second_event = Event.create!(buffet: third_buffet, order: sixth_order, customer: customer, payment_method: credit_card,
-                            expiration_date: 8.weeks.from_now, surcharge: 0.00, discount: 150.00,
+                            expiration_date: 5.weeks.from_now, surcharge: 0.00, discount: 150.00,
                             description: 'Custo promocional')
 third_event = Event.create!(buffet: third_buffet, order: seventh_order, customer: customer, payment_method: cash,
-                            expiration_date: 9.weeks.from_now, surcharge: 0.00, discount: 0.00,
+                            expiration_date: 6.weeks.from_now, surcharge: 0.00, discount: 0.00,
                             description: 'Valor padrão')
 fourth_event = Event.create!(buffet: third_buffet, order: eighth_order, customer: customer, payment_method: pix,
-                            expiration_date: 10.weeks.from_now, surcharge: 0.00, discount: 0.00,
+                            expiration_date: 7.weeks.from_now, surcharge: 0.00, discount: 0.00,
                             description: 'Valor padrão')
 fifth_event = Event.create!(buffet: fifth_buffet, order: nineth_order, customer: customer, payment_method: credit_card,
-                            expiration_date: 11.weeks.from_now, surcharge: 0.00, discount: 200.00,
+                            expiration_date: 8.weeks.from_now, surcharge: 0.00, discount: 200.00,
                             description: 'Promoção especial do dia das bruxas')
 sixth_event = Event.create!(buffet: fifth_buffet, order: tenth_order, customer: customer, payment_method: cash,
-                            expiration_date: 12.weeks.from_now, surcharge: 150.00, discount: 0.00,
+                            expiration_date: 9.weeks.from_now, surcharge: 150.00, discount: 0.00,
                             description: 'Adicional por decoração temática')
